@@ -1,0 +1,14 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            GesAula
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!-- todo: accesos temporales hasta que implemente login -->
+    <ion-button color="primary" expand="full" [routerLink]="['/dashboard-profesor']">Acceso Profesor</ion-button>
+    <ion-button color="primary" expand="full" [routerLink]="['/dashboard-mantenimiento']">Acceso Técnico</ion-button>
+    <ion-button color="secondary" expand="full" [routerLink]="['/dashboard-departamento']">Acceso Departamento</ion-button>
+</ion-content>

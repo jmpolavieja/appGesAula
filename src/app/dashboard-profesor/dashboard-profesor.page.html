@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>GesAula - Profesor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+  <app-titulo-page titulo="Aula 8"></app-titulo-page>
+  <ion-searchbar [animated]="true"></ion-searchbar>
+  <app-num-equipos numero="30" [routerLink]="['/list-aula']"></app-num-equipos>
+
+
+  <ion-card>
+    <ion-list color="secondary">
+      <app-notificacion></app-notificacion>
+    </ion-list>
+  </ion-card>
+</ion-content>
+
