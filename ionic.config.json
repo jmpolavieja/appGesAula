@@ -1,0 +1,7 @@
+{
+  "name": "appGesAula",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
