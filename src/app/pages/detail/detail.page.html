@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>Detalle</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-tabs>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="hardware">
+                <ion-icon name="construct"></ion-icon>
+                <ion-label>Hardware</ion-label>
+            </ion-tab-button>
+
+
+            <ion-tab-button tab="software">
+                <ion-icon name="logo-windows"></ion-icon>
+                <ion-label>Software</ion-label>
+            </ion-tab-button>
+
+            <ion-tab-button tab="users">
+                <ion-icon name="people"></ion-icon>
+                <ion-label>Users</ion-label>
+            </ion-tab-button>
+        </ion-tab-bar>
+    </ion-tabs>
+    <h3>Id: {{ equipo?.idEquipo }}</h3>
+    <p>Marca: {{ equipo?.marca}}</p>
+    <p>Modelo: {{ equipo?.modelo }}</p>
+    <p>CPU: {{equipo?.procesador}}</p>
+    <ion-button expand="block" (click)="eliminarEquipo()">Eliminar Equipo</ion-button>
+</ion-content>

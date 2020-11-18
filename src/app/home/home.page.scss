@@ -25,3 +25,11 @@
 #container a {
   text-decoration: none;
 }
+ion-content {
+  .container-buttons{
+    margin-top: 15%;
+  }
+}
+ion-content.background {
+  --background: url("../../assets/fondoTecnologic.jpg") 0 0/100% 100% no-repeat;
+}

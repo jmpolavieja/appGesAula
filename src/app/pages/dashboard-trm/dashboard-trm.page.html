@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Técnico</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- primero el título -->
+  <h3>Inventario</h3>
+  <!-- Barra de búsqueda -->
+  <ion-searchbar></ion-searchbar>
+  <!-- luego area de información -->
+  <ion-list>
+    <ion-item *ngFor="let total of totales | async" (click)="irALista(total.docId)">
+      <ion-icon name="{{ total.icono}}" slot="start"></ion-icon>
+      <ion-label>{{total.docId}}</ion-label>
+      <ion-badge slot="end" [color]="total.docId == 'incidencias' ? 'danger' : 'primary'">{{ total.total }}</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>
