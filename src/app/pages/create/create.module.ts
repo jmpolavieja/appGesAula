@@ -11,6 +11,7 @@ import { IonicModule } from '@ionic/angular';
 import { CreatePageRoutingModule } from './create-routing.module';
 
 import { CreatePage } from './create.page';
+import {DashboardPraPageModule} from "../dashboard-pra/dashboard-pra.module";
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { CreatePage } from './create.page';
         FormsModule,
         IonicModule,
         CreatePageRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DashboardPraPageModule
     ],
   declarations: [CreatePage]
 })

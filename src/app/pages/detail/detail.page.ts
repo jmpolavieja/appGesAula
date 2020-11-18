@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Equipo} from "../../models/equipo";
 import {FirestoreService} from "../../services/data/firestore.service";
 import {ActivatedRoute} from "@angular/router";
+import {EquipoHardware} from "../../models/equipo-hardware";
 
 @Component({
   selector: 'app-detail',
@@ -10,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DetailPage implements OnInit {
 
-  public equipo: Equipo;
+  public equipo: EquipoHardware;
 
   constructor(
       private firestoreService: FirestoreService,

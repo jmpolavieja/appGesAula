@@ -38,7 +38,7 @@ export class HomePage implements OnInit {
   async loginGoogle() {
     const res = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     const user = res.user;
-    console.log(user);
+    //console.log(user);
     this.compruebaUser(user.email);
     this.name = user.displayName;
     this.email = user.email;

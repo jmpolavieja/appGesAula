@@ -13,20 +13,8 @@ import {map} from "rxjs/operators";
 export class FirestoreService {
 
     private equipos: Observable<Equipo[]>;
-    private equipoCollection: AngularFirestoreCollection<Equipo>;
 
-    constructor(public firestore: AngularFirestore) {
-        this.equipoCollection = this.firestore.collection<Equipo>('equiposLista');
-        this.equipos = this.equipoCollection.snapshotChanges().pipe(
-            map(actions => {
-                return actions.map(a =>{
-                    const data = a.payload.doc.data();
-                    const id = a.payload.doc.id;
-                    return { id, ...data};
-                });
-            })
-        );
-    }
+    constructor(public firestore: AngularFirestore) {}
 
     createEquipo(
         idEquipo: string,
@@ -57,7 +45,7 @@ export class FirestoreService {
     }
 
     getEquiposList(): Observable<Equipo[]> {
-        return this.equipos;
+        return this.firestore.collection<Equipo>('equiposLista').valueChanges();
     }
 
     getEquipoDetail(id: string): Observable<EquipoHardware> {

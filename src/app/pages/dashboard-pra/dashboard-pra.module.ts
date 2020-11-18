@@ -10,12 +10,15 @@ import { DashboardPraPage } from './dashboard-pra.page';
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DashboardPraPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        DashboardPraPageRoutingModule
+    ],
+    exports: [
+        ToolbarComponent
+    ],
     declarations: [DashboardPraPage, ToolbarComponent]
 })
 export class DashboardPraPageModule {}

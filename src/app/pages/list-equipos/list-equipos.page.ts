@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FirestoreService} from "../../services/data/firestore.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Equipo} from "../../models/equipo";
 
 @Component({
@@ -10,15 +10,19 @@ import {Equipo} from "../../models/equipo";
 })
 export class ListEquiposPage implements OnInit {
 
+
   public equipos: Observable<Equipo[]>;
 
   constructor(private firestore: FirestoreService) { }
 
   ngOnInit() {
     this.equipos = this.firestore.getEquiposList();
+
   }
 
-  ionViewWillLeave() {
-    this.equipos.subscribe().unsubscribe();
+  ngOnDestroy(){
+    console.log("Equipos en on destroy: " + this.equipos);
+    console.log("on destroy");
+
   }
 }
