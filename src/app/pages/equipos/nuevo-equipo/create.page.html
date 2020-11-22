@@ -1,0 +1,81 @@
+<ion-header>
+    <app-toolbar titulo="Add Equipo"></app-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="createEquipoForm" (submit)="createEquipo()">
+        <ion-item>
+            <ion-label stacked>Código del Equipo</ion-label>
+            <ion-input
+                    formControlName="idEquipo"
+                    type="text"
+                    placeholder="Código del Equipo"
+            >
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Equipo Marca</ion-label>
+            <ion-input
+                    formControlName="marca"
+                    type="text"
+                    placeholder="¿De qué marca es el equipo?"
+            >
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Modelo del equipo</ion-label>
+            <ion-input
+                    formControlName="modelo"
+                    type="text"
+                    placeholder="¿Cuál es el modelo?"
+            >
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Departamento</ion-label>
+            <ion-input
+                    formControlName="departamento"
+                    type="text"
+                    placeholder="¿Cuál es el departamento?"
+            >
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Aula</ion-label>
+            <ion-input
+                    formControlName="aula"
+                    type="text"
+                    placeholder="¿Aula?"
+            >
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Monitor</ion-label>
+            <ion-input
+                    formControlName="monitor"
+                    type="text"
+                    placeholder="¿Cuál es su monitor?"
+            >
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-checkbox color="primary" slot="end" formControlName="raton"></ion-checkbox>
+            <ion-label stacked>Ratón</ion-label>
+        </ion-item>
+
+        <ion-item>
+            <ion-checkbox color="primary" slot="end" formControlName="teclado"></ion-checkbox>
+            <ion-label stacked>Teclado</ion-label>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" [disabled]="!createEquipoForm.valid">
+            Add Equipo
+        </ion-button>
+    </form>
+</ion-content>

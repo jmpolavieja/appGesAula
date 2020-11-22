@@ -1,0 +1,47 @@
+<ion-header>
+    <app-toolbar titulo="Detalle del Aula"></app-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen>
+    <ion-card>
+        <img src="../../../../assets/control_aula_nss.jpg"/>
+        <ion-card-header>
+            <ion-card-title class="ion-text-center">{{ aula?.idAula }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-card-subtitle>Nº Equipos:</ion-card-subtitle>
+                    </ion-col>
+                    <ion-col>
+                        <p class="num ion-text-center">{{ aula?.equipos }}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-card-subtitle>Curso: </ion-card-subtitle>
+                    </ion-col>
+                    <ion-col>
+                        <p>{{ aula?.curso }}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-card-subtitle>Departamento: </ion-card-subtitle>
+                    </ion-col>
+                    <ion-col>
+                        <p>{{ aula?.departamento }}</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+    <ion-fab vertical="center" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="pencil-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import 'firebase/firestore';
-import {Equipo} from "../../models/equipo";
+import {Equipo} from "../../models/equipo/equipo";
 import {Observable} from 'rxjs';
-import {EquipoHardware} from "../../models/equipo-hardware";
-import {map} from "rxjs/operators";
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -13,42 +13,22 @@ import {map} from "rxjs/operators";
 export class FirestoreService {
 
     private equipos: Observable<Equipo[]>;
+    private idEquipo: string;
 
-    constructor(public firestore: AngularFirestore) {}
+    constructor(
+        public firestore: AngularFirestore
+    ) {}
 
-    createEquipo(
-        idEquipo: string,
-        marca: string,
-        modelo: string,
-        procesador: string,
-        discoDuro: string,
-        memoria: string,
-        mac: string,
-        numSerie: string,
-        monitor: string,
-        raton: boolean,
-        teclado: boolean
-    ): Promise<void> {
-        return this.firestore.doc(`equipos/${idEquipo}`).set({
-            idEquipo,
-            marca,
-            modelo,
-            procesador,
-            discoDuro,
-            memoria,
-            mac,
-            numSerie,
-            monitor,
-            raton,
-            teclado
-        });
+    createEquipo(equipo: Equipo): Promise<void> {
+        this.idEquipo=equipo.idEquipo;
+        return this.firestore.doc(`equipos/${(this.idEquipo)}`).set(equipo);
     }
 
     getEquiposList(): Observable<Equipo[]> {
-        return this.firestore.collection<Equipo>('equiposLista').valueChanges();
+        return this.firestore.collection<Equipo>('equipos').valueChanges();
     }
 
-    getEquipoDetail(id: string): Observable<EquipoHardware> {
-        return this.firestore.collection('equipos').doc<EquipoHardware>(id).valueChanges();
+    getEquipoDetail(id: string): Observable<Equipo> {
+        return this.firestore.collection('equipos').doc<Equipo>(id).valueChanges();
     }
 }

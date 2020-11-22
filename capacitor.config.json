@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "appGesAula",
+  "appId": "com.jgf.gesaula",
+  "appName": "GesAula",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

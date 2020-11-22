@@ -1,0 +1,18 @@
+<ion-content padding>
+  <h4>Login</h4>
+  <ion-list>
+    <ion-item>
+      <oin-label fixed>Email</oin-label>
+      <ion-input type="text" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>
+        Password
+      </ion-label>
+      <ion-item tye="password" [(ngModel)]="password"></ion-item>
+    </ion-item>
+    <ion-item>
+      <ion-button (click)="login()">Entrar</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

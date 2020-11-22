@@ -1,5 +1,5 @@
 export interface Usuario {
-    name: string
+    nombre: string
     rol: string,
     email: string
 }

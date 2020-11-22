@@ -4,7 +4,7 @@
             GesAula
         </ion-title>
         &lt;!&ndash;<ion-buttons slot="end">
-            <ion-button routerLink="/create">
+            <ion-button routerLink="/nuevo-equipo">
                 <ion-icon slot="icon-only" name="add"></ion-icon>
             </ion-button>
         </ion-buttons>&ndash;&gt;
@@ -20,7 +20,7 @@
         </ion-row>
     </ion-grid>
 
-    <ion-button expand="block" color="danger" (click)="loginGoogle()">
+    <ion-button expand="block" class="google" (click)="loginGoogle()">
         <ion-icon name="logo-google" slot="start"></ion-icon>
         Iniciar sesión con Google
     </ion-button>
@@ -35,7 +35,7 @@
     </ion-header>
     <ion-item
             *ngFor="let equipo of equiposList | async"
-            routerLink="/detail/{{equipo.idEquipo}}"
+            routerLink="/detail-equipo/{{equipo.idEquipo}}"
     >
         <ion-label>
             <h2>{{equipo.idEquipo}}</h2>

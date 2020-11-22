@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {Equipo} from "../models/equipo";
 import {FirestoreService} from "../services/data/firestore.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import firebase from "firebase";
@@ -8,6 +7,7 @@ import {UsersService} from "../services/data/users.service";
 import {Usuario} from "../models/usuario";
 import {Router} from "@angular/router";
 import {AlertController} from "@ionic/angular";
+import {AuthFirebaseService} from "../services/auth/auth-firebase.service";
 
 
 
@@ -18,34 +18,50 @@ import {AlertController} from "@ionic/angular";
 })
 export class HomePage implements OnInit {
 
-  public equiposList: Observable<Equipo[]>;
   name: string;
   email: string;
-  public usuario: Usuario;
+  public usuario: Observable<firebase.User | null>;
+  private user: Promise<firebase.auth.UserCredential>;
 
   constructor(
-      private firestoreService: FirestoreService,
-      private afAuth: AngularFireAuth,
+      private auth: AuthFirebaseService,
+      // private firestoreService: FirestoreService,
+      //private afAuth: AngularFireAuth,
       private userService: UsersService,
       private router: Router,
       public alertController: AlertController
-  ) {}
+  ) {
 
-  ngOnInit() {
-    this.equiposList = this.firestoreService.getEquiposList();
   }
 
-  async loginGoogle() {
+  ngOnInit() {
+  if(this.auth.authenticated) {
+    this.usuario = this.auth.currentUser;
+
+  }else{
+    this.user = this.auth.authWithGoogle();
+
+  }
+    /*this.afAuth.user.subscribe(user =>{
+      if(user) {
+        this.compruebaUser(user.email);
+      }
+    })*/
+  }
+
+
+
+  /*async loginGoogle() {
     const res = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     const user = res.user;
     //console.log(user);
     this.compruebaUser(user.email);
     this.name = user.displayName;
     this.email = user.email;
-    // todo: comprobar el usuario con la base de datos y dar o no acceso a la aplicación
-  }
 
-  compruebaUser(email) {
+  }*/
+
+  /*compruebaUser(email) {
     console.log(email);
     this.userService.getUser(email).subscribe(
         usuario => {
@@ -74,5 +90,5 @@ export class HomePage implements OnInit {
       buttons: ['Close']
     });
     await alert.present();
-  }
+  }*/
 }

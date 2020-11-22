@@ -18,7 +18,7 @@ describe('InfoCardComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('should nuevo-equipo', () => {
     expect(component).toBeTruthy();
   });
 });

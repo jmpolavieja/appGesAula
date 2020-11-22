@@ -1,0 +1,19 @@
+<ion-header>
+  <app-toolbar titulo="Lista de Equipos"></app-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item *ngFor="let equipo of equipos | async">
+    <ion-label>{{ equipo.idEquipo }}</ion-label>
+    <ion-label>{{ equipo.ubicacion.aula}}</ion-label>
+    <ion-label>{{ equipo.ubicacion.departamento}}</ion-label>
+  </ion-item>
+</ion-list>
+
+
+    <ion-fab-button routerLink="/create">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+
+</ion-content>
