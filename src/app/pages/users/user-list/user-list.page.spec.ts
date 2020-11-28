@@ -18,7 +18,7 @@ describe('UserListPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should nuevo-equipo', () => {
+  it('should form-equipo', () => {
     expect(component).toBeTruthy();
   });
 });

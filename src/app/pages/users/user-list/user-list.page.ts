@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
-import {Usuario} from "../../../models/usuario";
+import {UsuarioInterface} from "../../../models/usuarioInterface";
 import {UsersService} from "../../../services/data/users.service";
 
 @Component({
@@ -10,7 +10,7 @@ import {UsersService} from "../../../services/data/users.service";
 })
 export class UserListPage implements OnInit {
 
-  public userList: Observable<Usuario[]>;
+  public userList: Observable<UsuarioInterface[]>;
 
   constructor(private usersService: UsersService) { }
 

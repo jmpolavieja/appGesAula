@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CreatePage } from './create.page';
+import { FormEquipoPage } from './form-equipo.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CreatePage
+    component: FormEquipoPage
   }
 ];
 

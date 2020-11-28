@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
-import {Aula} from "../../../models/aula";
+import {AulaInterface} from "../../../models/aulaInterface";
 import {AulasService} from "../../../services/data/aulas.service";
 
 @Component({
@@ -10,7 +10,7 @@ import {AulasService} from "../../../services/data/aulas.service";
 })
 export class ListAulasPage implements OnInit {
 
-  public aulas: Observable<Aula[]>;
+  public aulas: Observable<AulaInterface[]>;
 
   constructor(private aulaService: AulasService ) { }
 

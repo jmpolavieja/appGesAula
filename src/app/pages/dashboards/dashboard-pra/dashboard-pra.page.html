@@ -1,11 +1,58 @@
 <ion-header>
-  <app-toolbar titulo="PRA"></app-toolbar>
-  <!--<app-toolbar titulo="PRA"></app-toolbar>-->
+    <app-toolbar titulo="Profesor" dashboard="true"></app-toolbar>
+    <!--<app-toolbar titulo="PRA"></app-toolbar>-->
 </ion-header>
 
 <ion-content>
-  <!-- primero irá el texto del aula de que se trate -->
-  <h3>Aula 8</h3>
-  <!-- luego el cuadro de búsqueda -->
-  <ion-searchbar></ion-searchbar>
+    <!-- primero irá el texto del aula de que se trate -->
+    <h2>Aula {{ aula }}</h2>
+    <!-- luego el cuadro de búsqueda -->
+    <ion-searchbar></ion-searchbar>
+    <!-- ahora aparecerá un cuadro con el total de equipos del aula -->
+    <ion-card class="ion-text-center">
+        <ion-card-header>
+            <ion-card-title>
+                {{num}} equipos
+            </ion-card-title>
+            <ion-card-subtitle>
+                {{numInc}} incidencias activas
+            </ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <ion-list>
+        <ion-item-sliding id="notificacion001">
+            <ion-item-options side="start">
+                <ion-item-option (click)="leido(item)" color="success">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+            <ion-item>
+                <ion-label>
+                    <h2>CPU 123 - Notificación</h2>
+                    <p>Equipo reparado puede pasar a recogerlo</p>
+                </ion-label>
+                <ion-note slot="end">
+                    10:45 AM
+                </ion-note>
+            </ion-item>
+        </ion-item-sliding>
+
+        <ion-item-sliding id="notificacion002">
+            <ion-item-options side="start">
+                <ion-item-option (click)="leido(item)" color="success">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+            <ion-item>
+                <ion-label>
+                    <h2>CPU 243 - Notificación</h2>
+                    <p>Equipo reparado puede pasar a recogerlo</p>
+                </ion-label>
+                <ion-note slot="end">
+                    12:45 PM
+                </ion-note>
+            </ion-item>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-button (click)="logout()" expand="block" color="warning">Cerrar sesión</ion-button>
 </ion-content>

@@ -1,4 +1,4 @@
-export interface Incidencia {
+export interface IncidenciaInterface {
     idIncidencia: string,
     descripcion: string,
     fechaInicio: string,

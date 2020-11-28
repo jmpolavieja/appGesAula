@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Equipo} from "../../../models/equipo/equipo";
-import {FirestoreService} from "../../../services/data/firestore.service";
+import {EquipoInterface} from "../../../models/equipo/equipoInterface";
+import {EquiposService} from "../../../services/data/equipos.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -10,16 +10,16 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DetailPage implements OnInit {
 
-  public equipo: Equipo;
+  public equipo: EquipoInterface;
 
   constructor(
-      private firestoreService: FirestoreService,
+      private equiposService: EquiposService,
       private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     const idEquipo: string = this.route.snapshot.paramMap.get('id');
-    this.firestoreService.getEquipoDetail(idEquipo).subscribe(equipo =>{
+    this.equiposService.getEquipoDetail(idEquipo).subscribe(equipo =>{
       this.equipo = equipo;
     })
   }

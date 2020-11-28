@@ -1,13 +1,1 @@
-{
-  "appId": "com.jgf.gesaula",
-  "appName": "GesAula",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
-}
+{}

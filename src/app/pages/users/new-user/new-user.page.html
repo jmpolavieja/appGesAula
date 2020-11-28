@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>new-user</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-toolbar titulo="{{ titulo }}"></app-toolbar>
 
 <ion-content>
-
+    <form [formGroup]="usuarioFG" (ngSubmit)="guardarUsuario()">
+        <ion-item>
+            <ion-label>Nombre:</ion-label>
+            <ion-input formControlName="nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Email:</ion-label>
+            <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Rol:</ion-label>
+            <ion-input formControlName="rol"></ion-input>
+        </ion-item>
+        <ion-button type="submit" [disabled]="!usuarioFG.valid || !usuarioFG.dirty">{{action}} User</ion-button>
+    </form>
 </ion-content>

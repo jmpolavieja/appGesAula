@@ -1,9 +1,9 @@
 <ion-header>
-    <app-toolbar titulo="Add Equipo"></app-toolbar>
+    <app-toolbar titulo="{{ titulo }}"></app-toolbar>
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="createEquipoForm" (submit)="createEquipo()">
+    <form [formGroup]="formEquipo" (submit)="createEquipo()">
         <ion-item>
             <ion-label stacked>Código del Equipo</ion-label>
             <ion-input
@@ -45,11 +45,11 @@
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>Aula</ion-label>
+            <ion-label stacked>AulaInterface</ion-label>
             <ion-input
                     formControlName="aula"
                     type="text"
-                    placeholder="¿Aula?"
+                    placeholder="¿AulaInterface?"
             >
             </ion-input>
         </ion-item>
@@ -74,8 +74,9 @@
             <ion-label stacked>Teclado</ion-label>
         </ion-item>
 
-        <ion-button expand="block" type="submit" [disabled]="!createEquipoForm.valid">
-            Add Equipo
+        <ion-button expand="block" type="submit" [disabled]="!formEquipo.valid || !formEquipo.dirty">
+            {{ action }} equipo
         </ion-button>
+
     </form>
 </ion-content>

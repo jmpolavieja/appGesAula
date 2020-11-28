@@ -3,5 +3,19 @@
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="newAula" (ngSubmit)="guardarAula()">
+    <ion-item>
+      <ion-label>AulaID:</ion-label>
+      <ion-input formControlName="idAula"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Departamento:</ion-label>
+      <ion-input formControlName="departamento"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Curso:</ion-label>
+      <ion-input formControlName="curso"></ion-input>
+    </ion-item>
+    <ion-button type="submit" [disabled]="!newAula.valid">Guardar</ion-button>
+  </form>
 </ion-content>

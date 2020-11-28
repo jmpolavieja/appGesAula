@@ -1,4 +1,4 @@
-export interface Aula {
+export interface AulaInterface {
     idAula: string,
     filas?: number,
     columnas?: number,

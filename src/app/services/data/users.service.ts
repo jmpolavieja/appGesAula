@@ -1,36 +1,40 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {Observable, Subscription} from "rxjs";
-import {Usuario} from "../../models/usuario";
+import {UsuarioInterface} from "../../models/usuarioInterface";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsersService {
 
+    private userDoc: AngularFirestoreDocument<UsuarioInterface>;
 
-    constructor(public firestore: AngularFirestore) {
+    constructor(public afs: AngularFirestore) {
     }
 
     registerUser(
-        name: string,
-        email: string,
-        rol: string
+        user: UsuarioInterface
     ): Promise<void> {
-        return this.firestore.doc(`usuarios/${email}`).set({
-            name,
-            rol,
-            email
+        let nombre= user.nombre;
+        let email= user.email;
+        let rol= user.rol;
+        return this.afs.doc(`usuarios/${user.email}`).set({
+            nombre,email,rol
         });
     }
 
-    getUser(email: string): Observable<Usuario> {
-        return this.firestore.collection('usuarios').doc<Usuario>(email).valueChanges()
+    getUser(email: string): Observable<UsuarioInterface> {
+        return this.afs.collection('usuarios').doc<UsuarioInterface>(email).valueChanges()
     }
 
-    getUserList(): Observable<Usuario[]> {
-        return this.firestore.collection<Usuario>('usuarios').valueChanges();
+    getUserList(): Observable<UsuarioInterface[]> {
+        return this.afs.collection<UsuarioInterface>('usuarios').valueChanges();
     }
 
-
+    updateUser(user: UsuarioInterface) {
+        let idUser = user.email;
+        this.userDoc = this.afs.doc<UsuarioInterface>(`usuarios/${idUser}`);
+        this.userDoc.update(user);
+    }
 }

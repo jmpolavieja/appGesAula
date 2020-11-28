@@ -1,0 +1,45 @@
+Enlace configuración de FirebaseUI para autenticación con email y password de firebase
+https://github.com/alexnu/IonicFirebaseUI
+Add FirebaseUI to your own Ionic project:
+After setting up Firebase console as described above, please follow the next steps:
+
+Install firebase and firebaseui dependencies:
+$ npm install firebase   // --save me da errores enoen. no lo uso
+$ npm install firebaseui
+
+// Al final se vuelve un embrollo, lo descarto.
+npm uninstall firebaseui
+
+
+compruebaUser(email) {
+        console.log(email);
+        this.userService.getUser(email).subscribe(
+            usuario => {
+                this.usuario = usuario;
+                //console.log(this.usuario.rol);
+                if(typeof this.usuario != "undefined"){
+                    if(this.usuario.rol == "pra") {
+                        this.router.navigate(['/dashboard-pra']);
+                    } else {
+                        this.router.navigate(['/dashboard-trm']);
+                    }
+                } else {
+                    // todo: mensaje de que no está dado de alta en el sistema
+                    console.log("UsuarioInterface no dado de alta en el sistema");
+                    this.presentAlert();
+                }
+            }
+        )
+    }
+
+Enlaces a páginas fuente:
+Uso de capacitor en ionic
+https://capacitorjs.com/docs/getting-started/with-ionic
+Tutorial uso del lector qr code
+https://enappd.com/blog/qr-code-and-barcode-scanning-with-ionic-capacitor/127/
+Construir códigos qr en angular
+https://cgonzalez-uy.medium.com/angular-como-construir-c%C3%B3digos-qr-eb2badcb3cde
+Tutorial formularios y validación en ionic
+https://ionicthemes.com/tutorials/about/forms-and-validation-in-ionic
+Apliación de luis jordán gestión de aulas, es otra cosa
+https://luisjordan.net/tutorial-de-ionic/aplicacion-gestor-aulas-ionic-parte-1-login/

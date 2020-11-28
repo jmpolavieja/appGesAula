@@ -1,4 +1,4 @@
-export interface Equipo {
+export interface EquipoInterface {
     idEquipo?: string,
     estado: string,
     hardware: {
@@ -14,7 +14,7 @@ export interface Equipo {
         teclado: boolean
     },
     software?: {
-        SO: string,
+        so: string,
         officeVersion: string,
         antivirus: string,
         ide1: string,

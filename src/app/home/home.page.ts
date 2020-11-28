@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {FirestoreService} from "../services/data/firestore.service";
+import {EquiposService} from "../services/data/equipos.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import firebase from "firebase";
 import {UsersService} from "../services/data/users.service";
-import {Usuario} from "../models/usuario";
+import {UsuarioInterface} from "../models/usuarioInterface";
 import {Router} from "@angular/router";
 import {AlertController} from "@ionic/angular";
-import {AuthFirebaseService} from "../services/auth/auth-firebase.service";
+import {AuthenticateService} from "../services/auth/authenticate.service";
 
 
 
@@ -24,8 +24,8 @@ export class HomePage implements OnInit {
   private user: Promise<firebase.auth.UserCredential>;
 
   constructor(
-      private auth: AuthFirebaseService,
-      // private firestoreService: FirestoreService,
+      private auth: AuthenticateService,
+      // private firestoreService: EquiposService,
       //private afAuth: AngularFireAuth,
       private userService: UsersService,
       private router: Router,
@@ -35,18 +35,17 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-  if(this.auth.authenticated) {
-    this.usuario = this.auth.currentUser;
+    /*if(this.auth.authenticated) {
+      this.usuario = this.auth.currentUser;
 
-  }else{
-    this.user = this.auth.authWithGoogle();
-
-  }
-    /*this.afAuth.user.subscribe(user =>{
-      if(user) {
-        this.compruebaUser(user.email);
-      }
-    })*/
+    }else{
+      this.user = this.auth.authWithGoogle();
+     }
+      /*this.afAuth.user.subscribe(user =>{
+        if(user) {
+          this.compruebaUser(user.email);
+        }
+      })*/
   }
 
 
@@ -75,7 +74,7 @@ export class HomePage implements OnInit {
             }
           } else {
             // todo: mensaje de que no está dado de alta en el sistema
-            console.log("Usuario no dado de alta en el sistema");
+            console.log("UsuarioInterface no dado de alta en el sistema");
             this.presentAlert();
           }
         }

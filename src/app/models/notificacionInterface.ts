@@ -1,4 +1,4 @@
-export interface Notificacion {
+export interface NotificacionInterface {
     idNotificacion: string,
     hora: string,
     idIncidencia: string,

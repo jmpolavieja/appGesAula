@@ -4,13 +4,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { LoadingController, AlertController } from "@ionic/angular";
-import { FirestoreService } from "../../../services/data/firestore.service";
+import { EquiposService } from "../../../services/data/equipos.service";
 
 import { IonicModule } from '@ionic/angular';
 
-import { CreatePageRoutingModule } from './create-routing.module';
+import { CreatePageRoutingModule } from './form-equipo-routing.module';
 
-import { CreatePage } from './create.page';
+import { FormEquipoPage } from './form-equipo.page';
 import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-pra.module";
 
 @NgModule({
@@ -22,6 +22,6 @@ import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-p
         ReactiveFormsModule,
         DashboardPraPageModule
     ],
-  declarations: [CreatePage]
+  declarations: [FormEquipoPage]
 })
-export class CreatePageModule {}
+export class FormEquipoPageModule {}

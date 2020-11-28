@@ -1,5 +1,5 @@
 <ion-header>
-  <app-toolbar titulo="Inventario"></app-toolbar>
+
 </ion-header>
 
 <ion-content>
@@ -15,4 +15,5 @@
       <ion-badge slot="end" [color]="total.docId == 'incidencias' ? 'danger' : 'primary'">{{ total.total }}</ion-badge>
     </ion-item>
   </ion-list>
+  <ion-button (click)="logout()">Cerrar sesión</ion-button>
 </ion-content>

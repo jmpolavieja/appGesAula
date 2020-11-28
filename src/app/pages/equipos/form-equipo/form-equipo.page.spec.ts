@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CreatePage } from './create.page';
+import { FormEquipoPage } from './form-equipo.page';
 
 describe('CreatePage', () => {
-  let component: CreatePage;
-  let fixture: ComponentFixture<CreatePage>;
+  let component: FormEquipoPage;
+  let fixture: ComponentFixture<FormEquipoPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreatePage ],
+      declarations: [ FormEquipoPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreatePage);
+    fixture = TestBed.createComponent(FormEquipoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
-  it('should nuevo-equipo', () => {
+  it('should form-equipo', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -31,7 +31,7 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should nuevo-equipo the app', () => {
+  it('should form-equipo the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();

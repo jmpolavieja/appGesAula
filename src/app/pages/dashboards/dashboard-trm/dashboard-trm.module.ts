@@ -6,18 +6,16 @@ import { IonicModule } from '@ionic/angular';
 
 import { DashboardTrmPageRoutingModule } from './dashboard-trm-routing.module';
 
-import { DashboardTrmPage } from './dashboard-trm.page';
-import {InfoCardComponent} from "../../../components/info-card/info-card.component";
-import {DashboardPraPageModule} from "../dashboard-pra/dashboard-pra.module";
+
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        DashboardTrmPageRoutingModule,
-        DashboardPraPageModule
+        DashboardTrmPageRoutingModule
     ],
-    declarations: [DashboardTrmPage, InfoCardComponent]
+    exports: [],
+    declarations: []
 })
 export class DashboardTrmPageModule {}

@@ -1,23 +1,20 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AuthGuardService} from "./services/auth-guard.service";
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'create',
-    loadChildren: () => import('./pages/equipos/nuevo-equipo/create.module').then(m => m.CreatePageModule)
+    path: 'nuevo-equipo/:nuevo',
+    loadChildren: () => import('./pages/equipos/form-equipo/form-equipo.module').then(m => m.FormEquipoPageModule)
   },
   {
-    path: 'detail-equipo/:id',
-    loadChildren: () => import('./pages/equipos/detail-equipo/detail.module').then(m => m.DetailPageModule)
+    path: 'detail-equipo/:id/:nuevo',
+    loadChildren: () => import('./pages/equipos/form-equipo/form-equipo.module').then(m => m.FormEquipoPageModule)
   },
   {
     path: 'dashboard-pra',
@@ -25,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard-trm',
+    canActivate: [AuthGuardService],
     loadChildren: () => import('./pages/dashboards/dashboard-trm/dashboard-trm.module').then(m => m.DashboardTrmPageModule)
   },
   {
@@ -44,12 +42,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/aulas/list-aulas/list-aulas.module').then( m => m.ListAulasPageModule)
   },
   {
-    path: 'detail-aula/:id',
+    path: 'detail-aula/:id/:new',
     loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then( m => m.DetailAulaPageModule)
   },
   {
-    path: 'new-aula',
-    loadChildren: () => import('./pages/aulas/new-aula/new-aula.module').then( m => m.NewAulaPageModule)
+    path: 'detail-aula/:new',
+    loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then( m => m.DetailAulaPageModule)
   },
   {
     path: 'new-incidencia',
@@ -64,20 +62,20 @@ const routes: Routes = [
     loadChildren: () => import('./pages/incidencias/list-incidencias/list-incidencias.module').then( m => m.ListIncidenciasPageModule)
   },
   {
-    path: 'detail-user',
-    loadChildren: () => import('./pages/users/detail-user/detail-user.module').then( m => m.DetailUserPageModule)
-  },
-  {
-    path: 'new-user',
+    path: 'detail-user/:id/:nuevo',
     loadChildren: () => import('./pages/users/new-user/new-user.module').then( m => m.NewUserPageModule)
   },
   {
-    path: 'prueba',
-    loadChildren: () => import('./pages/prueba/prueba.module').then( m => m.PruebaPageModule)
+    path: 'new-user/:nuevo',
+    loadChildren: () => import('./pages/users/new-user/new-user.module').then( m => m.NewUserPageModule)
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'login2',
+    loadChildren: () => import('./pages/login2/login2.module').then( m => m.Login2PageModule)
   },
 ];
 

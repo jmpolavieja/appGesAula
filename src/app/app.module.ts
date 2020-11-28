@@ -14,9 +14,16 @@ import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {firebaseConfig} from "./credentials";
 import {AngularFireAuthModule} from "@angular/fire/auth";
+import {ToolbarComponent} from "./components/toolbar/toolbar.component";
+import {InfoCardComponent} from "./components/info-card/info-card.component";
+
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [
+        AppComponent,
+        ToolbarComponent,
+        InfoCardComponent
+    ],
     entryComponents: [],
     imports: [BrowserModule,
         IonicModule.forRoot(),
@@ -24,6 +31,10 @@ import {AngularFireAuthModule} from "@angular/fire/auth";
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFirestoreModule,
         AngularFireAuthModule
+    ],
+    exports: [
+        ToolbarComponent,
+        InfoCardComponent
     ],
     providers: [
         StatusBar,

@@ -1,28 +1,44 @@
-import { Injectable } from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {Injectable} from '@angular/core';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
-import {Total} from "../../models/total";
+import {TotalInterface} from "../../models/totalInterface";
+import {map} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TotalesService {
 
-  constructor(public firestore: AngularFirestore) { }
+    private totalDoc: AngularFirestoreDocument<TotalInterface>;
+    private total: Observable<TotalInterface>;
 
-  getTotales(): Observable<Total[]> {
-    return this.firestore.collection<Total>('totales').valueChanges();
-  }
+    constructor(public afs: AngularFirestore) {
+    }
 
-  getTotal(id: string): Observable<number> {
-    return this.firestore.collection('totales').doc<number>(id).valueChanges();
-  }
+    getTotales(): Observable<TotalInterface[]> {
+        return this.afs.collection<TotalInterface>('totales').valueChanges();
+    }
 
-  setTotal( id:string): Promise<void> {
-    // Primero leo el total solicitado
-    var totalAnterior: Observable<number>;
-    totalAnterior = this.getTotal(id);
-    console.log(totalAnterior);
-    return this.firestore.collection('totales').doc(id).set(totalAnterior);
-  }
+    getTotal(id: string): Observable<TotalInterface> {
+        return this.afs.collection('totales').doc<TotalInterface>(id).valueChanges();
+    }
+
+    getOneTotal(totalId: string) {
+        this.totalDoc = this.afs.doc<TotalInterface>(`totales/${totalId}`);
+        return this.total = this.totalDoc.snapshotChanges().pipe(map(action => {
+            if(action.payload.exists === false) {
+                return null;
+            } else {
+                const data = action.payload.data() as TotalInterface;
+                data.docId = action.payload.id;
+                return data;
+             }
+        }));
+    }
+
+    updateTotal(total: TotalInterface): void {
+        let idTotal = total.docId;
+        this.totalDoc = this.afs.doc<TotalInterface>(`totales/${idTotal}`);
+        this.totalDoc.update(total);
+    }
 }

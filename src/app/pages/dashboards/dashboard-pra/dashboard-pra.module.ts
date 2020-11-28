@@ -6,8 +6,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { DashboardPraPageRoutingModule } from './dashboard-pra-routing.module';
 
-import { DashboardPraPage } from './dashboard-pra.page';
-import {ToolbarComponent} from "../../../components/toolbar/toolbar.component";
+
+
 
 @NgModule({
     imports: [
@@ -17,8 +17,8 @@ import {ToolbarComponent} from "../../../components/toolbar/toolbar.component";
         DashboardPraPageRoutingModule
     ],
     exports: [
-        ToolbarComponent
+
     ],
-    declarations: [DashboardPraPage, ToolbarComponent]
+    declarations: []
 })
 export class DashboardPraPageModule {}

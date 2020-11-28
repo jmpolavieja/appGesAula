@@ -6,7 +6,9 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+
     @Input('titulo') titulo: string;
+    @Input('dashboard') dashboard: boolean;
 
   constructor() { }
 

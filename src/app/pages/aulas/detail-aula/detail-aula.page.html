@@ -1,5 +1,5 @@
 <ion-header>
-    <app-toolbar titulo="Detalle del Aula"></app-toolbar>
+    <app-toolbar titulo="{{ titulo }}"></app-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" fullscreen>
@@ -9,39 +9,39 @@
             <ion-card-title class="ion-text-center">{{ aula?.idAula }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
+            <!-- convertir en formulario reactivo -->
+            <form [formGroup]="aulaForm" (ngSubmit)="guardarDatos()">
+                <ion-item *ngIf="nuevo=='true'">
+                    <ion-label>Id:</ion-label>
+                    <ion-input formControlName="idAula"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Nº Equipos:</ion-label>
+                    <ion-input formControlName="numEquipos"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Curso:</ion-label>
+                    <ion-input formControlName="curso"></ion-input>
+                </ion-item>
+                <ion-label color="danger"
+                           *ngIf="aulaForm.controls.curso.errors?.required &&
+                           (aulaForm.touched || aulaForm.dirty)"
+                >
+                    * El curso es obligatorio
+                </ion-label>
+                <ion-item>
+                    <ion-label>Dpto:</ion-label>
+                    <ion-input formControlName="departamento"></ion-input>
+                </ion-item>
+                <ion-label color="danger" *ngIf="aulaForm.controls.departamento.errors?.required && (aulaForm.touched || aulaForm.dirty)">
+                    * El departamento es obligatorio
+                </ion-label>
+                <p class="ion-text-center">
+                    <ion-button type="submit" [disabled]="!aulaForm.valid || !aulaForm.dirty">Guardar</ion-button>
+                </p>
+            </form>
 
-            <ion-grid>
-                <ion-row>
-                    <ion-col>
-                        <ion-card-subtitle>Nº Equipos:</ion-card-subtitle>
-                    </ion-col>
-                    <ion-col>
-                        <p class="num ion-text-center">{{ aula?.equipos }}</p>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-card-subtitle>Curso: </ion-card-subtitle>
-                    </ion-col>
-                    <ion-col>
-                        <p>{{ aula?.curso }}</p>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-card-subtitle>Departamento: </ion-card-subtitle>
-                    </ion-col>
-                    <ion-col>
-                        <p>{{ aula?.departamento }}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
         </ion-card-content>
     </ion-card>
-    <ion-fab vertical="center" horizontal="end" slot="fixed">
-        <ion-fab-button>
-            <ion-icon name="pencil-outline"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
 
 </ion-content>

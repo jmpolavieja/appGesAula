@@ -1,23 +1,42 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {Aula} from "../../models/aula";
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AulaInterface} from "../../models/aulaInterface";
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AulasService {
 
-  private aulas: Observable<Aula[]>;
-  private idAula: string;
+    private aulas: Observable<AulaInterface[]>;
+    private idAula: string;
+    private aulaDoc: AngularFirestoreDocument<AulaInterface>;
 
-  constructor(public firestore: AngularFirestore) { }
+    constructor(public afs: AngularFirestore) {
+    }
 
-  getAulas(): Observable<Aula[]> {
-    return this.firestore.collection<Aula>('aulas').valueChanges();
-  }
+    getAulas(): Observable<AulaInterface[]> {
+        return this.afs.collection<AulaInterface>('aulas').valueChanges();
+    }
 
-  getAulaDetail(idAula: string): Observable<Aula> {
-    return this.firestore.collection('aulas').doc<Aula>(idAula).valueChanges();
-  }
+    getAulaDetail(idAula: string): Observable<AulaInterface> {
+        return this.afs.collection('aulas').doc<AulaInterface>(idAula).valueChanges();
+    }
+
+    addAula(aula: AulaInterface)
+        : Promise<void> {
+        const idAula = aula.idAula;
+        const curso = aula.curso;
+        const departamento = aula.departamento;
+        const equipos = 0;
+        return this.afs.doc(`aulas/${idAula}`).set({
+            idAula, curso, departamento, equipos
+        });
+    }
+
+    updateAula(aula: AulaInterface) {
+        let idAula = aula.idAula;
+        this.aulaDoc = this.afs.doc<AulaInterface>(`aulas/${idAula}`);
+        this.aulaDoc.update(aula);
+    }
 }

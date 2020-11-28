@@ -6,7 +6,7 @@
     <ion-list>
         <ion-item
                 *ngFor="let aula of aulas | async"
-                routerLink="/detail-aula/{{aula.idAula}}"
+                routerLink="/detail-aula/{{aula.idAula}}/false"
         >
             <ion-label>
                 <h2>{{ aula.idAula }}</h2>
@@ -15,7 +15,7 @@
             </ion-label>
         </ion-item>
     </ion-list>
-    <ion-fab-button routerLink="/create-aula">
+    <ion-fab-button routerLink="/detail-aula/true">
         <ion-icon name="add"></ion-icon>
     </ion-fab-button>
 </ion-content>
