@@ -7,15 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { ListAulasPageRoutingModule } from './list-aulas-routing.module';
 
 import { ListAulasPage } from './list-aulas.page';
-import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-pra.module";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        ListAulasPageRoutingModule,
-        DashboardPraPageModule
+        ListAulasPageRoutingModule
     ],
   declarations: [ListAulasPage]
 })

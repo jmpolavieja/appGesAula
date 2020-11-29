@@ -12,30 +12,23 @@ import {AppRoutingModule} from './app-routing.module';
 /*  imports de firebase */
 import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
-import {firebaseConfig} from "./credentials";
 import {AngularFireAuthModule} from "@angular/fire/auth";
-import {ToolbarComponent} from "./components/toolbar/toolbar.component";
-import {InfoCardComponent} from "./components/info-card/info-card.component";
+import { environment } from "../environments/environment";
 
 
 @NgModule({
     declarations: [
-        AppComponent,
-        ToolbarComponent,
-        InfoCardComponent
+        AppComponent
     ],
     entryComponents: [],
     imports: [BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
         AngularFireAuthModule
     ],
-    exports: [
-        ToolbarComponent,
-        InfoCardComponent
-    ],
+    exports: [],
     providers: [
         StatusBar,
         SplashScreen,

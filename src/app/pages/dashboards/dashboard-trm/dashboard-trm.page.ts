@@ -4,7 +4,6 @@ import {Observable} from "rxjs";
 import {TotalesService} from "../../../services/data/totales.service";
 import {TotalInterface} from "../../../models/totalInterface";
 import {Router} from "@angular/router";
-import firebase from "firebase";
 import {AuthenticateService} from "../../../services/auth/authenticate.service";
 
 @Component({
@@ -51,6 +50,7 @@ export class DashboardTrmPage implements OnInit {
         this.router.navigate(['/user-list']);
         break;
       case "incidencias":
+        this.router.navigate(['/list-incidencias']);
         break;
     }
   }

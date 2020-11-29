@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {AuthGuardService} from "./services/auth-guard.service";
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login2/login2.module').then( m => m.Login2PageModule)
   },
   {
     path: 'nuevo-equipo/:nuevo',
@@ -22,7 +25,6 @@ const routes: Routes = [
   },
   {
     path: 'dashboard-trm',
-    canActivate: [AuthGuardService],
     loadChildren: () => import('./pages/dashboards/dashboard-trm/dashboard-trm.module').then(m => m.DashboardTrmPageModule)
   },
   {
@@ -54,7 +56,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/incidencias/new-incidencia/new-incidencia.module').then( m => m.NewIncidenciaPageModule)
   },
   {
-    path: 'detail-incidencia',
+    path: 'detail-incidencia/:id',
     loadChildren: () => import('./pages/incidencias/detail-incidencia/detail-incidencia.module').then( m => m.DetailIncidenciaPageModule)
   },
   {
@@ -68,15 +70,8 @@ const routes: Routes = [
   {
     path: 'new-user/:nuevo',
     loadChildren: () => import('./pages/users/new-user/new-user.module').then( m => m.NewUserPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'login2',
-    loadChildren: () => import('./pages/login2/login2.module').then( m => m.Login2PageModule)
-  },
+  }
+
 ];
 
 @NgModule({

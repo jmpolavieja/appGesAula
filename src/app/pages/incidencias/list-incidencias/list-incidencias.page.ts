@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {IncidenciasService} from "../../../services/data/incidencias.service";
+import {Observable} from "rxjs";
+import {IncidenciaInterface} from "../../../models/incidenciaInterface";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-list-incidencias',
@@ -7,9 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListIncidenciasPage implements OnInit {
 
-  constructor() { }
+  public incidencias: Observable<IncidenciaInterface[]>;
+  public inc: IncidenciaInterface[];
+
+  constructor(private inciService: IncidenciasService,
+              public modalDetalle: ModalController) { }
 
   ngOnInit() {
+    this.incidencias = this.inciService.listaIncidencias();
   }
-
 }

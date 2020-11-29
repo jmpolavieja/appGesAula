@@ -43,3 +43,7 @@ Tutorial formularios y validación en ionic
 https://ionicthemes.com/tutorials/about/forms-and-validation-in-ionic
 Apliación de luis jordán gestión de aulas, es otra cosa
 https://luisjordan.net/tutorial-de-ionic/aplicacion-gestor-aulas-ionic-parte-1-login/
+
+De aquí he sacado la utilización de la sobrecarga del método valueChanges() para extraer el docId de un documento.
+https://es.coredump.biz/questions/46900430/firestore-getting-documents-id-from-collection#48462013
+

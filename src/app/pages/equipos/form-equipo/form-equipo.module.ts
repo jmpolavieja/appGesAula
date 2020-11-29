@@ -2,16 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { LoadingController, AlertController } from "@ionic/angular";
-import { EquiposService } from "../../../services/data/equipos.service";
 
 import { IonicModule } from '@ionic/angular';
 
 import { CreatePageRoutingModule } from './form-equipo-routing.module';
 
 import { FormEquipoPage } from './form-equipo.page';
-import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-pra.module";
 
 @NgModule({
     imports: [
@@ -19,8 +15,7 @@ import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-p
         FormsModule,
         IonicModule,
         CreatePageRoutingModule,
-        ReactiveFormsModule,
-        DashboardPraPageModule
+        ReactiveFormsModule
     ],
   declarations: [FormEquipoPage]
 })

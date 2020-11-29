@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { DashboardPraPageRoutingModule } from './dashboard-pra-routing.module';
-
+import { DashboardPraPage } from "./dashboard-pra.page";
 
 
 
@@ -19,6 +19,6 @@ import { DashboardPraPageRoutingModule } from './dashboard-pra-routing.module';
     exports: [
 
     ],
-    declarations: []
+    declarations: [DashboardPraPage]
 })
 export class DashboardPraPageModule {}

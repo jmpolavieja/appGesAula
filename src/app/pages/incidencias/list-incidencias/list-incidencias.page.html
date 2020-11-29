@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>list-incidencias</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inc. Lista</ion-title>
+    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+<ion-list>
+  <div *ngFor="let inc of incidencias | async">
+    <ion-item *ngIf="!inc.recogida" routerLink="/detail-incidencia/{{inc.idIncidencia}}">
+      <ion-label>
+        <h2>{{ inc.idEquipo }}</h2>
+        <p>{{ inc.descripcion }}</p>
+        <p>{{ inc.creadaPor }}</p>
+        <p>{{ inc.fechaInicio }}</p>
+      </ion-label>
+    </ion-item>
+  </div>
 
+</ion-list>
 </ion-content>

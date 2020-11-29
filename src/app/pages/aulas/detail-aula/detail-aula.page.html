@@ -1,10 +1,16 @@
 <ion-header>
-    <app-toolbar titulo="{{ titulo }}"></app-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ titulo }}</ion-title>
+        <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" fullscreen>
     <ion-card>
-        <img src="../../../../assets/control_aula_nss.jpg"/>
+        <img src="../../../../assets/control_aula_nss.jpg" alt="Aula con ordenadores"/>
         <ion-card-header>
             <ion-card-title class="ion-text-center">{{ aula?.idAula }}</ion-card-title>
         </ion-card-header>

@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-import {DashboardPraPageModule} from "../dashboards/dashboard-pra/dashboard-pra.module";
-
 @NgModule({
     imports: [
         CommonModule,
@@ -16,8 +14,7 @@ import {DashboardPraPageModule} from "../dashboards/dashboard-pra/dashboard-pra.
         FormsModule,
         ReactiveFormsModule,
         IonicModule,
-        LoginPageRoutingModule,
-        DashboardPraPageModule
+        LoginPageRoutingModule
     ],
   declarations: [LoginPage]
 })

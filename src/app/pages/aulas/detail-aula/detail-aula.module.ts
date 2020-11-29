@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { DetailAulaPageRoutingModule } from './detail-aula-routing.module';
 
 import { DetailAulaPage } from './detail-aula.page';
-import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-pra.module";
 
 @NgModule({
     imports: [
@@ -15,7 +14,6 @@ import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-p
         FormsModule,
         IonicModule,
         DetailAulaPageRoutingModule,
-        DashboardPraPageModule,
         ReactiveFormsModule
     ],
   declarations: [DetailAulaPage]
