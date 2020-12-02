@@ -22,9 +22,14 @@
             <ion-label>{{ equipo.ubicacion.departamento}}</ion-label>
         </ion-item>
     </ion-list>
-    <ion-fab horizontal="center" vertical="bottom">
-        <ion-fab-button (click)="presentActionSheet()">
-            <ion-icon name="arrow-up-circle"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
+
+        <ion-button (click)="presentActionSheet()" expand="block" >
+            Acciones
+        </ion-button>
+
+
+            <!--<ion-icon name="arrow-up-circle"></ion-icon>
+
+    <ion-fab vertical="bottom">
+    </ion-fab>-->
 </ion-content>

@@ -5,6 +5,8 @@ import {TotalesService} from "../../../services/data/totales.service";
 import {TotalInterface} from "../../../models/totalInterface";
 import {Router} from "@angular/router";
 import {AuthenticateService} from "../../../services/auth/authenticate.service";
+import {NotificacionesService} from "../../../services/data/notificaciones.service";
+import {NotificacionInterface} from "../../../models/notificacionInterface";
 
 @Component({
   selector: 'app-dashboard-trm',
@@ -15,12 +17,15 @@ export class DashboardTrmPage implements OnInit {
 
   public totales: Observable<TotalInterface[]>;
   public primeraVez: boolean;
+  public notificaciones: Observable<NotificacionInterface[]>;
+  private notif: NotificacionInterface;
 
   constructor(
       private userService: UsersService,
       private totalService: TotalesService,
       private router: Router,
-      private authService: AuthenticateService
+      private authService: AuthenticateService,
+      private notifService: NotificacionesService
   ) {this.primeraVez = true; }
 
   ngOnInit() {
@@ -28,14 +33,11 @@ export class DashboardTrmPage implements OnInit {
     let uid = localStorage.getItem("UID");
     if(uid != null) {
       this.totales = this.totalService.getTotales();
+      this.notificaciones = this.notifService.getNotificaciones('taller');
     }else{
       this.router.navigate(['/login']);
     }
   }
-
-  /*async setTotal() {
-    this.totalService.setTotal('usuarios');
-  }*/
 
   irALista(docId: string) {
     this.primeraVez = false;
@@ -59,5 +61,12 @@ export class DashboardTrmPage implements OnInit {
     this.authService.logoutUser();
     localStorage.clear();
     this.router.navigate(['/']);
+  }
+
+  notifLeida(not: NotificacionInterface) {
+    // Marcar notificacion como leída y enviarle al detalle de la notificación
+    this.notif = not;
+    this.notif.leida = true;
+    this.notifService.marcarLeida(this.notif);
   }
 }

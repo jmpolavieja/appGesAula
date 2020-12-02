@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="formEquipo" (submit)="createEquipo()">
+    <form [formGroup]="formEquipo" (submit)="guardaEquipo()">
         <ion-item>
             <ion-label>Código del Equipo</ion-label>
             <ion-input
@@ -21,7 +21,7 @@
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>Equipo Marca</ion-label>
+            <ion-label>Equipo Marca</ion-label>
             <ion-input
                     formControlName="marca"
                     type="text"
@@ -51,11 +51,11 @@
         </ion-item>
 
         <ion-item>
-            <ion-label >AulaInterface</ion-label>
+            <ion-label >Aula</ion-label>
             <ion-input
                     formControlName="aula"
                     type="text"
-                    placeholder="¿AulaInterface?"
+                    placeholder="¿Aula?"
             >
             </ion-input>
         </ion-item>

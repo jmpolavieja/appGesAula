@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EquipoInterface} from "../../../models/equipo/equipoInterface";
+import {EquipoInterface} from "../../../models/equipoInterface";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {ActivatedRoute} from "@angular/router";
 

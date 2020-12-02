@@ -1,13 +1,39 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Incidencia Detail</ion-title>
-    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Incidencia Detail</ion-title>
+        <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-card>
+        <ion-card-header class="ion-text-center">
+            <ion-card-title>{{ incidencia?.idEquipo  }}</ion-card-title>
+            <ion-card-subtitle>
+                Creada por: {{ incidencia?.creadaPor}} - {{ incidencia?.fechaInicio}}
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <form [formGroup]="incidForm" (ngSubmit)="updateInci()">
+                <ion-item>
+                    <ion-label>Desripción Incidencia:</ion-label>
+                    <ion-textarea readonly formControlName="descripcion"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Actuación:</ion-label>
+                    <ion-textarea formControlName="actuacion"></ion-textarea>
+                </ion-item>
+                <p class="ion-text-center">
+
+                    <ion-button (click)="finalizar()" expand="block">Finalizar</ion-button>
+                    <ion-button (click)="recogido()" disabled="true" expand="block">Recogido</ion-button>
+
+                </p>
+            </form>
+        </ion-card-content>
+    </ion-card>
 
 </ion-content>

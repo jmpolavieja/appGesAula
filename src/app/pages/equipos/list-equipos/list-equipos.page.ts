@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {EquiposService} from "../../../services/data/equipos.service";
-import {Observable, Subscription} from "rxjs";
-import {EquipoInterface} from "../../../models/equipo/equipoInterface";
+import {Observable} from "rxjs";
+import {EquipoInterface} from "../../../models/equipoInterface";
 import {ActionSheetController} from "@ionic/angular";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-list-equipos',

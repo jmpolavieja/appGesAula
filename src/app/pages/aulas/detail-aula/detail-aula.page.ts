@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AulaInterface} from "../../../models/aulaInterface";
 import {AulasService} from "../../../services/data/aulas.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {TotalInterface} from "../../../models/totalInterface";
 import {TotalesService} from "../../../services/data/totales.service";
 import {AlertController, LoadingController} from "@ionic/angular";
@@ -42,6 +42,7 @@ export class DetailAulaPage implements OnInit {
     if(this.nuevo == "false"){
       this.titulo = "Detalle del Aula";
       const idAula: string = this.route.snapshot.paramMap.get('id');
+      console.log("IdAula: " + idAula);
       this.aulasService.getAulaDetail(idAula).subscribe(aula =>{
         this.aula = aula;
         this.aulaForm.controls.numEquipos.setValue(this.aula.equipos | 0);
@@ -59,25 +60,30 @@ export class DetailAulaPage implements OnInit {
   }
 
   guardarDatos() {
-    const idAula = this.aulaForm.value.idAula;
+    const idAula = this.aula.idAula;
     const departamento = this.aulaForm.value.departamento;
     const curso = this.aulaForm.value.curso;
+    console.log(parseInt(this.aulaForm.value.numEquipos));
+    const equipos = parseInt(this.aulaForm.value.numEquipos);
     this.aula = {
       idAula: idAula,
       departamento: departamento,
-      curso: curso
+      curso: curso,
+      equipos: equipos
     }
     if (this.nuevo == "true") {
       console.log("Nueva aula");
       this.guardarAula();
     }else{
       console.log("Modifica aula");
+      console.log(this.aula);
       this.updateAula();
+      this.router.navigateByUrl('/list-aulas');
     }
   }
 
   async guardarAula() {
-    const loading = await this.loadingCtrl.create();
+    //const loading = await this.loadingCtrl.create();
     this.aulasService.addAula(this.aula)
         .then(()=>{
           // Aumentar el contador de aulas. Mirar nuevo usuario

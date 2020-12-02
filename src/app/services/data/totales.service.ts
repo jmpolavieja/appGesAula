@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
 import {TotalInterface} from "../../models/totalInterface";
 import {map} from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class TotalesService {
     }
 
     getTotales(): Observable<TotalInterface[]> {
-        return this.afs.collection<TotalInterface>('totales').valueChanges();
+        return this.afs.collection<TotalInterface>('totales').valueChanges({idField: 'docId'});
     }
 
     getTotal(id: string): Observable<TotalInterface> {
@@ -34,6 +34,7 @@ export class TotalesService {
                 return data;
              }
         }));
+
     }
 
     updateTotal(total: TotalInterface): void {

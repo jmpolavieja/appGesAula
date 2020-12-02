@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import 'firebase/firestore';
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {IncidenciaInterface} from "../../models/incidenciaInterface";
 
 @Injectable({
@@ -23,7 +23,7 @@ export class IncidenciasService {
         return this.afs.collection<IncidenciaInterface>('incidencias').valueChanges({idField: 'idIncidencia'});
     }
 
-    getIncidenciaDetail(idInc: string) {
+    getIncidenciaDetail(idInc: string): Observable<IncidenciaInterface> {
         return this.afs.collection('incidencias').doc<IncidenciaInterface>(idInc).valueChanges();
     }
 

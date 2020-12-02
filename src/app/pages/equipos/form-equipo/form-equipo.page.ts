@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {AlertController, LoadingController} from "@ionic/angular";
 import {EquiposService} from "../../../services/data/equipos.service";
-import {ActivatedRoute, Route, Router} from "@angular/router";
-import {EquipoInterface} from "../../../models/equipo/equipoInterface";
+import {ActivatedRoute, Router} from "@angular/router";
+import {EquipoInterface} from "../../../models/equipoInterface";
 import {TotalesService} from "../../../services/data/totales.service";
 import {TotalInterface} from "../../../models/totalInterface";
 
@@ -14,7 +14,7 @@ import {TotalInterface} from "../../../models/totalInterface";
 })
 export class FormEquipoPage implements OnInit {
 
-    formEquipo = this.fb.group({
+    public formEquipo = this.fb.group({
         idEquipo: ['', Validators.required],
         marca: ['', Validators.required],
         modelo: ['', Validators.required],
@@ -24,10 +24,10 @@ export class FormEquipoPage implements OnInit {
         raton: [false, Validators.required],
         teclado: [false, Validators.required]
     });
-    equipo: EquipoInterface;
-    titulo: string;
-    nuevo: boolean;
-    total: TotalInterface;
+    private equipo: EquipoInterface;
+    private titulo: string;
+    private nuevo: boolean;
+    private total: TotalInterface;
     private action: string;
 
     constructor(
@@ -54,7 +54,7 @@ export class FormEquipoPage implements OnInit {
             this.nuevo = false
             this.titulo = "Edit Equipo";
             this.action = "Update";
-            // TODO: Pedir los datos del equipo y colocarlos en el formulario
+            // Pedir los datos del equipo y colocarlos en el formulario
             const id = this.route.snapshot.paramMap.get('id');
             this.equiposService.getEquipoDetail(id).subscribe(equipo => {
                 this.formEquipo.controls.idEquipo.setValue(equipo.idEquipo);
@@ -67,13 +67,12 @@ export class FormEquipoPage implements OnInit {
                 this.formEquipo.controls.teclado.setValue(equipo.hardware.teclado);
             });
 
-        };
+        }
 
     }
 
-
-    async createEquipo() {
-        const loading = await this.loadingCtrl.create();
+    async guardaEquipo() {
+        // Coger los datos del formulario y ponerlos en el equipo
         const idEquipo = this.formEquipo.value.idEquipo;
         const marca = this.formEquipo.value.marca;
         const modelo = this.formEquipo.value.modelo;
@@ -114,25 +113,28 @@ export class FormEquipoPage implements OnInit {
                 aula, departamento, puesto: ""
             }
         }
+        // Si es nuevo addEquipo, sino updateEquipo
+        if (this.nuevo) {
+            this.addEquipo();
+        } else {
+            this.updateEquipo();
+        }
+    }
 
+    async addEquipo() {
+        //const loading = await this.loadingCtrl.create();
         this.equiposService
             .createEquipo(this.equipo)
-            .then(
-                () => {
-                    loading.dismiss().then(() => {
-                        // aumentar el contador de equipos totales
-                        this.updateTotal()
-                        this.router.navigateByUrl('/dashboard-trm');
-                    });
-                },
-                error => {
-                    loading.dismiss().then(() => {
-                        console.error(error);
-                    });
-                }
-            );
+            .then(() => {
+                // aumentar el contador de equipos totales
+                this.updateTotal();
+                this.router.navigateByUrl('/dashboard-trm');
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
-        return await loading.present();
+        //return await loading.present();
     }
 
 
@@ -143,5 +145,10 @@ export class FormEquipoPage implements OnInit {
     updateTotal(): void {
         this.total.total += 1;
         this.totalesService.updateTotal(this.total);
+    }
+
+    updateEquipo(): void {
+        this.equiposService.updateEquipo(this.equipo);
+        this.router.navigateByUrl('/dashboard-trm');
     }
 }

@@ -31,7 +31,7 @@
                 </ion-item>
                 <ion-label color="danger"
                            *ngIf="aulaForm.controls.curso.errors?.required &&
-                           (aulaForm.touched || aulaForm.dirty)"
+                           aulaForm.dirty"
                 >
                     * El curso es obligatorio
                 </ion-label>
@@ -39,11 +39,11 @@
                     <ion-label>Dpto:</ion-label>
                     <ion-input formControlName="departamento"></ion-input>
                 </ion-item>
-                <ion-label color="danger" *ngIf="aulaForm.controls.departamento.errors?.required && (aulaForm.touched || aulaForm.dirty)">
+                <ion-label color="danger" *ngIf="aulaForm.controls.departamento.errors?.required">
                     * El departamento es obligatorio
                 </ion-label>
                 <p class="ion-text-center">
-                    <ion-button type="submit" [disabled]="!aulaForm.valid || !aulaForm.dirty">Guardar</ion-button>
+                    <ion-button type="submit" [disabled]="!aulaForm.valid && !aulaForm.dirty">Guardar</ion-button>
                 </p>
             </form>
 

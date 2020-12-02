@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
+
 import {UsersService} from "../../../services/data/users.service";
-import firebase from "firebase";
+
 import {AlertController, LoadingController} from "@ionic/angular";
 import {UsuarioInterface} from "../../../models/usuarioInterface";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TotalesService} from "../../../services/data/totales.service";
 import {TotalInterface} from "../../../models/totalInterface";
 
@@ -22,8 +23,8 @@ export class NewUserPage implements OnInit {
     });
     public user: UsuarioInterface;
     total: TotalInterface;
-    titulo: String;
-    private action: String;
+    titulo: string;
+    action: string;
     private nuevo: Boolean;
 
     constructor(
@@ -55,11 +56,11 @@ export class NewUserPage implements OnInit {
                 this.usuarioFG.controls.nombre.setValue(user.nombre);
                 this.usuarioFG.controls.rol.setValue(user.rol);
             });
-        };
+        }
     }
 
     async guardarUsuario() {
-        const loading = await this.loadingCtrl.create();
+        //const loading = await this.loadingCtrl.create();
         const idUser = this.usuarioFG.value.email;
         const nombre = this.usuarioFG.value.nombre;
         const email = idUser;
@@ -78,7 +79,7 @@ export class NewUserPage implements OnInit {
     }
 
     async addUser() {
-        const loading = await this.loadingCtrl.create();
+        //const loading = await this.loadingCtrl.create();
         this.userService.registerUser(this.user)
             .then(() => {
                 this.updateTotal();
@@ -91,6 +92,7 @@ export class NewUserPage implements OnInit {
 
     updateuser(): void{
         this.userService.updateUser(this.user);
+        this.router.navigateByUrl('/dashboard-trm');
     }
 
     private updateTotal(): void {

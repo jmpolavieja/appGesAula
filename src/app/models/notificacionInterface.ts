@@ -1,8 +1,9 @@
 export interface NotificacionInterface {
     idNotificacion: string,
-    hora: string,
+    fecha: string,
     idIncidencia: string,
-    destino: string,
+    desde: string,
+    para: string,
     mensaje: string,
-    estado: string,
+    leida: boolean
 }

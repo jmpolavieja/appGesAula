@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import 'firebase/firestore';
-import {EquipoInterface} from "../../models/equipo/equipoInterface";
+import {EquipoInterface} from "../../models/equipoInterface";
 import {Observable} from 'rxjs';
 
 
@@ -12,7 +12,6 @@ import {Observable} from 'rxjs';
 })
 export class EquiposService {
 
-    private equipo: EquipoInterface;
     private equipoDoc: AngularFirestoreDocument;
     private idEquipo: string;
 
