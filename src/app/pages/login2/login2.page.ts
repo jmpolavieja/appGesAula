@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
-import {NavController} from "@ionic/angular";
+import {UsersService} from "../../services/data/users.service";
+import {UsuarioInterface} from "../../models/usuarioInterface";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login2',
@@ -12,11 +14,14 @@ export class Login2Page implements OnInit {
 
   validations_form: FormGroup;
   errorMessage: string = '';
+  userMail: string;
+  usuario: UsuarioInterface;
 
   constructor(
       public authService: AuthService,
-      private navCtrl: NavController,
-      private formBuilder: FormBuilder
+      private router: Router,
+      private formBuilder: FormBuilder,
+      private userService: UsersService
   ) { }
 
   ngOnInit() {
@@ -46,15 +51,33 @@ export class Login2Page implements OnInit {
   loginUser(value) {
     this.authService.loginUser(value)
         .then(res => {
-          console.log(res);
+          this.userMail = res.user.email;// res devuelve el user
           this.errorMessage = "";
-          this.navCtrl.navigateForward('/dashboard-trm');
+          this.compruebaUser();
         }, err => {
           this.errorMessage = err.message;
         })
   }
 
-  goToRegisterPage() {
-    this.navCtrl.navigateForward('/register');
+  compruebaUser() {
+    this.userService.getUser(this.userMail).subscribe(
+        usuario => {
+          this.usuario = usuario;
+          //console.log(this.usuario.rol);
+          if(typeof this.usuario != "undefined"){
+            if(this.usuario.rol == "pra") {
+              this.router.navigate(['/dashboard-pra']);
+            } else if(this.usuario.rol == "trm") {
+              this.router.navigate(['/dashboard-trm']);
+            } else {
+              this.router.navigate(['/dasboard-pdd']);
+            }
+          } else {
+            // todo: mensaje de que no está dado de alta en el sistema
+            console.log("Usuario no dado de alta en el sistema");
+
+          }
+        }
+    )
   }
 }

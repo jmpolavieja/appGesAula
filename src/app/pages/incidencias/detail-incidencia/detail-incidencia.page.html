@@ -19,18 +19,16 @@
         <ion-card-content>
             <form [formGroup]="incidForm" (ngSubmit)="updateInci()">
                 <ion-item>
-                    <ion-label>Desripción Incidencia:</ion-label>
-                    <ion-textarea readonly formControlName="descripcion"></ion-textarea>
+                    <ion-label position="floating">Desripción Incidencia:</ion-label>
+                    <ion-textarea readonly formControlName="descripcion" class="ion-text-wrap"></ion-textarea>
                 </ion-item>
                 <ion-item>
-                    <ion-label>Actuación:</ion-label>
-                    <ion-textarea formControlName="actuacion"></ion-textarea>
+                    <ion-label position="stacked">Actuación:</ion-label>
+                    <ion-textarea formControlName="actuacion" auto-grow></ion-textarea>
                 </ion-item>
                 <p class="ion-text-center">
-
                     <ion-button (click)="finalizar()" expand="block">Finalizar</ion-button>
                     <ion-button (click)="recogido()" disabled="true" expand="block">Recogido</ion-button>
-
                 </p>
             </form>
         </ion-card-content>

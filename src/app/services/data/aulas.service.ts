@@ -8,8 +8,6 @@ import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestor
 })
 export class AulasService {
 
-    private aulas: Observable<AulaInterface[]>;
-    private idAula: string;
     private aulaDoc: AngularFirestoreDocument<AulaInterface>;
 
     constructor(public afs: AngularFirestore) {
@@ -39,4 +37,5 @@ export class AulasService {
         this.aulaDoc = this.afs.doc<AulaInterface>(`aulas/${idAula}`);
         this.aulaDoc.update(aula);
     }
+
 }

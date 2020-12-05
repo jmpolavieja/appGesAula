@@ -1,20 +1,27 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>Profesor</ion-title>
+        <ion-title>Profesor - {{name}}</ion-title>
         <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <!-- primero irá el texto del aula de que se trate -->
-    <h2>Aula {{ aula }}</h2>
-    <!-- luego el cuadro de búsqueda -->
-    <ion-searchbar></ion-searchbar>
+    <h2>{{ idAula }}</h2>
+    <!-- luego el cuadro de búsqueda
+    <ion-searchbar (click)=""></ion-searchbar>-->
+    <!-- búsqueda por código QR -->
+
+    <ion-button color="success" expand="block" (click)="scan()">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        Scan code
+    </ion-button>
     <!-- ahora aparecerá un cuadro con el total de equipos del aula -->
-    <ion-card class="ion-text-center">
+    <ion-card class="ion-text-center"
+    routerLink="/list-equipos/{{idAula}}">
         <ion-card-header>
             <ion-card-title>
-                {{num}} equipos
+                {{totalEquipos}} equipos
             </ion-card-title>
             <ion-card-subtitle>
                 {{numInc}} incidencias activas

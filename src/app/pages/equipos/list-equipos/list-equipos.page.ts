@@ -3,7 +3,7 @@ import {EquiposService} from "../../../services/data/equipos.service";
 import {Observable} from "rxjs";
 import {EquipoInterface} from "../../../models/equipoInterface";
 import {ActionSheetController} from "@ionic/angular";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-list-equipos',
@@ -12,18 +12,27 @@ import {Router} from "@angular/router";
 })
 export class ListEquiposPage implements OnInit {
 
-
+    public idAula: string;
     public equipos: Observable<EquipoInterface[]>;
 
-    constructor(private firestore: EquiposService,
+    constructor(private equiposService: EquiposService,
                 public actionSheetController: ActionSheetController,
-                private router: Router
-    ) {
-    }
+                private router: Router,
+                private route: ActivatedRoute
+    ) {}
 
 
     ngOnInit() {
-        this.equipos = this.firestore.getEquiposList();
+
+        if(this.route.snapshot.paramMap.get('aula')) {
+            this.idAula = this.route.snapshot.paramMap.get('aula');
+            this.idAula = this.idAula.charAt(this.idAula.length-1);
+            console.log("tengo aula: ", this.idAula);
+            this.equipos = this.equiposService.getEquiposList(this.idAula);
+        } else {
+            this.equipos = this.equiposService.getEquiposList();
+        }
+
     }
 
     async presentActionSheet() {

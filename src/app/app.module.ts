@@ -15,14 +15,19 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireAuthModule} from "@angular/fire/auth";
 import { environment } from "../environments/environment";
 
+import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import {IonicStorageModule} from "@ionic/storage";
+
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     entryComponents: [],
-    imports: [BrowserModule,
+    imports: [
+        BrowserModule,
         IonicModule.forRoot(),
+        IonicStorageModule.forRoot(),
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
@@ -32,6 +37,7 @@ import { environment } from "../environments/environment";
     providers: [
         StatusBar,
         SplashScreen,
+        BarcodeScanner,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

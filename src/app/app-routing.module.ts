@@ -12,14 +12,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login2/login2.module').then( m => m.Login2PageModule)
   },
   {
-    path: 'nuevo-equipo/:nuevo',
-    loadChildren: () => import('./pages/equipos/form-equipo/form-equipo.module').then(m => m.FormEquipoPageModule)
-  },
-  {
-    path: 'detail-equipo/:id/:nuevo',
-    loadChildren: () => import('./pages/equipos/form-equipo/form-equipo.module').then(m => m.FormEquipoPageModule)
-  },
-  {
     path: 'dashboard-pra',
     loadChildren: () => import('./pages/dashboards/dashboard-pra/dashboard-pra.module').then(m => m.DashboardPraPageModule)
   },
@@ -28,16 +20,24 @@ const routes: Routes = [
     loadChildren: () => import('./pages/dashboards/dashboard-trm/dashboard-trm.module').then(m => m.DashboardTrmPageModule)
   },
   {
-    path: 'user-list',
-    loadChildren: () => import('./pages/users/user-list/user-list.module').then(m => m.UserListPageModule)
+    path: 'dashboard-pdd',
+    loadChildren: () => import('./pages/dashboards/dashboard-pdd/dashboard-pdd.module').then( m => m.DashboardPddPageModule)
+  },
+  {
+    path: 'nuevo-equipo/:nuevo',
+    loadChildren: () => import('./pages/equipos/form-equipo/form-equipo.module').then(m => m.FormEquipoPageModule)
+  },
+  {
+    path: 'detail-equipo/:id/:nuevo',
+    loadChildren: () => import('./pages/equipos/form-equipo/form-equipo.module').then(m => m.FormEquipoPageModule)
   },
   {
     path: 'list-equipos',
     loadChildren: () => import('./pages/equipos/list-equipos/list-equipos.module').then(m => m.ListEquiposPageModule)
   },
   {
-    path: 'dashboard-pdd',
-    loadChildren: () => import('./pages/dashboards/dashboard-pdd/dashboard-pdd.module').then( m => m.DashboardPddPageModule)
+    path: 'list-equipos/:aula',
+    loadChildren: () => import('./pages/equipos/list-equipos/list-equipos.module').then(m => m.ListEquiposPageModule)
   },
   {
     path: 'list-aulas',
@@ -62,6 +62,10 @@ const routes: Routes = [
   {
     path: 'list-incidencias',
     loadChildren: () => import('./pages/incidencias/list-incidencias/list-incidencias.module').then( m => m.ListIncidenciasPageModule)
+  },
+  {
+    path: 'list-users',
+    loadChildren: () => import('./pages/users/list-users/list-users.module').then(m => m.UserListPageModule)
   },
   {
     path: 'detail-user/:id/:nuevo',

@@ -12,12 +12,26 @@
 <ion-list>
   <div *ngFor="let inc of incidencias | async">
     <ion-item *ngIf="!inc.recogida" routerLink="/detail-incidencia/{{inc.idIncidencia}}">
-      <ion-label>
-        <h2>{{ inc.idEquipo }}</h2>
-        <p>{{ inc.descripcion }}</p>
-        <p>{{ inc.creadaPor }}</p>
-        <p>{{ inc.fechaInicio }}</p>
-      </ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h2 class="ion-text-center">{{ inc.idEquipo }}</h2>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p>{{ inc.descripcion }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p>{{ inc.creadaPor }}</p>
+          </ion-col>
+          <ion-col>
+            <p>{{ inc.fechaInicio }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </div>
 

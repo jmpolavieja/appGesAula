@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
 import 'firebase/firestore';
 import {EquipoInterface} from "../../models/equipoInterface";
 import {Observable} from 'rxjs';
-
 
 
 @Injectable({
@@ -14,23 +13,31 @@ export class EquiposService {
 
     private equipoDoc: AngularFirestoreDocument;
     private idEquipo: string;
+    private listEquipos: AngularFirestoreCollection<EquipoInterface>;
 
     constructor(
         public afs: AngularFirestore
-    ) {}
+    ) {
+    }
 
     createEquipo(equipo: EquipoInterface): Promise<void> {
-        this.idEquipo=equipo.idEquipo;
+        this.idEquipo = equipo.idEquipo;
         return this.afs.doc(`equipos/${(this.idEquipo)}`).set(equipo);
     }
 
-    getEquiposList(): Observable<EquipoInterface[]> {
-        const listadoEquipos = this.afs.collection<EquipoInterface>('equipos').valueChanges();
-        //leo solo los datos que me interesan y los retorno
-        listadoEquipos.forEach(equipo => {
-            console.log(equipo);
-        });
-        return listadoEquipos;
+    getEquiposList(aula = null): Observable<EquipoInterface[]> {
+        if (aula == null) {
+            console.log("No hay aula");
+            this.listEquipos = this.afs.collection<EquipoInterface>('equipos');
+        } else {
+            // Hay aula, filtro resultados
+            console.log("Hay aula es ", aula);
+            this.listEquipos = this.afs.collection<EquipoInterface>('equipos',
+                ref => {
+                    return ref.where('ubicacion.aula', "==", aula);
+                });
+        }
+        return this.listEquipos.valueChanges();
     }
 
     getEquipoDetail(id: string): Observable<EquipoInterface> {
