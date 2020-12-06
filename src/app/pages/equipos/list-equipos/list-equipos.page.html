@@ -19,22 +19,19 @@
             <ion-label *ngIf="idAula"></ion-label>
         </ion-list-header>
         <ion-item *ngFor="let equipo of equipos | async"
-        routerLink="/detail-equipo/{{equipo.idEquipo}}/false">
+                  routerLink="/detail-equipo/{{equipo.idEquipo}}/false">
             <ion-label>{{ equipo.idEquipo }}</ion-label>
             <ion-label *ngIf="!idAula">{{ equipo.ubicacion.aula}}</ion-label>
             <ion-label *ngIf="!idAula">{{ equipo.ubicacion.departamento}}</ion-label>
             <ion-label *ngIf="idAula">{{ equipo.ubicacion.puesto }}</ion-label>
-            <ion-label *ngIf="idAula"><ion-icon name="eye-outline"></ion-icon></ion-label>
+            <ion-label *ngIf="idAula">
+                <ion-icon name="eye-outline"></ion-icon>
+            </ion-label>
         </ion-item>
     </ion-list>
 
-        <ion-button (click)="presentActionSheet()" expand="block" >
-            Acciones
-        </ion-button>
+    <ion-button (click)="presentActionSheet()" expand="block" *ngIf="!idAula">
+        Acciones
+    </ion-button>
 
-
-            <!--<ion-icon name="arrow-up-circle"></ion-icon>
-
-    <ion-fab vertical="bottom">
-    </ion-fab>-->
 </ion-content>

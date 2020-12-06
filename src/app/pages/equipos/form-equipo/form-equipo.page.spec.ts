@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { FormEquipoPage } from './form-equipo.page';
+import {FormEquipoPage} from './form-equipo.page';
 
 describe('CreatePage', () => {
   let component: FormEquipoPage;

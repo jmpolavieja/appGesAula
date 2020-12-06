@@ -4,14 +4,14 @@ export interface EquipoInterface {
     hardware: {
         marca: string,
         modelo: string,
-        procesador: string,
-        memoria: string,
-        discoDuro: string,
-        numSerie: string,
-        direccionMAC: string,
-        monitor: string,
-        raton: boolean,
-        teclado: boolean
+        procesador?: string,
+        memoria?: string,
+        discoDuro?: string,
+        numSerie?: string,
+        direccionMAC?: string,
+        monitor?: string,
+        raton?: boolean,
+        teclado?: boolean
     },
     software?: {
         so: string,

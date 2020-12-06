@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IncidenciasService} from "../../../services/data/incidencias.service";
 import {Observable} from "rxjs";
 import {IncidenciaInterface} from "../../../models/incidenciaInterface";

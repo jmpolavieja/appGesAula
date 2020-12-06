@@ -1,20 +1,22 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+/*import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';*/
 
-import { DetailIncidenciaPageRoutingModule } from './detail-incidencia-routing.module';
+import {DetailIncidenciaPageRoutingModule} from './detail-incidencia-routing.module';
 
-import { DetailIncidenciaPage } from './detail-incidencia.page';
+import {DetailIncidenciaPage} from './detail-incidencia.page';
+import {SharedModule} from "../../../shared/shared.module";
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
-        IonicModule,
+        SharedModule,
+        /*FormsModule,
+        IonicModule,*/
         DetailIncidenciaPageRoutingModule,
-        ReactiveFormsModule
+        //ReactiveFormsModule
     ],
   declarations: [DetailIncidenciaPage]
 })

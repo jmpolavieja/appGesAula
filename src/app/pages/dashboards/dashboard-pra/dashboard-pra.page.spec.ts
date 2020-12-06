@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { DashboardPraPage } from './dashboard-pra.page';
+import {DashboardPraPage} from './dashboard-pra.page';
 
 describe('DashboardPraPage', () => {
   let component: DashboardPraPage;

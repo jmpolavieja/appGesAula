@@ -44,6 +44,7 @@ export class ListEquiposPage implements OnInit {
                     icon: 'qr-code',
                     handler: () => {
                         console.log("Genera clicked");
+                        this.router.navigate(['/genera-equipos']);
                     }
                 },
                 {

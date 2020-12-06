@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IncidenciasService} from "../../../services/data/incidencias.service";
 import {ActivatedRoute} from "@angular/router";
 import {IncidenciaInterface} from "../../../models/incidenciaInterface";
 import {FormBuilder} from "@angular/forms";
 import {TotalInterface} from "../../../models/totalInterface";
-import {TotalesService} from "../../../services/data/totales.service";
-import {NotificacionesService} from "../../../services/data/notificaciones.service";
 import {NotificacionInterface} from "../../../models/notificacionInterface";
 import {Observable} from "rxjs";
 
@@ -27,9 +25,7 @@ export class DetailIncidenciaPage implements OnInit {
   constructor(
       private incidService: IncidenciasService,
       private route: ActivatedRoute,
-      private fb: FormBuilder,
-      private totales: TotalesService,
-      private notifS: NotificacionesService
+      private fb: FormBuilder
   ) { }
 
   ngOnInit() {

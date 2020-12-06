@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { ListUsersPage } from './list-users.page';
+import {ListUsersPage} from './list-users.page';
 
 describe('UserListPage', () => {
   let component: ListUsersPage;

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AulaInterface} from "../../../models/aulaInterface";
 import {AulasService} from "../../../services/data/aulas.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 import {TotalInterface} from "../../../models/totalInterface";
 import {TotalesService} from "../../../services/data/totales.service";
-import {AlertController, LoadingController} from "@ionic/angular";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-detail-aula',
@@ -32,7 +32,6 @@ export class DetailAulaPage implements OnInit {
       private fb: FormBuilder,
       private router: Router,
       private totalesService: TotalesService,
-      private loadingCtrl: LoadingController,
       public alertCtrl: AlertController
   ) { }
 

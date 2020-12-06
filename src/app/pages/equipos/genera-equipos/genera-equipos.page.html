@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Genera Equipos</ion-title>
+        <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <p class="ion-padding">Proceso de registro de nuevos equipos por lotes. Los equipos deben tener la misma marca y sr
+                           del mismo modelo.</p>
+    <p class="ion-padding">Deberá introducir el primer id de equipo a asignar y el número de equipos a registrar, con su
+                           marca y modelo.</p>
+    <ion-list class="ion-padding">
+        <form [formGroup]="datosLote" (ngSubmit)="presentAlert()">
+            <ion-input placeholder="primer idEquipo: CPUXXX" formControlName="idEquipo"></ion-input>
+            <ion-input placeholder="Número de equipos" inputmode="numeric" formControlName="numero"></ion-input>
+            <ion-input placeholder="Marca" formControlName="marca"></ion-input>
+            <ion-input placeholder="Modelo" formControlName="modelo"></ion-input>
+            <ion-button type="submit" expand="block">Generar</ion-button>
+        </form>
+
+    </ion-list>
+</ion-content>

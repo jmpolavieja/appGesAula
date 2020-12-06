@@ -15,7 +15,6 @@
             <ion-card-title class="ion-text-center">{{ aula?.idAula }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <!-- convertir en formulario reactivo -->
             <form [formGroup]="aulaForm" (ngSubmit)="guardarDatos()">
                 <ion-item *ngIf="nuevo=='true'">
                     <ion-label>Id:</ion-label>

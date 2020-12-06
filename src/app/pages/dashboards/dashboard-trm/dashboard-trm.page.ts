@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UsersService} from "../../../services/data/users.service";
 import {Observable} from "rxjs";
 import {TotalesService} from "../../../services/data/totales.service";
@@ -6,7 +6,7 @@ import {TotalInterface} from "../../../models/totalInterface";
 import {Router} from "@angular/router";
 import {NotificacionesService} from "../../../services/data/notificaciones.service";
 import {NotificacionInterface} from "../../../models/notificacionInterface";
-import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {AuthService} from "../../../services/auth.service";
 import firebase from "firebase";
 

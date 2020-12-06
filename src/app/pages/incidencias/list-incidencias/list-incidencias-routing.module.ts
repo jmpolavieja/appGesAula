@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { ListIncidenciasPage } from './list-incidencias.page';
+import {ListIncidenciasPage} from './list-incidencias.page';
 
 const routes: Routes = [
   {

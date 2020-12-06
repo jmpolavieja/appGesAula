@@ -1,21 +1,23 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+/*
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {IonicModule} from '@ionic/angular';
+*/
 
+import {CreatePageRoutingModule} from './form-equipo-routing.module';
 
-import { IonicModule } from '@ionic/angular';
-
-import { CreatePageRoutingModule } from './form-equipo-routing.module';
-
-import { FormEquipoPage } from './form-equipo.page';
+import {FormEquipoPage} from './form-equipo.page';
+import {SharedModule} from "../../../shared/shared.module";
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
-        IonicModule,
+        SharedModule,
+        /*FormsModule,
+        IonicModule,*/
         CreatePageRoutingModule,
-        ReactiveFormsModule
+        //ReactiveFormsModule
     ],
   declarations: [FormEquipoPage]
 })

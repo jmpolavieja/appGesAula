@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { DashboardTrmPage } from './dashboard-trm.page';
+import {DashboardTrmPage} from './dashboard-trm.page';
 
 const routes: Routes = [
   {

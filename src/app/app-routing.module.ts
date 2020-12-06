@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
@@ -74,6 +74,14 @@ const routes: Routes = [
   {
     path: 'new-user/:nuevo',
     loadChildren: () => import('./pages/users/new-user/new-user.module').then( m => m.NewUserPageModule)
+  },
+  {
+    path: 'form-completo',
+    loadChildren: () => import('./pages/equipos/form-completo/form-completo.module').then( m => m.FormCompletoPageModule)
+  },
+  {
+    path: 'genera-equipos',
+    loadChildren: () => import('./pages/equipos/genera-equipos/genera-equipos.module').then(m => m.GeneraEquiposPageModule)
   }
 
 ];

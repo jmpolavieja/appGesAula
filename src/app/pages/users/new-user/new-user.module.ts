@@ -1,20 +1,24 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+/*
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
+*/
 
-import { NewUserPageRoutingModule } from './new-user-routing.module';
+import {NewUserPageRoutingModule} from './new-user-routing.module';
 
-import { NewUserPage } from './new-user.page';
+import {NewUserPage} from './new-user.page';
 import {DashboardPraPageModule} from "../../dashboards/dashboard-pra/dashboard-pra.module";
+import {SharedModule} from "../../../shared/shared.module";
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
+        SharedModule,
+        /*FormsModule,
         ReactiveFormsModule,
-        IonicModule,
+        IonicModule,*/
         NewUserPageRoutingModule,
         DashboardPraPageModule
     ],
