@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asignar Equipos</ion-title>
+    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-fab vertical="center" horizontal="end" >
+  <ion-fab-button color="dark" (click)="asignarEquipos()">Asignar
+  </ion-fab-button>
+</ion-fab>
+
+<ion-content>
+<ion-list>
+  <ion-item *ngFor="let equipo of listEquipos">
+    <ion-label>{{ equipo.idEquipo }}</ion-label>
+    <ion-toggle (ionChange)="selecciona(equipo.idEquipo)"></ion-toggle>
+  </ion-item>
+</ion-list>
+</ion-content>

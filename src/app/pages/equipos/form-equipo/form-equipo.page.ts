@@ -3,9 +3,9 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {AlertController, LoadingController} from "@ionic/angular";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {EquipoInterface} from "../../../models/equipoInterface";
+import {EquipoInterface} from "../../../interfaces/equipoInterface";
 import {TotalesService} from "../../../services/data/totales.service";
-import {TotalInterface} from "../../../models/totalInterface";
+import {TotalInterface} from "../../../interfaces/totalInterface";
 
 @Component({
     selector: 'app-create',

@@ -27,8 +27,8 @@
                     <ion-textarea formControlName="actuacion" auto-grow></ion-textarea>
                 </ion-item>
                 <p class="ion-text-center">
-                    <ion-button (click)="finalizar()" expand="block">Finalizar</ion-button>
-                    <ion-button (click)="recogido()" disabled="true" expand="block">Recogido</ion-button>
+                    <ion-button (click)="finalizar()" [disabled]="bloquearF" expand="block">Finalizar</ion-button>
+                    <ion-button (click)="recogido()" [disabled]="bloquearR" expand="block">Recogido</ion-button>
                 </p>
             </form>
         </ion-card-content>

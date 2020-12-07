@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AulaInterface} from "../../../models/aulaInterface";
+import {AulaInterface} from "../../../interfaces/aulaInterface";
 import {AulasService} from "../../../services/data/aulas.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
-import {TotalInterface} from "../../../models/totalInterface";
+import {TotalInterface} from "../../../interfaces/totalInterface";
 import {TotalesService} from "../../../services/data/totales.service";
 import {AlertController} from "@ionic/angular";
 
@@ -40,7 +40,7 @@ export class DetailAulaPage implements OnInit {
     console.log(this.nuevo);
     if(this.nuevo == "false"){
       this.titulo = "Detalle del Aula";
-      const idAula: string = this.route.snapshot.paramMap.get('id');
+      const idAula: string = 'Aula ' + this.route.snapshot.paramMap.get('id');
       console.log("IdAula: " + idAula);
       this.aulasService.getAulaDetail(idAula).subscribe(aula =>{
         this.aula = aula;

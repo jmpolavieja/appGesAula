@@ -10,28 +10,36 @@
 
 <ion-content>
     <h3 *ngIf="idAula" class="ion-text-center">Aula {{ idAula }}</h3>
-    <ion-list>
+    <ion-list *ngIf="!idAula">
         <ion-list-header lines="inset">
             <ion-label>IdEquipo</ion-label>
-            <ion-label *ngIf="!idAula">Aula</ion-label>
-            <ion-label *ngIf="!idAula">Departamento</ion-label>
-            <ion-label *ngIf="idAula">Puesto</ion-label>
-            <ion-label *ngIf="idAula"></ion-label>
+            <ion-label>Aula</ion-label>
+            <ion-label>Departamento</ion-label>
         </ion-list-header>
-        <ion-item *ngFor="let equipo of equipos | async"
+        <ion-item *ngFor="let equipo of equipos"
                   routerLink="/detail-equipo/{{equipo.idEquipo}}/false">
             <ion-label>{{ equipo.idEquipo }}</ion-label>
-            <ion-label *ngIf="!idAula">{{ equipo.ubicacion.aula}}</ion-label>
-            <ion-label *ngIf="!idAula">{{ equipo.ubicacion.departamento}}</ion-label>
-            <ion-label *ngIf="idAula">{{ equipo.ubicacion.puesto }}</ion-label>
-            <ion-label *ngIf="idAula">
+            <ion-label>{{ equipo.ubicacion.aula}}</ion-label>
+            <ion-label>{{ equipo.ubicacion.departamento}}</ion-label>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="idAula">
+        <ion-list-header>
+            <ion-label>IdEquipo</ion-label>
+            <ion-label>Puesto</ion-label>
+            <ion-label></ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let equipo of equipos"
+                  routerLink="/form-completo/{{equipo.idEquipo}}">
+            <ion-label>{{ equipo.idEquipo }}</ion-label>
+            <ion-label>{{ equipo.ubicacion.puesto }}</ion-label>
+            <ion-label>
                 <ion-icon name="eye-outline"></ion-icon>
             </ion-label>
         </ion-item>
     </ion-list>
-
     <ion-button (click)="presentActionSheet()" expand="block" *ngIf="!idAula">
         Acciones
     </ion-button>
-
+    <ion-button (click)="presentActionPra()" expand="block" *ngIf="idAula">Asignar Equipos</ion-button>
 </ion-content>

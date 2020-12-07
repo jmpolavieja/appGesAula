@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {UsersService} from "../../services/data/users.service";
-import {UsuarioInterface} from "../../models/usuarioInterface";
+import {UsuarioInterface} from "../../interfaces/usuarioInterface";
 import {Router} from "@angular/router";
 
 @Component({
@@ -66,11 +66,11 @@ export class Login2Page implements OnInit {
           //console.log(this.usuario.rol);
           if(typeof this.usuario != "undefined"){
             if(this.usuario.rol == "pra") {
-              this.router.navigate(['/dashboard-pra']);
+              this.router.navigate(['/pra']);
             } else if(this.usuario.rol == "trm") {
-              this.router.navigate(['/dashboard-trm']);
+              this.router.navigate(['/trm']);
             } else {
-              this.router.navigate(['/dasboard-pdd']);
+              this.router.navigate(['/pdd']);
             }
           } else {
             // todo: mensaje de que no está dado de alta en el sistema

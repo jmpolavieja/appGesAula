@@ -1,30 +1,50 @@
 import {Injectable} from '@angular/core';
 
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import 'firebase/firestore';
 import {Observable} from "rxjs";
-import {IncidenciaInterface} from "../../models/incidenciaInterface";
+import {IncidenciaInterface} from "../../interfaces/incidenciaInterface";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class IncidenciasService {
 
-    constructor(
-        public afs: AngularFirestore
-    ) {
-    }
+  listIncidencias: AngularFirestoreCollection<IncidenciaInterface>;
 
-    addIncidencia() {
-        // Este módulo será llamado por el profesor encargado
-    }
+  constructor(
+    public afs: AngularFirestore
+  ) {
+  }
 
-    listaIncidencias(): Observable<IncidenciaInterface[]> {
-        return this.afs.collection<IncidenciaInterface>('incidencias').valueChanges({idField: 'idIncidencia'});
-    }
+  createIncidencia() {
+    // Este módulo será llamado por el profesor encargado
+  }
 
-    getIncidenciaDetail(idInc: string): Observable<IncidenciaInterface> {
-        return this.afs.collection('incidencias').doc<IncidenciaInterface>(idInc).valueChanges();
-    }
 
+  listIncNoFinalizadas(): Observable<IncidenciaInterface[]> {
+    this.listIncidencias = this.afs.collection<IncidenciaInterface>('incidencias',
+      ref => {
+      return ref.where('recogida', '==', false);
+      });
+    return this.listIncidencias.valueChanges({idField: 'idIncidencia'});
+  }
+
+  getIncidenciaDetail(idInc: string): Observable<IncidenciaInterface> {
+    return this.afs.collection('incidencias').doc<IncidenciaInterface>(idInc).valueChanges();
+  }
+
+  // Actualizar los datos de la incidencia
+  updateIncidencia(inc: IncidenciaInterface): boolean {
+    let res: boolean = true;
+    let idIncidencia = inc.idIncidencia;
+    this.afs.doc<IncidenciaInterface>(`incidencias/${idIncidencia}`).update(inc)
+      .then(() => {
+        res = true;
+      })
+      .catch(() => {
+        res = false;
+      });
+    return res;
+  }
 }

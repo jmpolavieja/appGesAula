@@ -4,7 +4,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {Router} from "@angular/router";
 import {TotalesService} from "../../../services/data/totales.service";
-import {TotalInterface} from "../../../models/totalInterface";
+import {TotalInterface} from "../../../interfaces/totalInterface";
 
 
 @Component({

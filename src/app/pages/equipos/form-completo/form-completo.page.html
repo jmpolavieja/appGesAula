@@ -1,9 +1,124 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>formCompleto</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ficha de Equipo</ion-title>
+    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+ <form [formGroup]="equipoForm" (ngSubmit)="guardar()">
+   <ion-item-group>
+   <ion-item-divider>
+     <ion-label>Hardware</ion-label>
+   </ion-item-divider>
+   <ion-item>
+     <ion-label>Marca</ion-label>
+     <ion-input formControlName="marca"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Modelo</ion-label>
+     <ion-input formControlName="modelo"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Procesador</ion-label>
+     <ion-input formControlName="procesador"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Memoria</ion-label>
+     <ion-input formControlName="memoria"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Disco Duro</ion-label>
+     <ion-input formControlName="discoDuro"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>MAC</ion-label>
+     <ion-input formControlName="direccionMAC"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Num. Serie</ion-label>
+     <ion-input formControlName="numSerie"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Monitor</ion-label>
+     <ion-input formControlName="monitor"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Ratón</ion-label>
+     <ion-input formControlName="raton"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Teclado</ion-label>
+     <ion-input formControlName="teclado"></ion-input>
+   </ion-item>
+   </ion-item-group>
+   <ion-item-group>
+   <ion-item-divider>
+     <ion-label>Software</ion-label>
+   </ion-item-divider>
+   <ion-item>
+     <ion-label>Antivirus</ion-label>
+     <ion-input formControlName="antivirus"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Ide-1</ion-label>
+     <ion-input formControlName="ide1"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Ide-2</ion-label>
+     <ion-input formControlName="ide2"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Office</ion-label>
+     <ion-input formControlName="officeVersion"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Otros</ion-label>
+     <ion-input formControlName="otros"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>SO</ion-label>
+     <ion-input formControlName="so"></ion-input>
+   </ion-item>
+   </ion-item-group>
+   <ion-item-group>
+   <ion-item-divider>
+     <ion-label>Ubicación</ion-label>
+   </ion-item-divider>
+   <ion-item>
+     <ion-label>Alumno 1</ion-label>
+     <ion-input formControlName="alumno1"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Alumno 2</ion-label>
+     <ion-input formControlName="alumno2"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Usuario Prof</ion-label>
+     <ion-input formControlName="userProfesor"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Password Prof</ion-label>
+     <ion-input formControlName="passProfesor"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Aula</ion-label>
+     <ion-input formControlName="aula" disabled="true"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Puesto</ion-label>
+     <ion-input formControlName="puesto" disabled="true"></ion-input>
+   </ion-item>
+   <ion-item>
+     <ion-label>Departamento</ion-label>
+     <ion-input formControlName="departamento" disabled="true"></ion-input>
+   </ion-item>
+   </ion-item-group>
+   <p class="ion-text-center">
+     <ion-button type="submit" [disabled]="!equipoForm.valid && !equipoForm.dirty">Guardar</ion-button>
+   </p>
+ </form>
 </ion-content>

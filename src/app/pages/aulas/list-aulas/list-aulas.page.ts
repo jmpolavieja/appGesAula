@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {AulaInterface} from "../../../models/aulaInterface";
+import {AulaInterface} from "../../../interfaces/aulaInterface";
 import {AulasService} from "../../../services/data/aulas.service";
 
 @Component({

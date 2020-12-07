@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
-import {TotalInterface} from "../../models/totalInterface";
+import {TotalInterface} from "../../interfaces/totalInterface";
 import {map} from 'rxjs/operators';
 
 @Injectable({

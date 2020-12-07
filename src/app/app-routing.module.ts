@@ -12,15 +12,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login2/login2.module').then( m => m.Login2PageModule)
   },
   {
-    path: 'dashboard-pra',
+    path: 'pra',
     loadChildren: () => import('./pages/dashboards/dashboard-pra/dashboard-pra.module').then(m => m.DashboardPraPageModule)
   },
   {
-    path: 'dashboard-trm',
+    path: 'trm',
     loadChildren: () => import('./pages/dashboards/dashboard-trm/dashboard-trm.module').then(m => m.DashboardTrmPageModule)
   },
   {
-    path: 'dashboard-pdd',
+    path: 'pdd',
     loadChildren: () => import('./pages/dashboards/dashboard-pdd/dashboard-pdd.module').then( m => m.DashboardPddPageModule)
   },
   {
@@ -41,15 +41,15 @@ const routes: Routes = [
   },
   {
     path: 'list-aulas',
-    loadChildren: () => import('./pages/aulas/list-aulas/list-aulas.module').then( m => m.ListAulasPageModule)
+    loadChildren: () => import('./pages/aulas/list-aulas/list-aulas.module').then(m => m.ListAulasPageModule)
   },
   {
     path: 'detail-aula/:id/:new',
-    loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then( m => m.DetailAulaPageModule)
+    loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then(m => m.DetailAulaPageModule)
   },
   {
     path: 'detail-aula/:new',
-    loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then( m => m.DetailAulaPageModule)
+    loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then(m => m.DetailAulaPageModule)
   },
   {
     path: 'new-incidencia',
@@ -69,19 +69,27 @@ const routes: Routes = [
   },
   {
     path: 'detail-user/:id/:nuevo',
-    loadChildren: () => import('./pages/users/new-user/new-user.module').then( m => m.NewUserPageModule)
+    loadChildren: () => import('./pages/users/new-user/new-user.module').then(m => m.NewUserPageModule)
   },
   {
     path: 'new-user/:nuevo',
-    loadChildren: () => import('./pages/users/new-user/new-user.module').then( m => m.NewUserPageModule)
+    loadChildren: () => import('./pages/users/new-user/new-user.module').then(m => m.NewUserPageModule)
   },
   {
-    path: 'form-completo',
+    path: 'form-completo/:id',
     loadChildren: () => import('./pages/equipos/form-completo/form-completo.module').then( m => m.FormCompletoPageModule)
   },
   {
     path: 'genera-equipos',
     loadChildren: () => import('./pages/equipos/genera-equipos/genera-equipos.module').then(m => m.GeneraEquiposPageModule)
+  },
+  {
+    path: 'asigna-equipos',
+    loadChildren: () => import('./pages/equipos/asigna-equipos/asigna-equipos.module').then( m => m.AsignaEquiposPageModule)
+  },
+  {
+    path: 'list-equipos-aula',
+    loadChildren: () => import('./pages/equipos/list-equipos-aula/list-equipos-aula.module').then( m => m.ListEquiposAulaPageModule)
   }
 
 ];

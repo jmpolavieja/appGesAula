@@ -1,5 +1,5 @@
 export interface NotificacionInterface {
-    idNotificacion: string,
+    idNotificacion?: string,
     fecha: string,
     idIncidencia: string,
     desde: string,

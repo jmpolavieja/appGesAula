@@ -4,10 +4,10 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {UsersService} from "../../../services/data/users.service";
 
 import {AlertController, LoadingController} from "@ionic/angular";
-import {UsuarioInterface} from "../../../models/usuarioInterface";
+import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TotalesService} from "../../../services/data/totales.service";
-import {TotalInterface} from "../../../models/totalInterface";
+import {TotalInterface} from "../../../interfaces/totalInterface";
 
 @Component({
     selector: 'app-new-user',
