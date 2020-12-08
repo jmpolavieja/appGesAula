@@ -37,9 +37,19 @@ export class TotalesService {
 
     }
 
+    dameunTotal(totalName) {
+        return this.afs.collection('totales').doc(totalName).snapshotChanges();
+    }
+
+
     updateTotal(total: TotalInterface): void {
         let idTotal = total.docId;
         this.totalDoc = this.afs.doc<TotalInterface>(`totales/${idTotal}`);
         this.totalDoc.update(total);
+    }
+
+    updateElTotal(total: number, idTotal) {
+        let ref = this.afs.collection('totales').doc(idTotal).ref;
+        return ref.update({total: total});
     }
 }

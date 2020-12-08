@@ -1,9 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {EquiposService} from "../../../services/data/equipos.service";
 import {EquipoInterface} from "../../../interfaces/equipoInterface";
-import {ActionSheetController} from "@ionic/angular";
+import {ActionSheetController, AlertController} from "@ionic/angular";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PuestosService} from "../../../services/data/puestos.service";
+import {AulasService} from "../../../services/data/aulas.service";
+import {AulaInterface} from "../../../interfaces/aulaInterface";
+import {IncidenciasService} from "../../../services/data/incidencias.service";
+import {IncidenciaInterface} from "../../../interfaces/incidenciaInterface";
+import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
+import {NotificacionesService} from "../../../services/data/notificaciones.service";
+import {TotalesService} from "../../../services/data/totales.service";
 
 @Component({
   selector: 'app-list-equipos',
@@ -13,31 +20,58 @@ import {PuestosService} from "../../../services/data/puestos.service";
 export class ListEquiposPage implements OnInit {
 
   public idAula: string;
+  public AulaNumero: string;
   public equipos: EquipoInterface[];
+  private aula: AulaInterface;
+  private incidenciasAula: number;
+  private totalIncidencias: number;
 
   constructor(private equiposService: EquiposService,
               private puestosService: PuestosService,
+              private aulaService: AulasService,
+              private incSer: IncidenciasService,
+              private notiSer: NotificacionesService,
+              private totalesService: TotalesService,
               public actionSheetController: ActionSheetController,
               private router: Router,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private alertCtrl: AlertController
   ) {
   }
 
 
   ngOnInit() {
-
+    // Si es un aula
     if (this.route.snapshot.paramMap.get('aula')) {
       this.idAula = this.route.snapshot.paramMap.get('aula');
-      this.idAula = this.idAula.charAt(this.idAula.length - 1);
+      this.aulaService.getAulaDetail(this.idAula).subscribe(
+        aula => {
+          this.aula = aula;
+        }
+      )
+      this.AulaNumero = this.idAula.charAt(this.idAula.length - 1);
       console.log("tengo aula: ", this.idAula);
-      this.equiposService.getEquiposList(this.idAula).subscribe( equipos => {
+      this.equiposService.getEquiposList(this.AulaNumero).subscribe(equipos => {
         this.equipos = equipos;
       });
-    } else {
-      this.equiposService.getEquiposList().subscribe( equipos => {
+    } else { // si son todos los equipos
+      this.equiposService.getEquiposList().subscribe(equipos => {
         this.equipos = equipos;
       });
     }
+    // Leer totales de incidencias en aulas y total de incidencias
+    this.aulaService.getAulaDetail(this.idAula).subscribe(
+      aula => {
+        this.incidenciasAula = aula.incidencias;
+        console.log('Número de incidencias del aula leído');
+      }
+    )
+    this.totalesService.getTotal('incidencias').subscribe(
+      total => {
+        this.totalIncidencias = total.total;
+        console.log('Total de indencias leído');
+      }
+    )
 
   }
 
@@ -114,20 +148,124 @@ export class ListEquiposPage implements OnInit {
 
   private asignacionAutomatica() {
     // Recorrer equipos y preparar array
-    let equiposAsignacion: [{idEquipo: string, asignado: boolean}?] = [];
+    let equiposAsignacion: [{ idEquipo: string, asignado: boolean }?] = [];
     console.log("Equipos leidos: :", this.equipos);
 
-      for (const equiposKey in this.equipos) {
-        const idEquipo = this.equipos[equiposKey].idEquipo;
-        console.log(idEquipo);
-        var asignado: boolean;
-        console.log(this.equipos[equiposKey].ubicacion.puesto);
-        asignado = this.equipos[equiposKey].ubicacion.puesto != "";
-        console.log(asignado);
-        equiposAsignacion.push({idEquipo,asignado: asignado});
-      }
-      console.log("Equipos Asignación antes del envio: ", equiposAsignacion);
-      this.puestosService.asignarEquipos(equiposAsignacion, this.idAula);
+    for (const equiposKey in this.equipos) {
+      const idEquipo = this.equipos[equiposKey].idEquipo;
+      console.log(idEquipo);
+      var asignado: boolean;
+      console.log(this.equipos[equiposKey].ubicacion.puesto);
+      asignado = this.equipos[equiposKey].ubicacion.puesto != "";
+      console.log(asignado);
+      equiposAsignacion.push({idEquipo, asignado: asignado});
+    }
+    console.log("Equipos Asignación antes del envio: ", equiposAsignacion);
+    this.puestosService.asignarEquipos(equiposAsignacion, this.AulaNumero);
 
+  }
+
+
+  async alertIncidencia(idEquipo: string) {
+    const alert = await this.alertCtrl.create({
+      header: '¡Confirmar!',
+      message: 'Va a crear una incidencia del equipo <i>' + idEquipo + '</i>, se generará una notificación a Mantenimiento, <strong>¿Quiere continuar?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            // Manejador para el ok, llamar a nueva incidencia
+            this.generaIncidencia(idEquipo);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  generaIncidencia(idEquipo) {
+    // Para llamar a nueva incidencia necesito: idEquipo, aula, fecha y profesor
+    let data: IncidenciaInterface;
+    let date = new Date();
+    let options = {day: 'numeric', month: 'numeric', year: 'numeric'};
+    let fecha = date.toLocaleString('es-ES', options);
+    // para el id de la incidencia solo dia y mes
+    let options2 = {day: 'numeric', month: 'numeric'};
+    let diames = date.toLocaleString('es-ES', options2);
+    if (diames.length == 4) {
+      var n = 1, m = 4;
+    } else {
+      var n = 2, m = 5;
+    }
+    let idIncidencia = idEquipo + "-" + diames.slice(0, n) + diames.slice(n + 1, m);
+    data = {
+      creadaPor: this.aula.pra,
+      fechaInicio: fecha,
+      idIncidencia: idIncidencia,
+      idEquipo: idEquipo,
+      recogida: false,
+      aula: this.idAula
+    }
+    console.log(data.fechaInicio);
+    // uso el inyector para crear la incidencia,
+
+    console.log('Llamo al servicio createIncidencia con ', data);
+    this.incSer.createIncidencia(data).then(
+      res => {
+        console.log('Incidencia creada exitosamente', idEquipo);
+        // cuando es correcta, lanzo la notificación
+        this.generaNotificacion(fecha, idIncidencia, idEquipo);
+        // cambiar estado del equipo a incidencia
+        this.equiposService.updateEstado('incidencia', idEquipo).then(() => {
+          console.log('Equipo actualizado el estado');
+        }), error => {
+          console.error(error)
+        };
+        // Actualizar totales
+        this.totalIncidencias += 1;
+        this.totalesService.updateElTotal(this.totalIncidencias, 'incidencias').then(() => {
+            console.log('total incidencias actualizado');
+          })
+          .catch( () => {
+              console.log('No he podido actualizar el total de incidencias');
+            });
+        console.log('Incidencias Aula ', this.incidenciasAula);
+        this.incidenciasAula += 1;
+        this.aulaService.updateIncidenciasAula(this.incidenciasAula, this.idAula).then(() => {
+          console.log('Incidencias aula actualizada');
+        }).catch(() => {
+          console.log('No he podido actualizar el total incidencias de un aula');
+        });
+        // muestro detalle incidencia
+        this.router.navigateByUrl('/detail-incidencia/' + data.idIncidencia + '/true');
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+  }
+
+  private generaNotificacion(fecha: string, idIncidencia: string, idEquipo: string) {
+    // Primero preparo la notificación
+    let notificacion: NotificacionInterface;
+    notificacion = {
+      desde: this.idAula,
+      fecha: fecha,
+      idIncidencia: idIncidencia,
+      leida: false,
+      mensaje: "Nueva incidencia del equipo " + idEquipo,
+      para: "taller"
+    }
+    // Ahora creas la notificación
+    this.notiSer.createNotificacion(notificacion).then(() => {
+      console.log('Notificacion creada correctamente');
+    }, error => {
+      console.error(error);
+    });
   }
 }

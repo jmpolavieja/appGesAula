@@ -52,15 +52,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then(m => m.DetailAulaPageModule)
   },
   {
-    path: 'new-incidencia',
-    loadChildren: () => import('./pages/incidencias/new-incidencia/new-incidencia.module').then( m => m.NewIncidenciaPageModule)
-  },
-  {
-    path: 'detail-incidencia/:id',
+    path: 'detail-incidencia/:id/:nueva',
     loadChildren: () => import('./pages/incidencias/detail-incidencia/detail-incidencia.module').then( m => m.DetailIncidenciaPageModule)
   },
   {
-    path: 'list-incidencias',
+    path: 'list-incidencias/:aula',
     loadChildren: () => import('./pages/incidencias/list-incidencias/list-incidencias.module').then( m => m.ListIncidenciasPageModule)
   },
   {

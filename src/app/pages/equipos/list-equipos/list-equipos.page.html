@@ -1,45 +1,56 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/login"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Lista Equipos</ion-title>
-        <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lista Equipos</ion-title>
+    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <h3 *ngIf="idAula" class="ion-text-center">Aula {{ idAula }}</h3>
-    <ion-list *ngIf="!idAula">
-        <ion-list-header lines="inset">
-            <ion-label>IdEquipo</ion-label>
-            <ion-label>Aula</ion-label>
-            <ion-label>Departamento</ion-label>
-        </ion-list-header>
-        <ion-item *ngFor="let equipo of equipos"
-                  routerLink="/detail-equipo/{{equipo.idEquipo}}/false">
-            <ion-label>{{ equipo.idEquipo }}</ion-label>
-            <ion-label>{{ equipo.ubicacion.aula}}</ion-label>
-            <ion-label>{{ equipo.ubicacion.departamento}}</ion-label>
-        </ion-item>
-    </ion-list>
-    <ion-list *ngIf="idAula">
-        <ion-list-header>
-            <ion-label>IdEquipo</ion-label>
-            <ion-label>Puesto</ion-label>
-            <ion-label></ion-label>
-        </ion-list-header>
-        <ion-item *ngFor="let equipo of equipos"
-                  routerLink="/form-completo/{{equipo.idEquipo}}">
-            <ion-label>{{ equipo.idEquipo }}</ion-label>
-            <ion-label>{{ equipo.ubicacion.puesto }}</ion-label>
-            <ion-label>
-                <ion-icon name="eye-outline"></ion-icon>
-            </ion-label>
-        </ion-item>
-    </ion-list>
-    <ion-button (click)="presentActionSheet()" expand="block" *ngIf="!idAula">
-        Acciones
-    </ion-button>
-    <ion-button (click)="presentActionPra()" expand="block" *ngIf="idAula">Asignar Equipos</ion-button>
+  <!-- Plantilla para todos los equipos -->
+  <ion-list *ngIf="!idAula">
+    <ion-list-header lines="inset">
+      <ion-label>IdEquipo</ion-label>
+      <ion-label>Aula</ion-label>
+      <ion-label>Departamento</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let equipo of equipos"
+              routerLink="/detail-equipo/{{equipo.idEquipo}}/false">
+      <ion-label>{{ equipo.idEquipo }}</ion-label>
+      <ion-label>{{ equipo.ubicacion.aula}}</ion-label>
+      <ion-label>{{ equipo.ubicacion.departamento}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <!-- Plantilla para aula, acceso pra -->
+  <ion-grid *ngIf="idAula">
+    <ion-row>
+      <ion-col [size]="12">
+        <h3 class="ion-text-center">Aula {{ idAula }}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row id="header" class="ion-margin-bottom">
+      <ion-col>IdEquipo</ion-col>
+      <ion-col>Puesto</ion-col>
+      <ion-col>Ficha</ion-col>
+      <ion-col>Incidencia</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let equipo of equipos" class="{{equipo.estado}}">
+        <ion-col>{{ equipo.idEquipo }}</ion-col>
+        <ion-col>{{ equipo.ubicacion.puesto }}</ion-col>
+        <ion-col>
+          <ion-icon name="eye-outline"
+                    routerLink="/form-completo/{{equipo.idEquipo}}"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="warning-outline" *ngIf="equipo.estado == 'asignado'" (click)="alertIncidencia(equipo.idEquipo)"></ion-icon>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button (click)="presentActionSheet()" expand="block" *ngIf="!idAula">
+    Acciones
+  </ion-button>
+  <ion-button (click)="presentActionPra()" expand="block" *ngIf="idAula">Asignar Equipos</ion-button>
 </ion-content>

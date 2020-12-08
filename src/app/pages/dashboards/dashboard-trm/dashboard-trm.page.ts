@@ -23,8 +23,8 @@ export class DashboardTrmPage implements OnInit {
   public notificaciones: Observable<NotificacionInterface[]>;
   private notif: NotificacionInterface;
   private data: any;
-  user: Observable<firebase.User | null>;
-  name: string;
+  public user: Observable<firebase.User | null>;
+  public name: string;
   private usuario: UsuarioInterface;
 
   constructor(
@@ -41,13 +41,13 @@ export class DashboardTrmPage implements OnInit {
   ngOnInit() {
     // Para que si no hay sesión activa se vuelva al login
     this.user = this.authService.currentUser;
-
     this.user.subscribe((user) => {
       if (user) {
         let email = user.email;
         this.userService.getUser(email).subscribe(
           usuario => {
             this.usuario = usuario;
+            this.name = this.usuario.nombre;
             if (this.usuario.rol == "trm") {
               this.totales = this.totalService.getTotales();
               this.notificaciones = this.notifService.getNotificaciones('taller');
@@ -57,7 +57,7 @@ export class DashboardTrmPage implements OnInit {
           }
         )
       } else {
-        this.router.navigateByUrl('/logiin');
+        this.router.navigateByUrl('/login');
       }
     });
   }
@@ -75,7 +75,7 @@ export class DashboardTrmPage implements OnInit {
         this.router.navigate(['/list-users']);
         break;
       case "incidencias":
-        this.router.navigate(['/list-incidencias']);
+        this.router.navigate(['/list-incidencias/all']);
         break;
     }
   }

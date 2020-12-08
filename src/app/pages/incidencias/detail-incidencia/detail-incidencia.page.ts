@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IncidenciasService} from "../../../services/data/incidencias.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IncidenciaInterface} from "../../../interfaces/incidenciaInterface";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {TotalInterface} from "../../../interfaces/totalInterface";
 import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
 import {Observable} from "rxjs";
@@ -10,6 +10,7 @@ import {NotificacionesService} from "../../../services/data/notificaciones.servi
 import {EquiposService} from "../../../services/data/equipos.service";
 import {EquipoInterface} from "../../../interfaces/equipoInterface";
 import {TotalesService} from "../../../services/data/totales.service";
+import {AulasService} from "../../../services/data/aulas.service";
 
 @Component({
   selector: 'app-detail-incidencia',
@@ -20,21 +21,25 @@ export class DetailIncidenciaPage implements OnInit {
 
   public incidencia: IncidenciaInterface;
   public incidForm = this.fb.group({
-    descripcion: [''],
+    descripcion: ['', [Validators.required]],
     actuacion: ['']
   })
   public total: TotalInterface;
+  private incidenciasAula: number;
   public notif: Observable<NotificacionInterface[]>;
   public notificacion: NotificacionInterface;
-  private bloquearF: boolean;
-  private bloquearR: boolean;
+  public bloquearF: boolean;
+  public bloquearR: boolean;
   private equipo: EquipoInterface;
+  public nueva: boolean;
+  public idAula: string;
 
   constructor(
     private incidService: IncidenciasService,
     private notService: NotificacionesService,
     private equipoSer: EquiposService,
     private totalSer: TotalesService,
+    private aulasSer: AulasService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router
@@ -43,9 +48,15 @@ export class DetailIncidenciaPage implements OnInit {
 
   ngOnInit() {
     const idIncidencia: string = this.route.snapshot.paramMap.get('id');
+    if (this.route.snapshot.paramMap.get('nueva') == "true") {
+      this.nueva = true;
+    } else {
+      this.nueva = false;
+    }
     console.log(idIncidencia);
     this.incidService.getIncidenciaDetail(idIncidencia).subscribe(incidencia => {
       this.incidencia = incidencia;
+      this.idAula = incidencia.aula;
       this.incidForm.controls.descripcion.setValue(this.incidencia.descripcion);
       this.incidForm.controls.actuacion.setValue(this.incidencia.actuacion);
       if (this.incidencia.fechaFin == "") {
@@ -56,14 +67,13 @@ export class DetailIncidenciaPage implements OnInit {
         this.bloquearF = true;
         this.bloquearR = false;
       }
+      this.aulasSer.getAulaDetail(this.incidencia.aula).subscribe(aula => {
+        this.incidenciasAula = aula.incidencias;
+      });
     });
     this.totalSer.getOneTotal('incidencias').subscribe(total => {
       this.total = total;
     });
-  }
-
-  updateInci() {
-
   }
 
   finalizar() {
@@ -88,7 +98,7 @@ export class DetailIncidenciaPage implements OnInit {
     this.notService.createNotificacion(this.notificacion).then(
       () => {
         console.log('Notificacion creada exitosamente!');
-        this.router.navigateByUrl('/list-incidencias')
+        this.router.navigateByUrl('/list-incidencias/all')
       }, (error) => {
         console.error(error);
       });
@@ -109,14 +119,28 @@ export class DetailIncidenciaPage implements OnInit {
     });
     // Se resta 1 a totales incidencias
     this.updateTotal();
+    // Se resta 1 de incidenicas del aula
+    this.updateIncidenciasAula();
     // Se actualiza la incidencia a recogido = true.
     this.incidencia.recogida = true;
     this.incidService.updateIncidencia(this.incidencia);
     this.router.navigateByUrl('/list-equipos');
   }
 
-  updateTotal(): void {
+  private updateTotal(): void {
     this.total.total -= 1;
     this.totalSer.updateTotal(this.total);
+  }
+
+  private updateIncidenciasAula(): void {
+    this.incidenciasAula -= 1;
+    this.aulasSer.updateIncidenciasAula(this.incidenciasAula, this.incidencia.aula);
+  }
+
+  enviar() {
+    // Actualiza la incidencia
+    this.incidencia.descripcion = this.incidForm.controls.descripcion.value;
+    this.incidService.updateIncidencia(this.incidencia);
+    //this.router.navigateByUrl('list-incidencias/')
   }
 }

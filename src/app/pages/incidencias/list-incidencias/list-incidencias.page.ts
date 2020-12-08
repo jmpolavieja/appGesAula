@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IncidenciasService} from "../../../services/data/incidencias.service";
 import {Observable} from "rxjs";
 import {IncidenciaInterface} from "../../../interfaces/incidenciaInterface";
-import {ModalController} from "@ionic/angular";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-list-incidencias',
@@ -13,11 +13,24 @@ export class ListIncidenciasPage implements OnInit {
 
   public incidencias: Observable<IncidenciaInterface[]>;
   public inc: IncidenciaInterface[];
+  private idAula: string;
+  private nueva: string;
 
-  constructor(private inciService: IncidenciasService,
-              public modalDetalle: ModalController) { }
+  constructor(
+    private inciService: IncidenciasService,
+    private route: ActivatedRoute
+  ) {
+  }
 
   ngOnInit() {
-    this.incidencias = this.inciService.listIncNoFinalizadas();
+    this.idAula = this.route.snapshot.paramMap.get('aula');
+    if (this.idAula == 'all') {
+      this.incidencias = this.inciService.listIncNoFinalizadas();
+      this.nueva = 'false';
+    }else{
+      this.incidencias = this.inciService.listIncAula(this.idAula);
+      this.nueva = 'true';
+    }
+
   }
 }

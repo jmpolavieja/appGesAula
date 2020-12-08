@@ -1,52 +1,85 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-title>PRA - {{name}}</ion-title>
-        <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>PRA - {{name}}</ion-title>
+    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <!-- primero irá el texto del aula de que se trate -->
-    <h2>{{ idAula }}</h2>
-    <!-- luego el cuadro de búsqueda
-    <ion-searchbar (click)=""></ion-searchbar>-->
-    <!-- búsqueda por código QR -->
+  <!-- primero irá el texto del aula de que se trate -->
+  <h2>{{ idAula }}</h2>
+  <!-- luego el cuadro de búsqueda
+  <ion-searchbar (click)=""></ion-searchbar>-->
+  <!-- búsqueda por código QR -->
 
-    <ion-button color="success" expand="block" (click)="scan()">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        Scan code
-    </ion-button>
-    <!-- ahora aparecerá un cuadro con el total de equipos del aula -->
-    <ion-card class="ion-text-center"
-    routerLink="/list-equipos/{{idAula}}">
-        <ion-card-header>
-            <ion-card-title>
-                {{totalEquipos}} equipos
-            </ion-card-title>
-            <ion-card-subtitle>
-                {{numInc}} incidencias activas
-            </ion-card-subtitle>
-        </ion-card-header>
-    </ion-card>
-    <!-- lista de notificaciones -->
-    <ion-list>
-        <ion-item-sliding *ngFor="let not of notificaciones | async">
-            <ion-item-options side="start">
-                <ion-item-option (click)="leido(not)" color="success">
-                    <ion-icon name="checkmark-outline"></ion-icon>
-                </ion-item-option>
-            </ion-item-options>
-            <ion-item *ngIf="!not.leida" color="secondary">
-                <ion-icon name="desktop-outline"></ion-icon>
-                <ion-label>
-                    <h2>{{ not.idIncidencia}} - Notificación</h2>
-                    <p class="ion-padding">{{ not.mensaje }}</p>
-                </ion-label>
-                <ion-note slot="end" color="light">
-                    {{ not.fecha }}
-                </ion-note>
-            </ion-item>
-        </ion-item-sliding>
-    </ion-list>
-    <ion-button (click)="logout()" expand="block" color="warning">Cerrar sesión</ion-button>
+  <ion-button color="success" expand="block" (click)="scan()">
+    <ion-icon name="qr-code-outline"></ion-icon>
+    Scan code
+  </ion-button>
+  <!-- ahora aparecerá un cuadro con el total de equipos del aula -->
+  <ion-card class="ion-text-center">
+    <ion-card-header>
+      <ion-item routerLink="/list-equipos/{{idAula}}">
+        <ion-grid>
+          <ion-row>
+            <ion-col col="3" offset="5">
+              <ion-icon size="large" name="desktop-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col="6">
+              <ion-card-title class="ion-text-center">
+                Equipos
+              </ion-card-title>
+            </ion-col>
+            <ion-col col="2" offset="4" >
+              <ion-card-title class="ion-text-right">
+                {{totalEquipos}}
+              </ion-card-title>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item routerLink="/list-incidencias/{{idAula}}">
+        <ion-grid>
+          <ion-row>
+            <ion-col col="3" offset="5">
+              <ion-icon size="large" name="warning-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col="10">
+              <ion-card-title>
+                Incidencias activas
+              </ion-card-title>
+            </ion-col>
+            <ion-col size="2">
+              <ion-card-title class="ion-text-right">{{numInc}}</ion-card-title>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-header>
+  </ion-card>
+  <!-- lista de notificaciones -->
+  <ion-list>
+    <ion-item-sliding *ngFor="let not of notificaciones | async">
+      <ion-item-options side="start">
+        <ion-item-option (click)="leido(not)" color="success">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item *ngIf="!not.leida" color="secondary">
+        <ion-icon name="desktop-outline"></ion-icon>
+        <ion-label>
+          <h2>{{ not.idIncidencia}} - Notificación</h2>
+          <p class="ion-padding">{{ not.mensaje }}</p>
+        </ion-label>
+        <ion-note slot="end" color="light">
+          {{ not.fecha }}
+        </ion-note>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-button (click)="logout()" expand="block" color="warning">Cerrar sesión</ion-button>
 </ion-content>

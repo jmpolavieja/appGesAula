@@ -11,21 +11,33 @@ import {IncidenciaInterface} from "../../interfaces/incidenciaInterface";
 export class IncidenciasService {
 
   listIncidencias: AngularFirestoreCollection<IncidenciaInterface>;
+  dataNewInc: IncidenciaInterface;
 
   constructor(
-    public afs: AngularFirestore
+    private afs: AngularFirestore
   ) {
   }
 
-  createIncidencia() {
+  createIncidencia(data: IncidenciaInterface): Promise<void> {
     // Este módulo será llamado por el profesor encargado
+    // Recibo la incidencia y la guardo en la base de datos
+    console.log("CreateIncidencia.data= ", data);
+    let idIncidencia = data.idIncidencia;
+    return this.afs.doc(`incidencias/${(idIncidencia)}`).set(data);
   }
-
 
   listIncNoFinalizadas(): Observable<IncidenciaInterface[]> {
     this.listIncidencias = this.afs.collection<IncidenciaInterface>('incidencias',
       ref => {
-      return ref.where('recogida', '==', false);
+        return ref.where('recogida', '==', false);
+      });
+    return this.listIncidencias.valueChanges({idField: 'idIncidencia'});
+  }
+
+  listIncAula(idAula): Observable<IncidenciaInterface[]> {
+    this.listIncidencias = this.afs.collection<IncidenciaInterface>('incidencias',
+      ref => {
+      return ref.where('aula', '==', idAula);
       });
     return this.listIncidencias.valueChanges({idField: 'idIncidencia'});
   }

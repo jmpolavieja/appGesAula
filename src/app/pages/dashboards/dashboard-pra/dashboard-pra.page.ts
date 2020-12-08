@@ -19,14 +19,14 @@ import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 })
 export class DashboardPraPage implements OnInit {
 
-  public num = 30;
-  public numInc = 2;
-  private name: String;
+  public num: number;
+  public numInc: number;
+  public name: String;
   private data: any;
   private user: Observable<firebase.User | null>;
-  private idAula: string = "";
-  private totalEquipos: any = 0;
-  private notificaciones: Observable<NotificacionInterface[]>;
+  public idAula: string = "";
+  public totalEquipos: any = 0;
+  public notificaciones: Observable<NotificacionInterface[]>;
   private usuario: UsuarioInterface;
 
   constructor(
@@ -45,7 +45,7 @@ export class DashboardPraPage implements OnInit {
     // leer el nombre del usuario
     this.user = this.authService.currentUser;
     this.user.subscribe((user) => {
-      if(user) {
+      if (user) {
         let email = user.email;
         this.usersService.getUser(email).subscribe(
           usuario => {
@@ -71,7 +71,7 @@ export class DashboardPraPage implements OnInit {
   }
 
   logout() {
-    this.authService.logoutUser();
+    this.authService.singOut();
     this.router.navigate([('/login')]);
   }
 

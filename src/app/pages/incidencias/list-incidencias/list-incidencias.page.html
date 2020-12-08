@@ -12,8 +12,7 @@
   <ion-list>
     <div *ngFor="let inc of incidencias | async">
       <ion-item *ngIf="!inc.recogida"
-                routerLink="/detail-incidencia/{{inc.idIncidencia}}"
-      >
+                routerLink="/detail-incidencia/{{inc.idIncidencia}}/{{nueva}}">
         <ion-grid class="redClass" [class.greenClass]="inc.fechaFin">
           <ion-row>
             <ion-col>

@@ -46,4 +46,10 @@ export class AulasService {
     this.aulaDoc.update(aula);
   }
 
+  updateIncidenciasAula(incidencias: number, idAula: string) {
+    let ref = this.afs.collection('aulas').doc(idAula).ref;
+    return ref.update({incidencias: incidencias});
+  }
+
+
 }

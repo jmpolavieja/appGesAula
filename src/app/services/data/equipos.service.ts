@@ -63,6 +63,11 @@ export class EquiposService {
     this.equipoDoc.update(equipo);
   }
 
+  updateEstado(estado, idEquipo): Promise<void>{
+    let ref = this.afs.collection('equipos').doc(idEquipo).ref;
+    return ref.update({estado: estado});
+  }
+
   // Elimina un equipo
   deleteEquipo(idEquipo) {
     return this.afs.collection('equipos')
