@@ -9,6 +9,7 @@ import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {AuthService} from "../../../services/auth.service";
 import firebase from "firebase";
+import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 
 @Component({
   selector: 'app-dashboard-trm',
@@ -22,37 +23,43 @@ export class DashboardTrmPage implements OnInit {
   public notificaciones: Observable<NotificacionInterface[]>;
   private notif: NotificacionInterface;
   private data: any;
-  user: firebase.User;
+  user: Observable<firebase.User | null>;
   name: string;
+  private usuario: UsuarioInterface;
 
   constructor(
-      private userService: UsersService,
-      private totalService: TotalesService,
-      private router: Router,
-      private authService: AuthService,
-      private notifService: NotificacionesService,
-      private barcodeScanner: BarcodeScanner
-  ) {this.primeraVez = true; }
+    private userService: UsersService,
+    private totalService: TotalesService,
+    private router: Router,
+    private authService: AuthService,
+    private notifService: NotificacionesService,
+    private barcodeScanner: BarcodeScanner
+  ) {
+    this.primeraVez = true;
+  }
 
   ngOnInit() {
     // Para que si no hay sesión activa se vuelva al login
-    //let user = localStorage.getItem("user");
+    this.user = this.authService.currentUser;
 
-    this.authService.userDetails().subscribe((user) => {
-      this.user = user;
-      this.userService.getUser(this.user.email).subscribe(
+    this.user.subscribe((user) => {
+      if (user) {
+        let email = user.email;
+        this.userService.getUser(email).subscribe(
           usuario => {
-            this.name = usuario.nombre
+            this.usuario = usuario;
+            if (this.usuario.rol == "trm") {
+              this.totales = this.totalService.getTotales();
+              this.notificaciones = this.notifService.getNotificaciones('taller');
+            } else {
+              this.router.navigateByUrl('/login');
+            }
           }
-      )
-      if(this.user != null) {
-        this.totales = this.totalService.getTotales();
-        this.notificaciones = this.notifService.getNotificaciones('taller');
-      }else{
-        this.router.navigate(['/login']);
+        )
+      } else {
+        this.router.navigateByUrl('/logiin');
       }
     });
-
   }
 
   irALista(docId: string) {

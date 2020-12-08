@@ -1,9 +1,36 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-title>Departamento</ion-title>
-        <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>Departamento</ion-title>
+    <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
 
+  <h3 class="ion-text-center">Aulas de Informática</h3>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h3>Aula</h3>
+      </ion-col>
+      <ion-col>
+        <h3 class="ion-text-center">Equipos</h3>
+      </ion-col>
+      <ion-col>
+        <h3 class="ion-text-end">Profesor</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let aula of aulas | async">
+      <ion-col>
+        <p class="ion-text-center">{{ aula.idAula }}</p>
+      </ion-col>
+      <ion-col>
+        <p class="ion-text-center">{{ aula.equipos }}</p>
+      </ion-col>
+      <ion-col>
+        <p class="ion-text-center">{{ aula.pra }}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button (click)="logOut()" expand="block">Cerrar Sesión</ion-button>
 </ion-content>

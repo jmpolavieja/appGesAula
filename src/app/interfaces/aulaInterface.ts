@@ -6,5 +6,6 @@ export interface AulaInterface {
     equipos?: number, // contiene el número de equipos asignados al aula
     puestos?: number,
     curso: string,
-    incidencias?: number
+    incidencias?: number,
+    pra?: string
 }

@@ -1,41 +1,49 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {AulaInterface} from "../../interfaces/aulaInterface";
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AulasService {
 
-    private aulaDoc: AngularFirestoreDocument<AulaInterface>;
+  private aulas: AngularFirestoreCollection<AulaInterface>;
+  private aulaDoc: AngularFirestoreDocument<AulaInterface>;
 
-    constructor(public afs: AngularFirestore) {
-    }
+  constructor(public afs: AngularFirestore) {
+  }
 
-    getAulas(): Observable<AulaInterface[]> {
-        return this.afs.collection<AulaInterface>('aulas').valueChanges();
+  getAulas(departamento = null): Observable<AulaInterface[]> {
+    if (departamento == null) {
+      return this.afs.collection<AulaInterface>('aulas').valueChanges();
+    } else {
+      this.aulas = this.afs.collection<AulaInterface>('aulas', ref => {
+        return ref.where('departamento', "==", departamento);
+      });
     }
+    return this.aulas.valueChanges();
+  }
 
-    getAulaDetail(idAula: string): Observable<AulaInterface> {
-        return this.afs.collection('aulas').doc<AulaInterface>(idAula).valueChanges();
-    }
+  getAulaDetail(idAula: string): Observable<AulaInterface> {
+    return this.afs.collection('aulas').doc<AulaInterface>(idAula).valueChanges();
+  }
 
-    addAula(aula: AulaInterface)
-        : Promise<void> {
-        const idAula = aula.idAula;
-        const curso = aula.curso;
-        const departamento = aula.departamento;
-        const equipos = 0;
-        return this.afs.doc(`aulas/${idAula}`).set({
-            idAula, curso, departamento, equipos
-        });
-    }
+  addAula(aula: AulaInterface)
+    : Promise<void> {
+    const idAula = aula.idAula;
+    const curso = aula.curso;
+    const departamento = aula.departamento;
+    const equipos = 0;
+    return this.afs.doc(`aulas/${idAula}`).set({
+      idAula, curso, departamento, equipos
+    });
+  }
 
-    updateAula(aula: AulaInterface) {
-        let idAula = aula.idAula;
-        this.aulaDoc = this.afs.doc<AulaInterface>(`aulas/${idAula}`);
-        this.aulaDoc.update(aula);
-    }
+  updateAula(aula: AulaInterface) {
+    let idAula = aula.idAula;
+    this.aulaDoc = this.afs.doc<AulaInterface>(`aulas/${idAula}`);
+    this.aulaDoc.update(aula);
+  }
 
 }

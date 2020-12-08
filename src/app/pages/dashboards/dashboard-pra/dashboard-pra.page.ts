@@ -4,13 +4,13 @@ import {UsersService} from "../../../services/data/users.service";
 import {AuthService} from "../../../services/auth.service";
 import {Observable} from "rxjs";
 import {AulasService} from "../../../services/data/aulas.service";
-import {AulaInterface} from "../../../interfaces/aulaInterface";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {Router} from "@angular/router";
 import {TotalesService} from "../../../services/data/totales.service";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {NotificacionesService} from "../../../services/data/notificaciones.service";
 import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
+import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 
 @Component({
   selector: 'app-dashboard-pra',
@@ -21,13 +21,13 @@ export class DashboardPraPage implements OnInit {
 
   public num = 30;
   public numInc = 2;
-  name: String;
+  private name: String;
   private data: any;
-  aula: Observable<AulaInterface>;
-  private user: firebase.User;
+  private user: Observable<firebase.User | null>;
   private idAula: string = "";
   private totalEquipos: any = 0;
   private notificaciones: Observable<NotificacionInterface[]>;
+  private usuario: UsuarioInterface;
 
   constructor(
     private usersService: UsersService,
@@ -43,15 +43,16 @@ export class DashboardPraPage implements OnInit {
 
   ngOnInit() {
     // leer el nombre del usuario
-    this.authService.userDetails().subscribe((user) => {
-      this.user = user;
-      if (this.user.email) {
-        this.usersService.getUser(this.user.email).subscribe(
+    this.user = this.authService.currentUser;
+    this.user.subscribe((user) => {
+      if(user) {
+        let email = user.email;
+        this.usersService.getUser(email).subscribe(
           usuario => {
-            this.name = usuario.nombre;
-            this.idAula = usuario.aula;
-
-            if (this.user != null) {
+            this.usuario = usuario;
+            if (this.usuario.rol == 'pra') {
+              this.name = usuario.nombre;
+              this.idAula = usuario.aula;
               // Buscar totales del aula
               this.aulasService.getAulaDetail(this.idAula)
                 .subscribe((aula) => {
@@ -62,8 +63,9 @@ export class DashboardPraPage implements OnInit {
             } else {
               this.router.navigateByUrl('/login');
             }
-          }
-        )
+          })
+      } else {
+        this.router.navigateByUrl('/login');
       }
     });
   }
