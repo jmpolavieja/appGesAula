@@ -8,3 +8,7 @@ ion-row#header {
 ion-icon{
   font-size: 24px;
 }
+ion-content {
+  --background: url('../../../../assets/fondoDegradado.png') no-repeat center center fixed;
+  --background-size: cover;
+}

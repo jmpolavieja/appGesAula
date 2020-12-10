@@ -46,4 +46,5 @@ https://luisjordan.net/tutorial-de-ionic/aplicacion-gestor-aulas-ionic-parte-1-l
 
 De aquí he sacado la utilización de la sobrecarga del método valueChanges() para extraer el docId de un documento.
 https://es.coredump.biz/questions/46900430/firestore-getting-documents-id-from-collection#48462013
-
+Para centrar el formulario de login y que sea responsive, sacado de:
+https://anthonysimmon.com/centered-login-form-ionic-framework/

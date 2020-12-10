@@ -25,10 +25,10 @@ export class FormEquipoPage implements OnInit {
         teclado: [false, Validators.required]
     });
     private equipo: EquipoInterface;
-    private titulo: string;
+    public titulo: string;
     private nuevo: boolean;
     private total: TotalInterface;
-    private action: string;
+    public action: string;
 
     constructor(
         public loadingCtrl: LoadingController,
@@ -128,7 +128,7 @@ export class FormEquipoPage implements OnInit {
             .then(() => {
                 // aumentar el contador de equipos totales
                 this.updateTotal();
-                this.router.navigateByUrl('/dashboard-trm');
+                this.router.navigateByUrl('/trm');
             })
             .catch(error => {
                 console.error(error);
@@ -149,6 +149,6 @@ export class FormEquipoPage implements OnInit {
 
     updateEquipo(): void {
         this.equiposService.updateEquipo(this.equipo);
-        this.router.navigateByUrl('/dashboard-trm');
+        this.router.navigateByUrl('/trm');
     }
 }

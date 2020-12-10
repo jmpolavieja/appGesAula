@@ -4,3 +4,7 @@ ion-item-divider {
   font-weight: bold;
   font-size: large;
 }
+ion-content {
+  --background: url('../../../../assets/fondoDegradado.png') no-repeat center center fixed;
+  --background-size: cover;
+}

@@ -43,6 +43,7 @@ export class DashboardTrmPage implements OnInit {
     this.user = this.authService.currentUser;
     this.user.subscribe((user) => {
       if (user) {
+        console.log(user.email);
         let email = user.email;
         this.userService.getUser(email).subscribe(
           usuario => {
@@ -51,13 +52,14 @@ export class DashboardTrmPage implements OnInit {
             if (this.usuario.rol == "trm") {
               this.totales = this.totalService.getTotales();
               this.notificaciones = this.notifService.getNotificaciones('taller');
+            } else if (this.usuario.rol == "pra") {
+              this.router.navigateByUrl('/pra');
+            } else if (this.usuario.rol == 'pdd') {
+              this.router.navigateByUrl('/pdd');
             } else {
               this.router.navigateByUrl('/login');
             }
-          }
-        )
-      } else {
-        this.router.navigateByUrl('/login');
+          })
       }
     });
   }
@@ -94,11 +96,12 @@ export class DashboardTrmPage implements OnInit {
   }
 
   scan() {
-    // TODO activar la búsqueda si es un idequipo
+    // activar la búsqueda si es un idequipo
     this.data = null;
     this.barcodeScanner.scan().then(barcodeData => {
       console.log("Equipo: ", barcodeData);
-      this.data = barcodeData;
+      this.data = barcodeData.text;
+      this.router.navigateByUrl('/detail-equipo/' + this.data + '/false');
     }).catch(err => {
       console.log('Error ', err);
     });

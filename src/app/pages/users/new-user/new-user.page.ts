@@ -83,7 +83,7 @@ export class NewUserPage implements OnInit {
         this.userService.registerUser(this.user)
             .then(() => {
                 this.updateTotal();
-                this.router.navigateByUrl('/dashboard-trm');
+                this.router.navigateByUrl('/trm');
             })
             .catch( error => {
                 console.error(error);
@@ -92,7 +92,7 @@ export class NewUserPage implements OnInit {
 
     updateuser(): void{
         this.userService.updateUser(this.user);
-        this.router.navigateByUrl('/dashboard-trm');
+        this.router.navigateByUrl('/trm');
     }
 
     private updateTotal(): void {

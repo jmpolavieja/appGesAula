@@ -12,15 +12,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login2/login2.module').then( m => m.Login2PageModule)
   },
   {
-    path: 'pra',
-    loadChildren: () => import('./pages/dashboards/dashboard-pra/dashboard-pra.module').then(m => m.DashboardPraPageModule)
-  },
-  {
-    path: 'trm',
+    path: 'dashboard-trm',
     loadChildren: () => import('./pages/dashboards/dashboard-trm/dashboard-trm.module').then(m => m.DashboardTrmPageModule)
   },
   {
-    path: 'pdd',
+    path: 'dashboard-pra',
+    loadChildren: () => import('./pages/dashboards/dashboard-pra/dashboard-pra.module').then(m => m.DashboardPraPageModule)
+  },
+
+  {
+    path: 'dashboard-pdd',
     loadChildren: () => import('./pages/dashboards/dashboard-pdd/dashboard-pdd.module').then( m => m.DashboardPddPageModule)
   },
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/aulas/detail-aula/detail-aula.module').then(m => m.DetailAulaPageModule)
   },
   {
+    path: 'form-completo/:id',
+    loadChildren: () => import('./pages/equipos/form-completo/form-completo.module').then( m => m.FormCompletoPageModule)
+  },
+  {
     path: 'detail-incidencia/:id/:nueva',
     loadChildren: () => import('./pages/incidencias/detail-incidencia/detail-incidencia.module').then( m => m.DetailIncidenciaPageModule)
   },
@@ -72,20 +77,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/users/new-user/new-user.module').then(m => m.NewUserPageModule)
   },
   {
-    path: 'form-completo/:id',
-    loadChildren: () => import('./pages/equipos/form-completo/form-completo.module').then( m => m.FormCompletoPageModule)
-  },
-  {
     path: 'genera-equipos',
     loadChildren: () => import('./pages/equipos/genera-equipos/genera-equipos.module').then(m => m.GeneraEquiposPageModule)
   },
   {
     path: 'asigna-equipos',
     loadChildren: () => import('./pages/equipos/asigna-equipos/asigna-equipos.module').then( m => m.AsignaEquiposPageModule)
-  },
-  {
-    path: 'list-equipos-aula',
-    loadChildren: () => import('./pages/equipos/list-equipos-aula/list-equipos-aula.module').then( m => m.ListEquiposAulaPageModule)
   }
 
 ];

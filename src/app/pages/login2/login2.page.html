@@ -1,13 +1,16 @@
-<ion-header>
+<!--<ion-header>
     <ion-toolbar color="primary">
         <ion-title>Login</ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header>-->
 
-<ion-content class="ion-padding">
-    <form class="form" [formGroup]="validations_form" (ngSubmit)="loginUser(validations_form.value)">
-
-        <ion-item>
+<ion-content class="bg-img">
+    <form class="form" [formGroup]="validations_form"
+          (ngSubmit)="loginUser(validations_form.value)">
+        <div class="header padding text.center">
+            <img src="assets/logoGesAulalogin.png" alt="GesAula logo">
+        </div>
+        <ion-item class="ion-margin-horizontal">
             <ion-label position="floating" color="primary">Email</ion-label>
             <ion-input type="text" formControlName="email"></ion-input>
         </ion-item>
@@ -20,7 +23,7 @@
             </ng-container>
         </div>
 
-        <ion-item>
+        <ion-item class="ion-margin-horizontal">
             <ion-label position="floating" color="primary">Password</ion-label>
             <ion-input type="password" formControlName="password" class="form-controll" required></ion-input>
         </ion-item>
@@ -33,7 +36,7 @@
             </ng-container>
         </div>
 
-        <ion-button class="submit-btn" type="submit" [disabled]="!validations_form.valid">Log In</ion-button>
+        <ion-button class="ion-margin" color="primary" expand="block" type="submit" [disabled]="!validations_form.valid">Log In</ion-button>
 
         <label class="error-message">{{errorMessage}}</label>
     </form>

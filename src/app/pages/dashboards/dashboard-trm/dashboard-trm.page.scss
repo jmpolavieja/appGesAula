@@ -8,3 +8,7 @@ h3 {
 ion-button {
   --ion-safe-area-top: 20px;
 }
+ion-content {
+  --background: url('../../../../assets/fondoDegradado.png') no-repeat center center fixed;
+  --background-size: cover;
+}

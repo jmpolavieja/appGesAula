@@ -88,7 +88,7 @@ export class DetailAulaPage implements OnInit {
           // Aumentar el contador de aulas. Mirar nuevo usuario
           // navegar al dashboard
           this.updateTotal();
-          this.router.navigateByUrl('/dashboard-trm');
+          this.router.navigateByUrl('/trm');
         })
   }
 

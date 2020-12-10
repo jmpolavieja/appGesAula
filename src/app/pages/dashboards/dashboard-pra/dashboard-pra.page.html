@@ -12,9 +12,9 @@
   <ion-searchbar (click)=""></ion-searchbar>-->
   <!-- búsqueda por código QR -->
 
-  <ion-button color="success" expand="block" (click)="scan()">
+  <ion-button color="success" expand="block" (click)="scan()" class="ion-margin-horizontal">
     <ion-icon name="qr-code-outline"></ion-icon>
-    Scan code
+    Buscar por código QR
   </ion-button>
   <!-- ahora aparecerá un cuadro con el total de equipos del aula -->
   <ion-card class="ion-text-center">
@@ -62,8 +62,8 @@
     </ion-card-header>
   </ion-card>
   <!-- lista de notificaciones -->
-  <ion-list>
-    <ion-item-sliding *ngFor="let not of notificaciones | async">
+  <ion-list class="transparente">
+    <ion-item-sliding *ngFor="let not of notificaciones" >
       <ion-item-options side="start">
         <ion-item-option (click)="leido(not)" color="success">
           <ion-icon name="checkmark-outline"></ion-icon>
@@ -81,5 +81,5 @@
       </ion-item>
     </ion-item-sliding>
   </ion-list>
-  <ion-button (click)="logout()" expand="block" color="warning">Cerrar sesión</ion-button>
+  <ion-button (click)="logout()" expand="block" color="warning" class="ion-margin-horizontal">Cerrar sesión</ion-button>
 </ion-content>
