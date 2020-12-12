@@ -9,6 +9,8 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 
+import {NativeStorage} from '@ionic-native/native-storage/ngx';
+
 /*  imports de firebase */
 import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
@@ -20,27 +22,28 @@ import {IonicStorageModule} from "@ionic/storage";
 
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    entryComponents: [],
-    imports: [
-        BrowserModule,
-        IonicModule.forRoot(),
-        IonicStorageModule.forRoot(),
-        AppRoutingModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFirestoreModule,
-        AngularFireAuthModule
-    ],
-    exports: [],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        BarcodeScanner,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  entryComponents: [],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule
+  ],
+  exports: [],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    BarcodeScanner,
+    NativeStorage,
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

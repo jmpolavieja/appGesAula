@@ -1,22 +1,24 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-/*import {FormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';*/
+import {IonicModule} from '@ionic/angular';
 
 import {ListEquiposPageRoutingModule} from './list-equipos-routing.module';
 
 import {ListEquiposPage} from './list-equipos.page';
-import {SharedModule} from "../../../shared/shared.module";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        /*FormsModule,
-        IonicModule,*/
-        ListEquiposPageRoutingModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ListEquiposPageRoutingModule,
+    Ng2SearchPipeModule
+  ],
   declarations: [ListEquiposPage]
 })
-export class ListEquiposPageModule {}
+export class ListEquiposPageModule {
+}

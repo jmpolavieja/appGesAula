@@ -25,6 +25,7 @@ export class ListEquiposPage implements OnInit {
   private aula: AulaInterface;
   private incidenciasAula: number;
   private totalIncidencias: number;
+  filterTerm: string;
 
   constructor(private equiposService: EquiposService,
               private puestosService: PuestosService,
@@ -54,7 +55,8 @@ export class ListEquiposPage implements OnInit {
       this.equiposService.getEquiposList(this.AulaNumero).subscribe(equipos => {
         this.equipos = equipos;
       });
-    } else { // si son todos los equipos
+    } else {
+      // si son todos los equipos
       this.equiposService.getEquiposList().subscribe(equipos => {
         this.equipos = equipos;
       });
@@ -74,7 +76,7 @@ export class ListEquiposPage implements OnInit {
     )
 
   }
-
+  // ActionSheet para el trm, con el menú de acciones
   async presentActionPra() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Aula',
@@ -106,7 +108,7 @@ export class ListEquiposPage implements OnInit {
     });
     await actionSheet.present();
   }
-
+  // ActionSheet para el pra, con las acciones accesibles por su parte
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Equipos',
@@ -201,6 +203,7 @@ export class ListEquiposPage implements OnInit {
     } else {
       var n = 2, m = 5;
     }
+    // Una vez que tengo todos los datos, creo el objeto incidencia
     let idIncidencia = idEquipo + "-" + diames.slice(0, n) + diames.slice(n + 1, m);
     data = {
       creadaPor: this.aula.pra,
@@ -210,10 +213,10 @@ export class ListEquiposPage implements OnInit {
       recogida: false,
       aula: this.idAula
     }
-    console.log(data.fechaInicio);
-    // uso el inyector para crear la incidencia,
+    //console.log(data.fechaInicio);
+    // uso el servicio para crear la incidencia,
 
-    console.log('Llamo al servicio createIncidencia con ', data);
+    //console.log('Llamo al servicio createIncidencia con ', data);
     this.incSer.createIncidencia(data).then(
       res => {
         console.log('Incidencia creada exitosamente', idEquipo);
@@ -259,7 +262,8 @@ export class ListEquiposPage implements OnInit {
       idIncidencia: idIncidencia,
       leida: false,
       mensaje: "Nueva incidencia del equipo " + idEquipo,
-      para: "taller"
+      para: "taller",
+      idNotificacion: idIncidencia+"-A"
     }
     // Ahora creas la notificación
     this.notiSer.createNotificacion(notificacion).then(() => {

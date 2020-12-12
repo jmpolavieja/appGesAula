@@ -15,7 +15,7 @@ export class NotificacionesService {
   }
 
   createNotificacion(not: NotificacionInterface) {
-    return this.afs.collection('notificaciones').add(not);
+    return this.afs.collection('notificaciones').doc(not.idNotificacion).set(not);
   }
 
   setNotificacion(notificacion: NotificacionInterface): Promise<void> {

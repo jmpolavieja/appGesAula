@@ -1,15 +1,19 @@
 import {Component, OnInit} from '@angular/core';
+//Importamos nuestros servicios
 import {UsersService} from "../../../services/data/users.service";
-import {Observable} from "rxjs";
 import {TotalesService} from "../../../services/data/totales.service";
-import {TotalInterface} from "../../../interfaces/totalInterface";
-import {Router} from "@angular/router";
 import {NotificacionesService} from "../../../services/data/notificaciones.service";
-import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
-import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {AuthService} from "../../../services/auth.service";
-import firebase from "firebase";
+// Importamos interfaces necesarias
+import {TotalInterface} from "../../../interfaces/totalInterface";
 import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
+import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
+// Otras importaciones (librerías, etc)
+import {Observable} from "rxjs";
+import {Router} from "@angular/router";
+import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
+import firebase from "firebase";
+import {ToastController} from '@ionic/angular'
 
 @Component({
   selector: 'app-dashboard-trm',
@@ -18,6 +22,7 @@ import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 })
 export class DashboardTrmPage implements OnInit {
 
+  // Declaración de prppiedades
   public totales: Observable<TotalInterface[]>;
   public primeraVez: boolean;
   public notificaciones: Observable<NotificacionInterface[]>;
@@ -33,7 +38,8 @@ export class DashboardTrmPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private notifService: NotificacionesService,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private toastCtrl: ToastController
   ) {
     this.primeraVez = true;
   }
@@ -53,9 +59,9 @@ export class DashboardTrmPage implements OnInit {
               this.totales = this.totalService.getTotales();
               this.notificaciones = this.notifService.getNotificaciones('taller');
             } else if (this.usuario.rol == "pra") {
-              this.router.navigateByUrl('/pra');
+              this.router.navigateByUrl('/dashboard-pra');
             } else if (this.usuario.rol == 'pdd') {
-              this.router.navigateByUrl('/pdd');
+              this.router.navigateByUrl('/dashboard-pdd');
             } else {
               this.router.navigateByUrl('/login');
             }
@@ -97,13 +103,26 @@ export class DashboardTrmPage implements OnInit {
 
   scan() {
     // activar la búsqueda si es un idequipo
-    this.data = null;
+    var data = null;
     this.barcodeScanner.scan().then(barcodeData => {
-      console.log("Equipo: ", barcodeData);
-      this.data = barcodeData.text;
-      this.router.navigateByUrl('/detail-equipo/' + this.data + '/false');
-    }).catch(err => {
-      console.log('Error ', err);
+      // console.log("Equipo: ", barcodeData);
+      data = barcodeData.text;
+      if (data.substring(0,3) == "CPU"){
+        this.presentToast('Equipo leído: ' + data);
+        this.router.navigateByUrl('/detail-equipo/' + data + '/false');
+      } else {
+        this.presentToast('Debe escanear un código correcto.');
+      }
+      }).catch(err => {
+      this.presentToast('Error ' + err);
     });
+  }
+
+  async presentToast(mensaje) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 }

@@ -14,7 +14,7 @@
     <p class="ion-padding">Deberá introducir el primer id de equipo a asignar y el número de equipos a registrar, con su
                            marca y modelo.</p>
     <ion-list class="ion-padding">
-        <form [formGroup]="datosLote" (ngSubmit)="presentAlert()">
+        <form [formGroup]="dataForm" (ngSubmit)="presentAlert()">
             <ion-input placeholder="primer idEquipo: CPUXXX" formControlName="idEquipo"></ion-input>
             <ion-input placeholder="Número de equipos" inputmode="numeric" formControlName="numero"></ion-input>
             <ion-input placeholder="Marca" formControlName="marca"></ion-input>

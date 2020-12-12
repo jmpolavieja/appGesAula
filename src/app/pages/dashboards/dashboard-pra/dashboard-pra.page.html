@@ -7,23 +7,35 @@
 
 <ion-content>
   <!-- primero irá el texto del aula de que se trate -->
-  <h2>{{ idAula }}</h2>
+  <h3 class="ion-text-center">{{ idAula }}</h3>
   <!-- luego el cuadro de búsqueda
   <ion-searchbar (click)=""></ion-searchbar>-->
   <!-- búsqueda por código QR -->
 
-  <ion-button color="success" expand="block" (click)="scan()" class="ion-margin-horizontal">
+  <ion-button color="success" expand="block" (click)="scan()">
     <ion-icon name="qr-code-outline"></ion-icon>
-    Buscar por código QR
+     Buscar Equipo
   </ion-button>
   <!-- ahora aparecerá un cuadro con el total de equipos del aula -->
-  <ion-card class="ion-text-center">
+  <ion-list>
+    <ion-item routerLink="/list-equipos/{{idAula}}">
+      <ion-icon name="desktop-outline" slot="start"></ion-icon>
+      <ion-label>Equipos en el aula</ion-label>
+      <ion-badge slot="end" color="primary">{{totalEquipos}}</ion-badge>
+    </ion-item>
+    <ion-item routerLink="/list-incidencias/{{idAula}}">
+      <ion-icon name="warning-outline" slot="start"></ion-icon>
+      <ion-label>Incidencias activas</ion-label>
+      <ion-badge slot="end" color="danger">{{numInc}}</ion-badge>
+    </ion-item>
+  </ion-list>
+  <!--<ion-card class="ion-text-center">
     <ion-card-header>
       <ion-item routerLink="/list-equipos/{{idAula}}">
         <ion-grid>
           <ion-row>
             <ion-col col="3" offset="5">
-              <ion-icon size="large" name="desktop-outline"></ion-icon>
+
             </ion-col>
           </ion-row>
           <ion-row>
@@ -32,7 +44,7 @@
                 Equipos
               </ion-card-title>
             </ion-col>
-            <ion-col col="2" offset="4" >
+            <ion-col col="2" offset="4">
               <ion-card-title class="ion-text-right">
                 {{totalEquipos}}
               </ion-card-title>
@@ -41,29 +53,29 @@
         </ion-grid>
       </ion-item>
       <ion-item routerLink="/list-incidencias/{{idAula}}">
-        <ion-grid>
-          <ion-row>
-            <ion-col col="3" offset="5">
-              <ion-icon size="large" name="warning-outline"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col="10">
-              <ion-card-title>
-                Incidencias activas
-              </ion-card-title>
-            </ion-col>
-            <ion-col size="2">
-              <ion-card-title class="ion-text-right">{{numInc}}</ion-card-title>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col col="3" offset="5">
+                <ion-icon size="large" name="warning-outline"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col="10">
+                <ion-card-title>
+                  Incidencias
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="2">
+                <ion-card-title class="ion-text-right">{{numInc}}</ion-card-title>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
       </ion-item>
     </ion-card-header>
-  </ion-card>
+  </ion-card>-->
   <!-- lista de notificaciones -->
   <ion-list class="transparente">
-    <ion-item-sliding *ngFor="let not of notificaciones" >
+    <ion-item-sliding *ngFor="let not of notificaciones">
       <ion-item-options side="start">
         <ion-item-option (click)="leido(not)" color="success">
           <ion-icon name="checkmark-outline"></ion-icon>

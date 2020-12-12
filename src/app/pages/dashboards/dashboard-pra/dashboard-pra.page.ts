@@ -42,7 +42,7 @@ export class DashboardPraPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     private totSer: TotalesService,
     private router: Router,
-    private coastCtrl: ToastController
+    private toastCtrl: ToastController
   ) {
   }
 
@@ -73,9 +73,9 @@ export class DashboardPraPage implements OnInit {
                 }
               );
             } else if (this.usuario.rol == 'trm') {
-              this.router.navigateByUrl('/trm');
+              this.router.navigateByUrl('/dashboard-trm');
             } else if (this.usuario.rol == 'pdd') {
-              this.router.navigateByUrl('/pdd');
+              this.router.navigateByUrl('/dashboard-pdd');
             } else {
               this.router.navigateByUrl('/login');
             }
@@ -92,17 +92,18 @@ export class DashboardPraPage implements OnInit {
 
   scan() {
     // Búsqueda de equipos por código qr
+    var data = null;
     this.barcodeScanner.scan().then(barcodeData => {
-      const idEquipo = barcodeData.text;
+      data = barcodeData.text;
 
-      if (idEquipo.substring(0, 2) == "CPU") {
-        this.presentToast(idEquipo);
-        this.router.navigateByUrl('/form-completo/' + idEquipo);
+      if (data.substring(0, 3) == "CPU") {
+        this.presentToast(data);
+        this.router.navigateByUrl('/form-completo/' + data);
       } else {
         this.presentToast("Debe leer un código qr de equipo");
       }
     }).catch(err => {
-      console.log('Error ', err);
+      this.presentToast('Ha habido un error al leer el código, por favor inténtelo de nuevo.');
     });
   }
 
@@ -111,9 +112,9 @@ export class DashboardPraPage implements OnInit {
     this.notifService.marcarLeida(not);
   }
 
-  async presentToast(idEquipo) {
-    const toast = await this.coastCtrl.create({
-      message: 'Equipo leído: ' + idEquipo,
+  async presentToast(mensaje) {
+    const toast = await this.toastCtrl.create({
+      message: 'Equipo leído: ' + mensaje,
       duration: 2000
     });
     toast.present();

@@ -5,9 +5,13 @@
     </ion-buttons>
     <ion-title>Lista Equipos</ion-title>
     <ion-img slot="end" src="./assets/logoGesAulamin.png"></ion-img>
+
+
   </ion-toolbar>
 </ion-header>
-
+<ion-toolbar  color="light">
+  <ion-searchbar placeholder="Buscar..." [(ngModel)]="filterTerm" animated="true" class="ion-margin-top"></ion-searchbar>
+</ion-toolbar>
 <ion-content>
   <!-- Plantilla para todos los equipos -->
   <ion-list *ngIf="!idAula">
@@ -16,7 +20,7 @@
       <ion-label>Aula</ion-label>
       <ion-label>Departamento</ion-label>
     </ion-list-header>
-    <ion-item *ngFor="let equipo of equipos"
+    <ion-item *ngFor="let equipo of equipos | filter:filterTerm"
               routerLink="/detail-equipo/{{equipo.idEquipo}}/false">
       <ion-label>{{ equipo.idEquipo }}</ion-label>
       <ion-label>{{ equipo.ubicacion.aula}}</ion-label>
@@ -27,7 +31,7 @@
   <ion-grid *ngIf="idAula">
     <ion-row>
       <ion-col [size]="12">
-        <h3 class="ion-text-center">Aula {{ idAula }}</h3>
+        <h3 class="ion-text-center">{{ idAula }}</h3>
       </ion-col>
     </ion-row>
     <ion-row id="header" class="ion-margin-bottom">
@@ -36,7 +40,7 @@
       <ion-col>Ficha</ion-col>
       <ion-col>Incidencia</ion-col>
     </ion-row>
-    <ion-row *ngFor="let equipo of equipos" class="{{equipo.estado}}">
+    <ion-row *ngFor="let equipo of equipos | filter:filterTerm" class="{{equipo.estado}}">
         <ion-col>{{ equipo.idEquipo }}</ion-col>
         <ion-col>{{ equipo.ubicacion.puesto }}</ion-col>
         <ion-col>
@@ -49,8 +53,11 @@
     </ion-row>
   </ion-grid>
 
+
+  <ion-button (click)="presentActionPra()" expand="block" *ngIf="idAula">Asignar Equipos</ion-button>
+</ion-content>
+<ion-footer>
   <ion-button (click)="presentActionSheet()" expand="block" *ngIf="!idAula">
     Acciones
   </ion-button>
-  <ion-button (click)="presentActionPra()" expand="block" *ngIf="idAula">Asignar Equipos</ion-button>
-</ion-content>
+</ion-footer>

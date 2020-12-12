@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertController} from "@ionic/angular";
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {Router} from "@angular/router";
 import {TotalesService} from "../../../services/data/totales.service";
@@ -13,13 +13,13 @@ import {TotalInterface} from "../../../interfaces/totalInterface";
     styleUrls: ['./genera-equipos.page.scss'],
 })
 export class GeneraEquiposPage implements OnInit {
-
-    public datosLote = this.fb.group({
+    public dataForm: FormGroup;
+    /*public datosLote = this.fb.group({
         idEquipo: ['', Validators.required],
         numero: ['', Validators.required],
         marca: ['', Validators.required],
         modelo: ['', Validators.required]
-    })
+    })*/
     total: TotalInterface;
 
     constructor(
@@ -29,6 +29,12 @@ export class GeneraEquiposPage implements OnInit {
         private router: Router,
         private totales: TotalesService
         ) {
+        this.dataForm = this.fb.group({
+            idEquipo: ['', Validators.required],
+            numero: ['', Validators.required],
+            marca: ['', Validators.required],
+            modelo: ['', Validators.required]
+        })
     }
 
     ngOnInit() {
@@ -41,10 +47,10 @@ export class GeneraEquiposPage implements OnInit {
 
     generar() {
         console.log('Ahora voy a generar los equipos');
-        var numero = +this.datosLote.value.numero;
-        var modelo = this.datosLote.value.modelo;
-        var marca = this.datosLote.value.marca;
-        var primerId = this.datosLote.value.idEquipo;
+        var numero = +this.dataForm.value.numero;
+        var modelo = this.dataForm.value.modelo;
+        var marca = this.dataForm.value.marca;
+        var primerId = this.dataForm.value.idEquipo;
         if(this.eqService.generaEquipos(numero,primerId,marca,modelo)) {
             console.log("Equipos generados");
             // Actualizar total de equipos;

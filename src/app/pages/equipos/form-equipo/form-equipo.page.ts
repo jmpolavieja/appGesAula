@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertController, LoadingController} from "@ionic/angular";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -14,16 +14,7 @@ import {TotalInterface} from "../../../interfaces/totalInterface";
 })
 export class FormEquipoPage implements OnInit {
 
-    public formEquipo = this.fb.group({
-        idEquipo: ['', Validators.required],
-        marca: ['', Validators.required],
-        modelo: ['', Validators.required],
-        departamento: ['', Validators.required],
-        aula: ['', Validators.required],
-        monitor: [''],
-        raton: [false, Validators.required],
-        teclado: [false, Validators.required]
-    });
+    public formEquipo: FormGroup;
     private equipo: EquipoInterface;
     public titulo: string;
     private nuevo: boolean;
@@ -39,6 +30,16 @@ export class FormEquipoPage implements OnInit {
         private route: ActivatedRoute,
         public totalesService: TotalesService
     ) {
+       this.formEquipo = this.fb.group({
+            idEquipo: ['', Validators.required],
+            marca: ['', Validators.required],
+            modelo: ['', Validators.required],
+            departamento: ['', Validators.required],
+            aula: ['', Validators.required],
+            monitor: [''],
+            raton: [false, Validators.required],
+            teclado: [false, Validators.required]
+        });
     }
 
     ngOnInit() {
