@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import firebase from "firebase";
 import {ToastController} from '@ionic/angular'
+import {LoaderService} from "../../../services/loader.service";
 
 @Component({
   selector: 'app-dashboard-trm',
@@ -27,7 +28,6 @@ export class DashboardTrmPage implements OnInit {
   public primeraVez: boolean;
   public notificaciones: Observable<NotificacionInterface[]>;
   private notif: NotificacionInterface;
-  private data: any;
   public user: Observable<firebase.User | null>;
   public name: string;
   private usuario: UsuarioInterface;
@@ -39,16 +39,20 @@ export class DashboardTrmPage implements OnInit {
     private authService: AuthService,
     private notifService: NotificacionesService,
     private barcodeScanner: BarcodeScanner,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loader: LoaderService
   ) {
     this.primeraVez = true;
   }
 
   ngOnInit() {
+    // Llamamos al loader
+    this.loader.showLoader();
     // Para que si no hay sesión activa se vuelva al login
     this.user = this.authService.currentUser;
     this.user.subscribe((user) => {
       if (user) {
+
         console.log(user.email);
         let email = user.email;
         this.userService.getUser(email).subscribe(
@@ -56,6 +60,7 @@ export class DashboardTrmPage implements OnInit {
             this.usuario = usuario;
             this.name = this.usuario.nombre;
             if (this.usuario.rol == "trm") {
+              this.loader.hideLoader();
               this.totales = this.totalService.getTotales();
               this.notificaciones = this.notifService.getNotificaciones('taller');
             } else if (this.usuario.rol == "pra") {

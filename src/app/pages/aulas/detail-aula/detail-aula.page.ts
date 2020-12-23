@@ -37,10 +37,11 @@ export class DetailAulaPage implements OnInit {
 
   ngOnInit() {
     this.nuevo = this.route.snapshot.paramMap.get('new');
-    console.log(this.nuevo);
+    //console.log(this.nuevo);
     if(this.nuevo == "false"){
       this.titulo = "Detalle del Aula";
-      const idAula: string = 'Aula ' + this.route.snapshot.paramMap.get('id');
+
+      const idAula = this.route.snapshot.paramMap.get('id');
       console.log("IdAula: " + idAula);
       this.aulasService.getAulaDetail(idAula).subscribe(aula =>{
         this.aula = aula;
@@ -59,17 +60,8 @@ export class DetailAulaPage implements OnInit {
   }
 
   guardarDatos() {
-    const idAula = this.aula.idAula;
-    const departamento = this.aulaForm.value.departamento;
-    const curso = this.aulaForm.value.curso;
-    console.log(parseInt(this.aulaForm.value.numEquipos));
-    const equipos = parseInt(this.aulaForm.value.numEquipos);
-    this.aula = {
-      idAula: idAula,
-      departamento: departamento,
-      curso: curso,
-      equipos: equipos
-    }
+    // TODO: controlar, si es aula nueva, el id debe cargarse del formulario
+    this.aula = this.aulaForm.value;
     if (this.nuevo == "true") {
       console.log("Nueva aula");
       this.guardarAula();
@@ -88,7 +80,7 @@ export class DetailAulaPage implements OnInit {
           // Aumentar el contador de aulas. Mirar nuevo usuario
           // navegar al dashboard
           this.updateTotal();
-          this.router.navigateByUrl('/trm');
+          this.router.navigateByUrl('/dashboard-trm');
         })
   }
 

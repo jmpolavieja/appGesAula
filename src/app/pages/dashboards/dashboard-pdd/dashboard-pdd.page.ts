@@ -7,6 +7,7 @@ import {AuthService} from "../../../services/auth.service";
 import {User} from "../../../shared/user";
 import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 import {Router} from "@angular/router";
+import {LoaderService} from "../../../services/loader.service";
 
 @Component({
   selector: 'app-dashboard-pdd',
@@ -23,18 +24,22 @@ export class DashboardPddPage implements OnInit {
     private aulasService: AulasService,
     private userService: UsersService,
     private afs: AuthService,
-    private router: Router
+    private router: Router,
+    private loader: LoaderService
   ) { }
 
   ngOnInit() {
+    this.loader.showLoader();
     this.user = this.afs.currentUser;
     this.user.subscribe( user => {
+      this.loader.hideLoader();
       if(user) {
         let email = user.email;
-        console.log(email);
+        // console.log(email);
         this.userService.getUser(email).subscribe(
           (usuario) => {
             this.usuario = usuario;
+            this.aulas = this.aulasService.getAulasDepartamento(this.usuario.departamento);
             if(this.usuario.rol != "pdd") {
               this.router.navigateByUrl('/login');
             }
@@ -43,11 +48,15 @@ export class DashboardPddPage implements OnInit {
             console.log(error);
           })
         );
-      } else {
+      } else if (this.usuario.rol == 'trm') {
+        this.router.navigateByUrl('/dashboard-trm');
+      } else if (this.usuario.rol == 'pra') {
+        this.router.navigateByUrl('/dashboard-pra');
+      }else{
         this.router.navigateByUrl('/login');
       }
+
     })
-    this.aulas = this.aulasService.getAulas('Informática');
   }
 
   logOut() {

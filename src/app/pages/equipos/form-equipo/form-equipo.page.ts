@@ -36,7 +36,7 @@ export class FormEquipoPage implements OnInit {
             modelo: ['', Validators.required],
             departamento: ['', Validators.required],
             aula: ['', Validators.required],
-            monitor: [''],
+            monitor: ['', Validators.required],
             raton: [false, Validators.required],
             teclado: [false, Validators.required]
         });
@@ -58,6 +58,7 @@ export class FormEquipoPage implements OnInit {
             // Pedir los datos del equipo y colocarlos en el formulario
             const id = this.route.snapshot.paramMap.get('id');
             this.equiposService.getEquipoDetail(id).subscribe(equipo => {
+                this.equipo = equipo;
                 this.formEquipo.controls.idEquipo.setValue(equipo.idEquipo);
                 this.formEquipo.controls.marca.setValue(equipo.hardware.marca);
                 this.formEquipo.controls.modelo.setValue(equipo.hardware.modelo);
@@ -74,46 +75,15 @@ export class FormEquipoPage implements OnInit {
 
     async guardaEquipo() {
         // Coger los datos del formulario y ponerlos en el equipo
-        const idEquipo = this.formEquipo.value.idEquipo;
-        const marca = this.formEquipo.value.marca;
-        const modelo = this.formEquipo.value.modelo;
-        const departamento = this.formEquipo.value.departamento;
-        const aula = this.formEquipo.value.aula;
-        const monitor = this.formEquipo.value.monitor;
-        const raton = this.formEquipo.value.raton;
-        const teclado = this.formEquipo.value.teclado;
+        this.equipo.idEquipo = this.formEquipo.value.idEquipo;
+        this.equipo.hardware.marca = this.formEquipo.value.marca;
+        this.equipo.hardware.modelo = this.formEquipo.value.modelo;
+        this.equipo.ubicacion.departamento = this.formEquipo.value.departamento;
+        this.equipo.ubicacion.aula = this.formEquipo.value.aula;
+        this.equipo.hardware.monitor = this.formEquipo.value.monitor;
+        this.equipo.hardware.raton = this.formEquipo.value.raton;
+        this.equipo.hardware.teclado = this.formEquipo.value.teclado;
 
-        this.equipo = {
-            estado: "alta",
-            idEquipo,
-            hardware: {
-                marca,
-                modelo,
-                procesador: "",
-                memoria: "",
-                discoDuro: "",
-                numSerie: "",
-                direccionMAC: "",
-                monitor,
-                raton,
-                teclado
-            },
-            software: {
-                alumno1: "",
-                alumno2: "",
-                antivirus: "",
-                ide1: "",
-                ide2: "",
-                officeVersion: "",
-                otros: "",
-                passProfesor: "",
-                so: "",
-                userProfesor: ""
-            },
-            ubicacion: {
-                aula, departamento, puesto: ""
-            }
-        }
         // Si es nuevo addEquipo, sino updateEquipo
         if (this.nuevo) {
             this.addEquipo();
@@ -129,7 +99,7 @@ export class FormEquipoPage implements OnInit {
             .then(() => {
                 // aumentar el contador de equipos totales
                 this.updateTotal();
-                this.router.navigateByUrl('/trm');
+                this.router.navigateByUrl('/dashboard-trm');
             })
             .catch(error => {
                 console.error(error);
@@ -139,8 +109,9 @@ export class FormEquipoPage implements OnInit {
     }
 
 
-    deleteEquipo() {
-        console.log('Eliminar el equipo');
+    deleteEquipo(idEquipo) {
+        // console.log('Eliminar el equipo');
+        this.equiposService.deleteEquipo(idEquipo)
     }
 
     updateTotal(): void {
@@ -150,6 +121,7 @@ export class FormEquipoPage implements OnInit {
 
     updateEquipo(): void {
         this.equiposService.updateEquipo(this.equipo);
-        this.router.navigateByUrl('/trm');
+        this.router.navigateByUrl('/list-equipos');
     }
+
 }

@@ -42,7 +42,7 @@ export class ListEquiposPage implements OnInit {
 
 
   ngOnInit() {
-    // Si es un aula
+    // Si es un aula leo los equipos de la misma
     if (this.route.snapshot.paramMap.get('aula')) {
       this.idAula = this.route.snapshot.paramMap.get('aula');
       this.aulaService.getAulaDetail(this.idAula).subscribe(
@@ -51,29 +51,30 @@ export class ListEquiposPage implements OnInit {
         }
       )
       this.AulaNumero = this.idAula.charAt(this.idAula.length - 1);
-      console.log("tengo aula: ", this.idAula);
-      this.equiposService.getEquiposList(this.AulaNumero).subscribe(equipos => {
+      // console.log("tengo aula: ", this.idAula);
+      this.equiposService.getEquiposList(this.idAula).subscribe(equipos => {
         this.equipos = equipos;
       });
+      // Leer totales de incidencias en aulas y total de incidencias
+      this.aulaService.getAulaDetail(this.idAula).subscribe(
+        aula => {
+          this.incidenciasAula = aula.incidencias;
+          // console.log('Número de incidencias del aula leído', this.incidenciasAula);
+        }
+      )
+      this.totalesService.getTotal('incidencias').subscribe(
+        total => {
+          this.totalIncidencias = total.total;
+          // console.log('Total de indencias leído', this.totalIncidencias);
+        }
+      )
     } else {
-      // si son todos los equipos
-      this.equiposService.getEquiposList().subscribe(equipos => {
+      // si son todos los equipos, leo todos los equipos para mostrarlos
+      this.equiposService.getAllEquipos().subscribe(equipos => {
         this.equipos = equipos;
       });
     }
-    // Leer totales de incidencias en aulas y total de incidencias
-    this.aulaService.getAulaDetail(this.idAula).subscribe(
-      aula => {
-        this.incidenciasAula = aula.incidencias;
-        console.log('Número de incidencias del aula leído');
-      }
-    )
-    this.totalesService.getTotal('incidencias').subscribe(
-      total => {
-        this.totalIncidencias = total.total;
-        console.log('Total de indencias leído');
-      }
-    )
+
 
   }
   // ActionSheet para el trm, con el menú de acciones
@@ -218,16 +219,12 @@ export class ListEquiposPage implements OnInit {
 
     //console.log('Llamo al servicio createIncidencia con ', data);
     this.incSer.createIncidencia(data).then(
-      res => {
+      () => {
         console.log('Incidencia creada exitosamente', idEquipo);
         // cuando es correcta, lanzo la notificación
         this.generaNotificacion(fecha, idIncidencia, idEquipo);
         // cambiar estado del equipo a incidencia
-        this.equiposService.updateEstado('incidencia', idEquipo).then(() => {
-          console.log('Equipo actualizado el estado');
-        }), error => {
-          console.error(error)
-        };
+        this.equiposService.updateEstado('incidencia', idEquipo);
         // Actualizar totales
         this.totalIncidencias += 1;
         this.totalesService.updateElTotal(this.totalIncidencias, 'incidencias').then(() => {
@@ -238,11 +235,13 @@ export class ListEquiposPage implements OnInit {
             });
         console.log('Incidencias Aula ', this.incidenciasAula);
         this.incidenciasAula += 1;
-        this.aulaService.updateIncidenciasAula(this.incidenciasAula, this.idAula).then(() => {
+        console.log("Actualizando incidencias del aula", this.aulaService.updateIncidenciasAula(this.incidenciasAula, this.idAula));
+
+          /*.then(() => {
           console.log('Incidencias aula actualizada');
         }).catch(() => {
           console.log('No he podido actualizar el total incidencias de un aula');
-        });
+        });*/
         // muestro detalle incidencia
         this.router.navigateByUrl('/detail-incidencia/' + data.idIncidencia + '/true');
       },

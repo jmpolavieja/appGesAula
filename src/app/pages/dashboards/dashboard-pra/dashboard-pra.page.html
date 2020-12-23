@@ -28,6 +28,10 @@
       <ion-label>Incidencias activas</ion-label>
       <ion-badge slot="end" color="danger">{{numInc}}</ion-badge>
     </ion-item>
+    <ion-item>
+      <ion-icon name="settings-outline" slot="start"></ion-icon>
+      <ion-label (click)="configAula()" *ngIf="puestosExist == 0">Configuración de Aula</ion-label>
+    </ion-item>
   </ion-list>
   <!--<ion-card class="ion-text-center">
     <ion-card-header>

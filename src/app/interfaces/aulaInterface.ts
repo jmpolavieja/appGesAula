@@ -4,8 +4,13 @@ export interface AulaInterface {
     columnas?: number,
     departamento: string,
     equipos?: number, // contiene el número de equipos asignados al aula
-    puestos?: number,
+    puestos?: Puesto[],
     curso: string,
     incidencias?: number,
     pra?: string
+}
+
+export interface Puesto {
+    docId: string,
+    idEquipo: string
 }

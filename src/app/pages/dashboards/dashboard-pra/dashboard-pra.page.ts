@@ -12,10 +12,12 @@ import {NotificacionesService} from "../../../services/data/notificaciones.servi
 import {Observable} from "rxjs";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {Router} from "@angular/router";
-import {ToastController} from "@ionic/angular";
+import {AlertController, ToastController} from "@ionic/angular";
 // Importaciones de interfaces necesarias
 import {NotificacionInterface} from "../../../interfaces/notificacionInterface";
 import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
+import {LoaderService} from "../../../services/loader.service";
+import {PuestosService} from "../../../services/data/puestos.service";
 
 @Component({
   selector: 'app-dashboard-pra',
@@ -24,7 +26,6 @@ import {UsuarioInterface} from "../../../interfaces/usuarioInterface";
 })
 export class DashboardPraPage implements OnInit {
   // Propiedades
-  public num: number;
   public numInc: number;
   public name: String;
   private user: Observable<firebase.User | null>;
@@ -32,6 +33,7 @@ export class DashboardPraPage implements OnInit {
   public totalEquipos: any = 0;
   public notificaciones: NotificacionInterface[];
   private usuario: UsuarioInterface;
+  private puestosExist: number;
 
   constructor(
     private usersService: UsersService,
@@ -39,24 +41,32 @@ export class DashboardPraPage implements OnInit {
     private aulasService: AulasService,
     private equiposSer: EquiposService,
     private notifService: NotificacionesService,
+    private puestosService: PuestosService,
     private barcodeScanner: BarcodeScanner,
     private totSer: TotalesService,
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loader: LoaderService,
+    private alertCtrl: AlertController
   ) {
   }
 
   ngOnInit() {
+    // console.log("Esto es ngOnInit");
+    // Mostrar el loader
+    this.loader.showLoader();
     // Comprobación de usuario actual - seguridad de acceso
     this.user = this.authService.currentUser;
     this.user.subscribe((user) => {
+      this.loader.hideLoader();
       // Si no hay sesión de usuario, se vuelve al login
       if (user) {
-        console.log(user.email);
+        // console.log(user.email);
         let email = user.email;
+        //console.log(localStorage.getItem('user'));
         this.usersService.getUser(email).subscribe(
           usuario => {
-            console.log("pra userServide: ", usuario.rol);
+            // console.log("pra userServide: ", usuario.rol);
             this.usuario = usuario;
             if (this.usuario.rol == 'pra') {
               this.name = usuario.nombre;
@@ -66,6 +76,10 @@ export class DashboardPraPage implements OnInit {
                 .subscribe((aula) => {
                   this.totalEquipos = aula.equipos;
                   this.numInc = aula.incidencias;
+                });
+              this.puestosService.existsPuestos(this.idAula)
+                .then( res => {
+                  this.puestosExist = res;
                 });
               this.notifService.getNotificaciones(this.idAula).subscribe(
                 nots => {
@@ -83,6 +97,7 @@ export class DashboardPraPage implements OnInit {
       }
     });
   }
+
 
   logout() {
     // Cerrar la sesión y volver a login
@@ -102,7 +117,7 @@ export class DashboardPraPage implements OnInit {
       } else {
         this.presentToast("Debe leer un código qr de equipo");
       }
-    }).catch(err => {
+    }).catch(() => {
       this.presentToast('Ha habido un error al leer el código, por favor inténtelo de nuevo.');
     });
   }
@@ -110,6 +125,42 @@ export class DashboardPraPage implements OnInit {
   leido(not: NotificacionInterface) {
     not.leida = true;
     this.notifService.marcarLeida(not);
+  }
+
+  // Alert para pedir datos de configuración del aula: filas y columnas
+  async configAula() {
+    let alert = await this.alertCtrl.create({
+      header: 'Setting Aula',
+      inputs: [
+        {
+          name: 'filas',
+          type: 'number',
+          placeholder: 'filas'
+        },
+        {
+          name: 'columnas',
+          type: 'number',
+          placeholder: 'columnas'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Guardar',
+          handler: data=> {
+            this.puestosService.setPuestos(this.idAula, data.filas, data.columnas);
+            console.log('Has configurado el aula con ', data.filas, " filas y ", data.columnas, " columnas" );
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async presentToast(mensaje) {

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EquiposService} from "../../../services/data/equipos.service";
 import {EquipoInterface} from "../../../interfaces/equipoInterface";
@@ -11,32 +11,10 @@ import {EquipoInterface} from "../../../interfaces/equipoInterface";
 })
 export class FormCompletoPage implements OnInit {
 
+  private idEquipo;
+  private estado;
   private equipo: EquipoInterface;
-  equipoForm = this.fb.group({
-    marca: [''],
-    modelo: [''],
-    procesador: [''],
-    memoria: [''],
-    discoDuro: [''],
-    numSerie: [''],
-    direccionMAC: [''],
-    monitor: [''],
-    raton: [''],
-    teclado: [''],
-    so: [''],
-    officeVersion: [''],
-    antivirus: [''],
-    ide1: [''],
-    ide2: [''],
-    otros: [''],
-    userProfesor: [''],
-    passProfesor: [''],
-    alumno1: [''],
-    alumno2: [''],
-    aula: [''],
-    departamento: [''],
-    puesto: ['']
-  });
+  private equipoForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -44,14 +22,40 @@ export class FormCompletoPage implements OnInit {
     private router: Router,
     private equipoSer: EquiposService
   ) {
+    this.equipoForm = this.fb.group({
+    marca: [' '],
+    modelo: [' '],
+    procesador: [' '],
+    memoria: [' '],
+    discoDuro: [' '],
+    numSerie: [' '],
+    direccionMAC: [' '],
+    monitor: [' '],
+    raton: [false],
+    teclado: [false],
+    so: [' '],
+    officeVersion: [' '],
+    antivirus: [' '],
+    ide1: [' '],
+    ide2: [' '],
+    otros: [' '],
+    userProfesor: [' '],
+    passProfesor: [ ' '],
+    alumno1: [' '],
+    alumno2: [' '],
+    aula: [' '],
+    departamento: [' '],
+    puesto: [' ']
+  });
   }
 
   ngOnInit() {
     // Leer el equipo
-    let idEquipo = this.route.snapshot.paramMap.get('id');
-    this.equipoSer.getEquipoDetail(idEquipo).subscribe(
+    this.idEquipo = this.route.snapshot.paramMap.get('id');
+    this.equipoSer.getEquipoDetail(this.idEquipo).subscribe(
       equipo => {
         this.equipo = equipo;
+        this.estado = equipo.estado;
         this.rellenaForm();
       }
     )
@@ -84,26 +88,44 @@ export class FormCompletoPage implements OnInit {
   }
 
   guardar() {
+    // TODO: lo primero que tengo que hacer es convertir el array simple de controles en el equipo
     let controles = this.equipoForm.controls;
-    for (const equipoKey in this.equipo) {
-      if(equipoKey == "hardware"){
-        let hardware = this.equipo.hardware;
-        for (const hardwareKey in hardware) {
-          hardware[hardwareKey] = controles[hardwareKey].value;
-        }
-        this.equipo.hardware = hardware;
-      }
-      if(equipoKey == "software") {
-        let software = this.equipo.software;
-        for (const softwareKey in software) {
-          software[softwareKey] = controles[softwareKey].value;
-        }
-        this.equipo.software = software;
-        console.log(this.equipo);
+    let equipo: EquipoInterface = {
+      idEquipo: this.idEquipo,
+      estado: this.estado,
+      hardware: {
+        marca: controles.marca.value,
+        modelo: controles.modelo.value,
+        procesador: controles.procesador.value,
+        memoria: controles.memoria.value,
+        discoDuro: controles.discoDuro.value,
+        numSerie: controles.numSerie.value,
+        direccionMAC: controles.direccionMAC.value,
+        monitor: controles.monitor.value,
+        raton: controles.raton.value,
+        teclado: controles.raton.value
+      },
+      software:{
+        so: controles.so.value,
+        officeVersion: controles.officeVersion.value,
+        antivirus: controles.antivirus.value,
+        ide1: controles.ide1.value,
+        ide2: controles.ide2.value,
+        otros: controles.otros.value,
+        userProfesor: controles.userProfesor.value,
+        passProfesor: controles.passProfesor.value,
+        alumno1: controles.alumno1.value,
+        alumno2: controles.alumno2.value
+      },
+      ubicacion: {
+        aula: controles.aula.value,
+        departamento: controles.departamento.value,
+        puesto: controles.puesto.value
       }
     }
+
     // Ahora actualizar el documento del equipo
-    this.equipoSer.updateEquipo(this.equipo);
-    this.router.navigateByUrl('pra');
+    console.log(this.equipoSer.updateEquipo(equipo));
+    this.router.navigateByUrl('/dashboard-pra');
   }
 }

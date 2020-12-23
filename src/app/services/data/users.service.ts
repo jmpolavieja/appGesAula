@@ -25,7 +25,7 @@ export class UsersService {
     }
 
     getUser(email: string): Observable<UsuarioInterface> {
-        return this.afs.collection('usuarios').doc<UsuarioInterface>(email).valueChanges()
+        return this.afs.collection('usuarios').doc<UsuarioInterface>(email).valueChanges();
     }
 
     getUserList(): Observable<UsuarioInterface[]> {

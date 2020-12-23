@@ -6,6 +6,7 @@ import {UsuarioInterface} from "../../interfaces/usuarioInterface";
 import {Router} from "@angular/router";
 import {ToastController} from "@ionic/angular";
 import {NativeStorage} from "@ionic-native/native-storage/ngx";
+import {LoaderService} from "../../services/loader.service";
 
 @Component({
   selector: 'app-login2',
@@ -25,7 +26,8 @@ export class Login2Page implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UsersService,
     private toastCtrl: ToastController,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private loader: LoaderService
   ) {
   }
 
@@ -55,16 +57,24 @@ export class Login2Page implements OnInit {
   };
 
   loginUser(value) {
-    //console.log("Soy loginUser ", value);
+    // Primero llamar al loading
+    this.loader.showLoader();
     this.authService.loginUser(value)
       .then(res => {
         this.userMail = res.user.email;// res devuelve el user
-        console.log(res.user);
+        //console.log(res.user);
         this.errorMessage = "";
         this.compruebaUser();
       }, err => {
+        console.log("Error de autenticación", err);
         this.errorMessage = err.message;
-      })
+        this.validations_form.reset();
+        this.loader.hideLoader();
+      }).catch ((err) => {
+        console.log('Error autenticación', err);
+        this.loader.hideLoader();
+    });
+
   }
 
   compruebaUser() {
@@ -72,15 +82,19 @@ export class Login2Page implements OnInit {
     // se comprueba su rol para enviarlo a su pantalla de inicio correspondiente
     this.userService.getUser(this.userMail).subscribe(
       usuario => {
+        this.loader.hideLoader();
         this.usuario = usuario;
-        console.log("Login2 rol: ", this.usuario.rol);
+        //console.log("Login2 rol: ", this.usuario.rol);
         this.nativeStorage.setItem('user', usuario).then(
-          () => this.presentToast('Usuario almacenado' + usuario.nombre),
-          error => console.error('Error almacenado datos', error)
+          () => this.presentToast('Usuario almacenado: ' + usuario.nombre),
+          error => {
+            localStorage.setItem('user',JSON.stringify(usuario));
+            this.presentToast('Datos almacenados el localStorage');
+          }
         );
         if (typeof this.usuario != "undefined") {
           var url = "/dashboard-" + this.usuario.rol;
-          this.nativeStorage.setItem('user', usuario);
+          //this.nativeStorage.setItem('user', usuario);
           this.router.navigateByUrl(url);
         } else {
           // mensaje de que no está dado de alta en el sistema
@@ -97,4 +111,5 @@ export class Login2Page implements OnInit {
     });
     toast.present();
   }
+
 }

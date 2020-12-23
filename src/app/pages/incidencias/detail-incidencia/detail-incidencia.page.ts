@@ -50,11 +50,7 @@ export class DetailIncidenciaPage implements OnInit {
     // Al iniciarse la página, se extrae el id de la ruta que corresponde al id de la incidencia
     const idIncidencia: string = this.route.snapshot.paramMap.get('id');
     // Si hay parámetro nueva en la ruta, ponemos el formulario en modo nueva incidencia para el pra
-    if (this.route.snapshot.paramMap.get('nueva') == "true") {
-      this.nueva = true;
-    } else {
-      this.nueva = false;
-    }
+    this.nueva = this.route.snapshot.paramMap.get('nueva') == "true";
     // Colocamos los valores y botones del formulario en función del valor de nueva, si true estamos iniciando desde pra una incidencia
     // si false, estamos editanto una incidencia desde trm
     this.incidService.getIncidenciaDetail(idIncidencia).subscribe(incidencia => {
@@ -108,7 +104,7 @@ export class DetailIncidenciaPage implements OnInit {
       }, (error) => {
         console.error(error);
       });
-    // por último desbloqueamos el botón de finalizar
+    // por último desbloqueamos el botón de recoger
     this.bloquearF = true;
     this.bloquearR = false;
   }
@@ -133,7 +129,7 @@ export class DetailIncidenciaPage implements OnInit {
     this.incidService.updateIncidencia(this.incidencia);
     // TODO: Se termina la notificación correspondiente
 
-    this.router.navigateByUrl('/list-equipos');
+    this.router.navigateByUrl('/list-incidencias');
   }
 
   private updateTotal(): void {
@@ -149,6 +145,7 @@ export class DetailIncidenciaPage implements OnInit {
   enviar() {
     // Actualiza la incidencia
     this.incidencia.descripcion = this.incidForm.controls.descripcion.value;
+    this.incidencia.fechaFin = "";
     this.incidService.updateIncidencia(this.incidencia);
     //this.router.navigateByUrl('list-incidencias/')
   }

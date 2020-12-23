@@ -17,6 +17,7 @@ export class AuthService {
   ) {
     this.user = this.afAuth.authState;
   }
+
   get autheticated():boolean {
     return this.user != null;
   }

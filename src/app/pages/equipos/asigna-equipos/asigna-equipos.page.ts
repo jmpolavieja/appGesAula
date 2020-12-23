@@ -70,17 +70,16 @@ export class AsignaEquiposPage implements OnInit {
               let idEquipo = this.equiposAsignar[equipoKey];
               // busco el equipo seleccionado
               let equipo = this.listEquipos.find(equipo => equipo.idEquipo == idEquipo);
-              console.log(this.equiposAsignar);
+              // console.log(this.equiposAsignar);
               // modifico las propiedades del equipo correspondiente
               equipo.idEquipo = idEquipo;
               equipo.estado = "asignado";
-              var aula = data.aula.substring(5, data.aula.length);
-              equipo.ubicacion.aula = aula;
+              equipo.ubicacion.aula = data.aula.substring(5, data.aula.length);
               equipo.ubicacion.departamento = data.departamento;
               this.equiposAsignados.push(equipo);
             }
             // Ya tengo el array de equipos asignados, los envío al proveso por lotes para su actualización
-            console.log(this.equiposAsignados);
+            // console.log(this.equiposAsignados);
             this.equiposService.asignarEquipos(this.equiposAsignados);
             this.router.navigateByUrl('/list-equipos');
           }
