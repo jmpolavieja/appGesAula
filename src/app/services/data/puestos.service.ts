@@ -22,11 +22,12 @@ export class PuestosService {
   // Comprueba que colecion puestos existe
   existsPuestos(idAula): Promise<any> {
     let puestosCollection = this.afs.collection('aulas').doc(idAula).collection('puestos').ref;
-    return puestosCollection.where('puestos', '!=', 'undefined').get()
-      .then(snapshot => {
-        console.log(snapshot.docs);
+    return puestosCollection.get().then(
+      snapshot => {
         return snapshot.docs.length;
-      })
+      }
+    )
+
   }
 
   // Crea los puestos del aula
@@ -52,7 +53,6 @@ export class PuestosService {
   }
 
   asignarEquipos(equipos: { idEquipo: string, asignado: boolean }[], idAula: string) {
-    idAula = "Aula " + idAula;
     let batch = this.afs.firestore.batch();
 
     console.log('asignarEquipos, equipos: ', equipos);

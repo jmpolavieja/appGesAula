@@ -20,7 +20,6 @@ import {TotalesService} from "../../../services/data/totales.service";
 export class ListEquiposPage implements OnInit {
 
   public idAula: string;
-  public AulaNumero: string;
   public equipos: EquipoInterface[];
   private aula: AulaInterface;
   private incidenciasAula: number;
@@ -50,7 +49,7 @@ export class ListEquiposPage implements OnInit {
           this.aula = aula;
         }
       )
-      this.AulaNumero = this.idAula.charAt(this.idAula.length - 1);
+
       // console.log("tengo aula: ", this.idAula);
       this.equiposService.getEquiposList(this.idAula).subscribe(equipos => {
         this.equipos = equipos;
@@ -118,7 +117,7 @@ export class ListEquiposPage implements OnInit {
           text: 'Genera Equipos',
           icon: 'qr-code',
           handler: () => {
-            console.log("Genera clicked");
+            // console.log("Genera clicked");
             this.router.navigate(['/genera-equipos']);
           }
         },
@@ -164,7 +163,7 @@ export class ListEquiposPage implements OnInit {
       equiposAsignacion.push({idEquipo, asignado: asignado});
     }
     console.log("Equipos Asignación antes del envio: ", equiposAsignacion);
-    this.puestosService.asignarEquipos(equiposAsignacion, this.AulaNumero);
+    this.puestosService.asignarEquipos(equiposAsignacion, this.idAula);
 
   }
 
@@ -214,10 +213,8 @@ export class ListEquiposPage implements OnInit {
       recogida: false,
       aula: this.idAula
     }
-    //console.log(data.fechaInicio);
-    // uso el servicio para crear la incidencia,
 
-    //console.log('Llamo al servicio createIncidencia con ', data);
+    // uso el servicio para crear la incidencia,
     this.incSer.createIncidencia(data).then(
       () => {
         console.log('Incidencia creada exitosamente', idEquipo);
@@ -236,12 +233,6 @@ export class ListEquiposPage implements OnInit {
         console.log('Incidencias Aula ', this.incidenciasAula);
         this.incidenciasAula += 1;
         console.log("Actualizando incidencias del aula", this.aulaService.updateIncidenciasAula(this.incidenciasAula, this.idAula));
-
-          /*.then(() => {
-          console.log('Incidencias aula actualizada');
-        }).catch(() => {
-          console.log('No he podido actualizar el total incidencias de un aula');
-        });*/
         // muestro detalle incidencia
         this.router.navigateByUrl('/detail-incidencia/' + data.idIncidencia + '/true');
       },

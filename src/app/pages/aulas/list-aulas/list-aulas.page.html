@@ -14,6 +14,9 @@
                 *ngFor="let aula of aulas | async"
                 routerLink="/detail-aula/{{aula.idAula}}/false"
         >
+            <ion-avatar slot="start">
+                <img src="./assets/avatarAula.png">
+            </ion-avatar>
             <ion-label>
                 <h2>{{ aula.idAula }}</h2>
                 <p>{{ aula.departamento }}</p>

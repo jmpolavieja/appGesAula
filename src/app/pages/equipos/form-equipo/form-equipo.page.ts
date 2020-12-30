@@ -36,9 +36,9 @@ export class FormEquipoPage implements OnInit {
             modelo: ['', Validators.required],
             departamento: ['', Validators.required],
             aula: ['', Validators.required],
-            monitor: ['', Validators.required],
-            raton: [false, Validators.required],
-            teclado: [false, Validators.required]
+            monitor: [''],
+            raton: [false],
+            teclado: [false]
         });
     }
 
@@ -99,7 +99,7 @@ export class FormEquipoPage implements OnInit {
             .then(() => {
                 // aumentar el contador de equipos totales
                 this.updateTotal();
-                this.router.navigateByUrl('/dashboard-trm');
+                this.router.navigateByUrl('/list-equipos');
             })
             .catch(error => {
                 console.error(error);

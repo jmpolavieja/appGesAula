@@ -25,7 +25,9 @@ import {PuestosService} from "../../../services/data/puestos.service";
   styleUrls: ['./dashboard-pra.page.scss'],
 })
 export class DashboardPraPage implements OnInit {
+
   // Propiedades
+
   public numInc: number;
   public name: String;
   private user: Observable<firebase.User | null>;
@@ -35,6 +37,7 @@ export class DashboardPraPage implements OnInit {
   private usuario: UsuarioInterface;
   private puestosExist: number;
 
+  // En el constructor inyectamos los servicios necesarios
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
@@ -52,7 +55,6 @@ export class DashboardPraPage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("Esto es ngOnInit");
     // Mostrar el loader
     this.loader.showLoader();
     // Comprobación de usuario actual - seguridad de acceso
@@ -61,12 +63,8 @@ export class DashboardPraPage implements OnInit {
       this.loader.hideLoader();
       // Si no hay sesión de usuario, se vuelve al login
       if (user) {
-        // console.log(user.email);
-        let email = user.email;
-        //console.log(localStorage.getItem('user'));
-        this.usersService.getUser(email).subscribe(
+        this.usersService.getUser(user.email).subscribe(
           usuario => {
-            // console.log("pra userServide: ", usuario.rol);
             this.usuario = usuario;
             if (this.usuario.rol == 'pra') {
               this.name = usuario.nombre;
@@ -74,11 +72,13 @@ export class DashboardPraPage implements OnInit {
               // Buscar totales del aula
               this.aulasService.getAulaDetail(this.idAula)
                 .subscribe((aula) => {
+                  // console.log(aula);
                   this.totalEquipos = aula.equipos;
                   this.numInc = aula.incidencias;
                 });
               this.puestosService.existsPuestos(this.idAula)
                 .then( res => {
+                  console.log(res);
                   this.puestosExist = res;
                 });
               this.notifService.getNotificaciones(this.idAula).subscribe(
@@ -122,6 +122,7 @@ export class DashboardPraPage implements OnInit {
     });
   }
 
+  // Control de lectura de notificaciones
   leido(not: NotificacionInterface) {
     not.leida = true;
     this.notifService.marcarLeida(not);
@@ -163,6 +164,7 @@ export class DashboardPraPage implements OnInit {
     await alert.present();
   }
 
+  // Toast para mensajes
   async presentToast(mensaje) {
     const toast = await this.toastCtrl.create({
       message: 'Equipo leído: ' + mensaje,

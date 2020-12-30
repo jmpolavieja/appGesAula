@@ -23,18 +23,17 @@ export class AsignaEquiposPage implements OnInit {
   }
 
   ngOnInit() {
-    //this.listEquipos = this.equiposService.getEquiposNoAsignados();
     this.equiposService.getEquiposNoAsignados().subscribe(
       equipos => {
         this.listEquipos = equipos;
-        console.log(this.listEquipos);
+        // todo: Toast diciendo que ha salido bien
       })
   }
 
   selecciona(idEquipo: string) {
     // Cada vez que se selecciona un equipo se añade o se quita del array equiposAsignar
     this.equiposAsignar.push(idEquipo);
-    console.log(this.equiposAsignar);
+
   }
 
   async asignarEquipos() {
@@ -64,7 +63,6 @@ export class AsignaEquiposPage implements OnInit {
           text: 'Ok',
           handler: data => {
             // Guardar asignación
-            console.log('Confirm Ok', data.aula);
             // Recorremos al array con los idequipos seleccionados
             for (const equipoKey in this.equiposAsignar) {
               let idEquipo = this.equiposAsignar[equipoKey];
@@ -74,12 +72,11 @@ export class AsignaEquiposPage implements OnInit {
               // modifico las propiedades del equipo correspondiente
               equipo.idEquipo = idEquipo;
               equipo.estado = "asignado";
-              equipo.ubicacion.aula = data.aula.substring(5, data.aula.length);
+              equipo.ubicacion.aula = data.aula;
               equipo.ubicacion.departamento = data.departamento;
               this.equiposAsignados.push(equipo);
             }
             // Ya tengo el array de equipos asignados, los envío al proveso por lotes para su actualización
-            // console.log(this.equiposAsignados);
             this.equiposService.asignarEquipos(this.equiposAsignados);
             this.router.navigateByUrl('/list-equipos');
           }

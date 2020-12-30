@@ -81,11 +81,12 @@ export class DetailIncidenciaPage implements OnInit {
     let date = new Date();
     let options = {day: 'numeric', month: 'numeric', year: 'numeric'};
     let fecha = date.toLocaleString('es-ES', options);
+    console.log(fecha);
     // primero se actualiza la incidencia, fecha y actuación
     this.incidencia.fechaFin = fecha;
     this.incidencia.actuacion = this.incidForm.value.actuacion;
-    console.log('Incidencia: ', this.incidencia);
-    console.log(this.incidService.updateIncidencia(this.incidencia));
+    // Llamada al servicio de incidencias para registrar la actualización
+    this.incidService.updateIncidencia(this.incidencia);
     // segundo se genera la notificación
     this.notificacion = {
       fecha: fecha,
@@ -96,7 +97,6 @@ export class DetailIncidenciaPage implements OnInit {
       leida: false,
       idNotificacion: this.incidencia.idIncidencia + "-T"
     };
-    console.log("Notificacion: ", this.notificacion);
     this.notService.createNotificacion(this.notificacion).then(
       () => {
         console.log('Notificacion creada exitosamente!');
@@ -127,9 +127,9 @@ export class DetailIncidenciaPage implements OnInit {
     // Se actualiza la incidencia a recogido = true.
     this.incidencia.recogida = true;
     this.incidService.updateIncidencia(this.incidencia);
-    // TODO: Se termina la notificación correspondiente
+    //  Se termina la notificación correspondiente
 
-    this.router.navigateByUrl('/list-incidencias');
+    this.router.navigateByUrl('/list-incidencias/all');
   }
 
   private updateTotal(): void {
@@ -138,6 +138,7 @@ export class DetailIncidenciaPage implements OnInit {
   }
 
   private updateIncidenciasAula(): void {
+    // Modifica el total de incidencias activas del aula, se dispara desde recogida
     this.incidenciasAula -= 1;
     this.aulasSer.updateIncidenciasAula(this.incidenciasAula, this.incidencia.aula);
   }
@@ -147,6 +148,6 @@ export class DetailIncidenciaPage implements OnInit {
     this.incidencia.descripcion = this.incidForm.controls.descripcion.value;
     this.incidencia.fechaFin = "";
     this.incidService.updateIncidencia(this.incidencia);
-    //this.router.navigateByUrl('list-incidencias/')
+    // this.router.navigateByUrl('list-incidencias/'+this.idAula);
   }
 }

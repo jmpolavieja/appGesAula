@@ -14,12 +14,6 @@ import {TotalInterface} from "../../../interfaces/totalInterface";
 })
 export class GeneraEquiposPage implements OnInit {
     public dataForm: FormGroup;
-    /*public datosLote = this.fb.group({
-        idEquipo: ['', Validators.required],
-        numero: ['', Validators.required],
-        marca: ['', Validators.required],
-        modelo: ['', Validators.required]
-    })*/
     total: TotalInterface;
 
     constructor(
@@ -46,7 +40,6 @@ export class GeneraEquiposPage implements OnInit {
     }
 
     generar() {
-        console.log('Ahora voy a generar los equipos');
         var numero = +this.dataForm.value.numero;
         var modelo = this.dataForm.value.modelo;
         var marca = this.dataForm.value.marca;

@@ -28,7 +28,7 @@ export class AulasService {
       return this.aulasRef.valueChanges();
   }
 
-  // Devuelve el detalle de unaula
+  // Devuelve el detalle de un aula, no muestra la colección puestos
   getAulaDetail(idAula: string): Observable<AulaInterface> {
     return this.aulasRef.doc<AulaInterface>(idAula).valueChanges();
   }

@@ -88,7 +88,7 @@ export class FormCompletoPage implements OnInit {
   }
 
   guardar() {
-    // TODO: lo primero que tengo que hacer es convertir el array simple de controles en el equipo
+    // lo primero que tengo que hacer es convertir el array simple de controles en el equipo
     let controles = this.equipoForm.controls;
     let equipo: EquipoInterface = {
       idEquipo: this.idEquipo,
